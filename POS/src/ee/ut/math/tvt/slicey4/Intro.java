@@ -41,7 +41,11 @@ public class Intro {
 	public static void main(String[] args) {
 		Map<String, String> andmed = loeFail("application.properties");
 		Map<String, String> versioon = loeFail("version.properties");
-		andmed.put("versioon", versioon.get("build.number"));
+		andmed.put(
+				"versioon",
+				versioon.get("build.major.number") + "."
+						+ versioon.get("build.minor.number") + "."
+						+ versioon.get("build.revision.number"));
 		System.out.println(andmed);
 		IntroUI uus = new IntroUI();
 		uus.Create(andmed);

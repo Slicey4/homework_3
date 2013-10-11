@@ -4,15 +4,12 @@
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
-<!-- ebavajalikud asjad kustasime automaatsest loomisest ära, ja googlist saadud näite järgi asendasime puuduvad -->
 <project basedir="." default="build" name="POS">
 	<property environment="env" />
 	<property name="debuglevel" value="source,lines,vars" />
-	<!-- see asi mida ivari seletas, et ei tekkiks konflikti kui on sama muutuja -->
 	<property file="build.properties" prefix="uniqueprefix" />
 	<property name="target" value="1.7" />
 	<property name="source" value="1.7" />
-	<!-- sellega asendasin põhimõtteliselt bin build-iga -->
 	<property name="build.dir" value="build" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<path id="POS.classpath">

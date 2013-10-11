@@ -9,7 +9,7 @@ public class IntroUI extends Intro{
 	public static String Team_name="Slicey4";
 	public static String Team_leader= "Kätlin Viilukas";
 	public static String Team_leader_email= "katlinviilukas@gmail.com";
-	public static String[] Team_members= {"Kätlin Viilukas", "Jane Jürgenson", "Kristiina Pokk", "Linda-Liis Eek"};
+	public static String[] Team_members= {"Kätlin Viilukas", "Jane Jürgenson", "Kristiina Pokk", "Linda Liis Eek"};
 	public static Icon Team_logo;
 	public static int software_version_number;
 

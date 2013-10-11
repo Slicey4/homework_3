@@ -3,47 +3,64 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="POS">
-    <property environment="env"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
-    <path id="POS.classpath">
-        <pathelement location="bin"/>
-    </path>
-    <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="clean">
-        <delete dir="bin"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <classpath refid="POS.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
+              as the first entry and export the buildfile again. -->
+<!-- ebavajalikud asjad kustasime automaatsest loomisest ära, ja googlist saadud näite järgi asendasime puuduvad -->
+<project basedir="." default="build" name="POS">
+	<property environment="env" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<!-- see asi mida ivari seletas, et ei tekkiks konflikti kui on sama muutuja -->
+	<property file="build.properties" prefix="uniqueprefix" />
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+	<!-- sellega asendasin põhimõtteliselt bin build-iga -->
+	<property name="build.dir" value="build" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<path id="POS.classpath">
+		<pathelement location="${build.dir}" />
+	</path>
+
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<copy includeemptydirs="false" todir="${build.dir}">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+
+	<target depends="init" name="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.dir}" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="POS.classpath" />
+		</javac>
+	</target>
+
+	<target name="run" depends="build">
+		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
+	</target>
+
+
+	<target name="dist" depends="build">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="jrun" depends="dist">
+		<java jar="${jar.dir}/${app.project.name}.jar" fork="true" />
+	</target>
+
+
+
 </project>

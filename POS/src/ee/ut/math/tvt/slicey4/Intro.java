@@ -12,7 +12,7 @@ import java.util.Properties;
 import javax.swing.JFrame;
 
 public class Intro {
-	
+
 	static Map<String, String> loeFail(String fail) {
 		Map<String, String> d = new HashMap<String, String>();
 		try {
@@ -33,8 +33,8 @@ public class Intro {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//System.out.println(d);
+
+		// System.out.println(d);
 		return d;
 	}
 
@@ -43,5 +43,8 @@ public class Intro {
 		Map<String, String> versioon = loeFail("version.properties");
 		andmed.put("versioon", versioon.get("build.number"));
 		System.out.println(andmed);
+		IntroUI uus = new IntroUI();
+		uus.Create(andmed);
+
 	}
 }

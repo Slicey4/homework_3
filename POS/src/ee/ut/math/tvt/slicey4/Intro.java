@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.swing.JFrame;
+
 
 public class Intro {
 
@@ -46,7 +46,7 @@ public class Intro {
 				versioon.get("build.major.number") + "."
 						+ versioon.get("build.minor.number") + "."
 						+ versioon.get("build.revision.number"));
-		System.out.println(andmed);
+		//System.out.println(andmed);
 		IntroUI uus = new IntroUI();
 		uus.Create(andmed);
 

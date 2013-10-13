@@ -27,7 +27,7 @@ public class IntroUI extends JFrame {
 		JFrame frame = new JFrame("Intro");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(0, 2));
-		frame.setSize(900, 325);
+		frame.setSize(950, 400);
 
 		Team_logo = new ImageIcon("logo.png");
 

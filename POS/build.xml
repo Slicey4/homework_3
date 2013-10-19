@@ -56,8 +56,11 @@
 		</jar>
 	</target>
 
+	
 	<target name="jrun" depends="dist">
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
+		
+		
 	</target>
 
 
@@ -75,7 +78,7 @@
 	</macrodef>
 
 	<target name="git_commit">
-		
+		<input message="Commit message" addproperty="commit-message" /> 
 		<echo message="Commiting all changes with message ${commit-message}" />
 		<git command="add">
 			<args>
@@ -91,7 +94,7 @@
 	</target>
 
 	<target name="git_tag">
-		<input message="Commit message" addproperty="commit-message" /> 
+		
 	<!--<echo message="Commiting all changes with message ${commit-message}" /> -->
 	</target>
 

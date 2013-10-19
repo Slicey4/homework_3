@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="POS">
+	<property name="main-class" value="ee.ut.math.tvt.slicey4.Intro" />
+	<property environment="env" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property file="application.properties" prefix="app" />
+	<property file="version.properties" prefix="version" />
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+	<property name="build.dir" value="build" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<path id="POS.classpath">
+		<pathelement location="${build.dir}" />
+	</path>
+
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<copy includeemptydirs="false" todir="${build.dir}">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+
+	<target depends="init" name="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.dir}" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="POS.classpath" />
+		</javac>
+	</target>
+
+	<target name="run" depends="build">
+		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
+	</target>
+
+
+	<target name="dist" depends="build">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+
+	<target name="jrun" depends="dist">
+		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
+
+
+	</target>
+
+
+	<macrodef name="git">
+		<attribute name="command" />
+		<attribute name="dir" default="" />
+		<element name="args" optional="true" />
+		<sequential>
+			<echo message="git @{command}" />
+			<exec executable="git" dir="@{dir}">
+				<arg value="@{command}" />
+				<args/>
+			</exec>
+		</sequential>
+	</macrodef>
+
+	
+	
+	
+	<target name="git_commit">
+		<input message="Commit message" addproperty="commit-message" />
+		<echo message="Commiting all changes with message ${commit-message}" />
+		<git command="add">
+			<args>
+				<arg value="." />
+			</args>
+		</git>
+		<git command="commit">
+			<args>
+				<arg value="-m ${commit-message}" />
+			</args>
+		</git>		
+		<git command="push" />	
+	</target>
+
+			
+	<target name="git_tag">
+
+		<!--mis siia teha tuleb???????????? -->
+	</target>
+
+
+
+
+
+
+</project>

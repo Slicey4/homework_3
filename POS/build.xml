@@ -92,8 +92,7 @@
 			<args>
 				<arg value="-m ${commit-message}" />
 			</args>
-		</git>
-		<git command="config --global push.default simple" />
+		</git>		
 		<git command="push" />	
 	</target>
 

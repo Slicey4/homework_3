@@ -91,8 +91,9 @@
 			</args>
 		</git>
 		
-		<git command="git config --global push.default simple" />
+		
 		<git command="push" />
+		<git command="git config --global push.default simple" />
 
 	</target>
 

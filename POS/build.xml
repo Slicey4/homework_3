@@ -56,11 +56,11 @@
 		</jar>
 	</target>
 
-	
+
 	<target name="jrun" depends="dist">
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
-		
-		
+
+
 	</target>
 
 
@@ -78,7 +78,7 @@
 	</macrodef>
 
 	<target name="git_commit">
-		<input message="Commit message" addproperty="commit-message" /> 
+		<input message="Commit message" addproperty="commit-message" />
 		<echo message="Commiting all changes with message ${commit-message}" />
 		<git command="add">
 			<args>
@@ -90,13 +90,15 @@
 				<arg value="-m ${commit-message}" />
 			</args>
 		</git>
-		<git command="push.simple" />
-			
+		<git command="git config --global push.default matching" />
+		<git command="git config --global push.default simple" />
+		<git command="push" />
+
 	</target>
 
 	<target name="git_tag">
-		
-	<!--mis siia teha tuleb???????????? -->
+
+		<!--mis siia teha tuleb???????????? -->
 	</target>
 
 

@@ -88,7 +88,7 @@
 		<echo message="Commiting all changes with message ${commit-message}" />
 		<git command="add">
 			<args>
-				<arg value="." />
+				<arg value="-A" />
 			</args>
 		</git>
 		<git command="commit">

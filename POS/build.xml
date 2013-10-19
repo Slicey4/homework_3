@@ -90,12 +90,13 @@
 				<arg value="-m ${commit-message}" />
 			</args>
 		</git>
-		<git command="push" />
+		<git command="push.simple" />
+			
 	</target>
 
 	<target name="git_tag">
 		
-	<!--<echo message="Commiting all changes with message ${commit-message}" /> -->
+	<!--mis siia teha tuleb???????????? -->
 	</target>
 
 

@@ -100,16 +100,16 @@
 		<git command="push" />	
 	</target>
 
-			
+	<!--		
 	<target name="git_tag">
 		<input message="Homework number" addproperty="n" />
 		<exec dir="src" executable="cmd.exe">
 		  <arg line='git tag -a homework_${n} -m "Homework ${n}"'/>
-		  <arg line='git push --tags'/>
+		  <arg line='git push -tags'/>
 		</exec>
 		
 	</target>
 
-	<!-- WARNING -->
+ WARNING -->
 
 </project>

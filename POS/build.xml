@@ -90,7 +90,7 @@
 				<arg value="-m ${commit-message}" />
 			</args>
 		</git>
-		<git command="git config --global push.default matching" />
+		
 		<git command="git config --global push.default simple" />
 		<git command="push" />
 

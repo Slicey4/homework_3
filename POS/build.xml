@@ -60,7 +60,8 @@
 	<target name="jrun" depends="dist">
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
 		<fileset file="application.properties"/>
-		<fileset file="version.properties"/><fileset file="logo.png"/>
+		<fileset file="version.properties"/>
+		<fileset file="logo.png"/>
 
 
 	</target>

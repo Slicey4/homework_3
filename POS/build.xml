@@ -77,9 +77,13 @@
 		</sequential>
 	</macrodef>
 
+	
+	
+	
 	<target name="git_commit">
 		<input message="Commit message" addproperty="commit-message" />
 		<echo message="Commiting all changes with message ${commit-message}" />
+		<git command="git config --global push.default simple" />
 		<git command="add">
 			<args>
 				<arg value="." />
@@ -90,13 +94,10 @@
 				<arg value="-m ${commit-message}" />
 			</args>
 		</git>
-		
-		
-		<git command="push" />
-		<git command="git config --global push.default simple" />
-
+		<git command="push" />	
 	</target>
 
+			
 	<target name="git_tag">
 
 		<!--mis siia teha tuleb???????????? -->

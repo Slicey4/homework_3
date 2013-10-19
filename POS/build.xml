@@ -93,7 +93,7 @@
 				<arg value="-m ${commit-message}" />
 			</args>
 		</git>		
-		<git command="push --set-upstream origin master" />	
+		
 		<git command="push" />	
 	</target>
 

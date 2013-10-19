@@ -106,7 +106,7 @@
 	<!--		
 	<target name="git_tag">
 		<input message="Homework number" addproperty="n" />
-		<exec dir="" <_____see siin ****************** executable="cmd.exe">
+		<exec dir="" <_____see siin **see on jama**************** executable="cmd.exe">
 		  <arg line='git tag -a homework_${n} -m "Homework ${n}"'/>
 		  <arg line='git push -tags'/>
 		</exec>

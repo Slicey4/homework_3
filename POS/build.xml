@@ -100,9 +100,6 @@
 		<git command="push" />	
 	</target>
 
-	
-	
-	
 	<!--		
 	<target name="git_tag">
 		<input message="Homework number" addproperty="n" />

@@ -32,7 +32,7 @@ public class PurchaseItemPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
-	private JComboBox items;
+	private JComboBox<String> items;
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField nameField;
@@ -96,7 +96,7 @@ public class PurchaseItemPanel extends JPanel {
        
   
         
-        items = new JComboBox(combo);
+        items = new JComboBox<String>(combo);
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
         priceField = new JTextField();

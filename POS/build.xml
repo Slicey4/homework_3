@@ -16,32 +16,33 @@
 	<property name="source" value="1.7" />
 	<property name="build.dir" value="build" />
 	<property name="jar.dir" value="${build.dir}/jar" />
-	
+
+
 	<path id="compile.classpath">
-			<fileset dir="lib">
-				<include name="*.jar"/>
-			</fileset>
-		</path>
-	
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
 	<path id="POS.classpath">
-			<pathelement location="${build.classes.dir}"/>
-			<!-- configuration -->
-			<pathelement location="${conf.dir}"/>
-			<fileset dir="lib">
-				<include name="*.jar"/>
-			</fileset>
-		</path>
+		<pathelement location="${build.dir}"/>
+		<!-- configuration -->
+		<pathelement location="${conf.dir}"/>
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
 
 
-	
+
+
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${build.classes.dir}"/>
+
 		<javac
             srcdir="${src.dir}"
-            destdir="${build.classes.dir}"
+            destdir="${build.dir}"
             debug="true"
-			
             encoding="utf-8"
             compiler="modern"
 			target="${target}"
@@ -52,9 +53,10 @@
 		</javac>
 
 	</target>
-	
-	
-	
+
+
+
+
 	<target name="init">
 		<mkdir dir="${build.dir}" />
 		<copy includeemptydirs="false" todir="${build.dir}">
@@ -63,7 +65,7 @@
 			</fileset>
 		</copy>
 	</target>
-
+	<!-- <mkdir dir="${build.classes.dir}"/>-->
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
@@ -79,11 +81,12 @@
 	</target>
 
 	-->
-	
-	
+
+
 	<target name="run" depends="build">
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
 		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
+		<fileset file="log4j.properties"/>
 	</target>
 
 
@@ -92,16 +95,26 @@
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${build.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
+
 			</manifest>
+
 		</jar>
 	</target>
 
 
 	<target name="jrun" depends="dist">
+
+
+		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
+		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
+
 		<fileset file="application.properties"/>
 		<fileset file="version.properties"/>
+		<fileset file="log4j.properties"/>
+		
 		<fileset file="logo.png"/>
+		
 
 
 	</target>
@@ -120,9 +133,9 @@
 		</sequential>
 	</macrodef>
 
-	
-	
-	
+
+
+
 	<target name="git_commit">
 		<input message="Commit message" addproperty="commit-message" />
 		<echo message="Commiting all changes with message ${commit-message}" />
@@ -135,9 +148,9 @@
 			<args>
 				<arg value="-m ${commit-message}" />
 			</args>
-		</git>		
-		
-		<git command="push" />	
+		</git>
+
+		<git command="push" />
 	</target>
 
 	<!--		
@@ -151,5 +164,5 @@
 	</target>
 
  WARNING -->
-	
+
 </project>

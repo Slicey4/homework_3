@@ -2,12 +2,10 @@ package ee.ut.math.tvt.slicey4;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class IntroUI extends JFrame {
 
@@ -17,44 +15,81 @@ public class IntroUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static ImageIcon Team_logo;
-
-	public JFrame window;
+	public static JFrame frame;
 	public static JLabel Imagelabel;
 	public static JPanel panel;
+	public static JLabel Team_name, Team_leader, Leader_mail, members,
+			software;
 
-	void Create(Map<String, String> m) {
+	IntroUI() {
 
-		JFrame frame = new JFrame("Intro");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new GridLayout(0, 2));
-		frame.setSize(950, 400);
+		Map<String, String> andmed = loeFail("application.properties");
+		Map<String, String> versioon = loeFail("version.properties");
+		andmed.put(
+				"versioon",
+				versioon.get("build.major.number") + "."
+						+ versioon.get("build.minor.number") + "."
+						+ versioon.get("build.revision.number"));
+
+		setTitle("Intro");
+
+		setLayout(new GridLayout(0, 2));
+		setSize(950, 400);
 
 		Team_logo = new ImageIcon("logo.png");
 
 		Imagelabel = new JLabel(Team_logo);
 
-		frame.add(Imagelabel);
+		add(Imagelabel);
 
 		panel = new JPanel(new GridLayout(5, 1));
 		panel.setBackground(Color.white);
 
-		JLabel text1 = new JLabel("Team name: " + m.get("team.name"));
-		JLabel text2 = new JLabel("Team leader: " + m.get("team.leader.name"));
-		JLabel text3 = new JLabel("Team leader email: " + m.get("leader.email"));
-		JLabel text4 = new JLabel("Team members: " + m.get("team.members"));
-		JLabel text5 = new JLabel("Software version number: "
-				+ m.get("versioon"));
+		Team_name = new JLabel("Team name: " + andmed.get("team.name"));
+		Team_leader = new JLabel("Team leader: "
+				+ andmed.get("team.leader.name"));
+		Leader_mail = new JLabel("Team leader email: "
+				+ andmed.get("leader.email"));
+		members = new JLabel("Team members: " + andmed.get("team.members"));
+		software = new JLabel("Software version number: "
+				+ andmed.get("versioon"));
 
-		panel.add(text1);
-		panel.add(text2);
-		panel.add(text3);
-		panel.add(text4);
-		panel.add(text5);
+		panel.add(Team_name);
+		panel.add(Team_leader);
+		panel.add(Leader_mail);
+		panel.add(members);
+		panel.add(software);
 
-		frame.getContentPane().setBackground(Color.white);
-		frame.add(panel);
-		frame.setVisible(true);
+		getContentPane().setBackground(Color.white);
+		add(panel);
 
+		setVisible(true);
+
+	};
+
+	static Map<String, String> loeFail(String fail) {
+		Map<String, String> d = new HashMap<String, String>();
+		try {
+			File file = new File(fail);
+			FileInputStream fileInput = new FileInputStream(file);
+			Properties properties = new Properties();
+			properties.load(fileInput);
+
+			Enumeration<Object> enuKeys = properties.keys();
+			while (enuKeys.hasMoreElements()) {
+				String key = (String) enuKeys.nextElement();
+				String value = properties.getProperty(key);
+				d.put(key, value);
+			}
+			fileInput.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// System.out.println(d);
+		return d;
 	}
 
 }

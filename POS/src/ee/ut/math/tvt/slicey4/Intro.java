@@ -1,54 +1,41 @@
 package ee.ut.math.tvt.slicey4;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import org.apache.log4j.Logger;
 
-
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
+import ee.ut.math.tvt.salessystem.ui.ConsoleUI;
+import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
 public class Intro {
 
-	static Map<String, String> loeFail(String fail) {
-		Map<String, String> d = new HashMap<String, String>();
-		try {
-			File file = new File(fail);
-			FileInputStream fileInput = new FileInputStream(file);
-			Properties properties = new Properties();
-			properties.load(fileInput);
+private static final Logger log = Logger.getLogger(Intro.class);
+private static final String MODE = "console";
 
-			Enumeration<Object> enuKeys = properties.keys();
-			while (enuKeys.hasMoreElements()) {
-				String key = (String) enuKeys.nextElement();
-				String value = properties.getProperty(key);
-				d.put(key, value);
-			}
-			fileInput.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+public static void main(String[] args) {
+
+	final SalesDomainController domainController = new SalesDomainControllerImpl();
+
+	if (args.length == 1 && args[0].equals(MODE)) {
+		log.debug("Mode: " + MODE);
+
+		ConsoleUI cui = new ConsoleUI(domainController);
+		cui.run();
+	} else {
+
+		IntroUI introUI = new IntroUI();
+		introUI.setVisible(true);
+		introUI.setAlwaysOnTop(true);
+
+		final SalesSystemUI ui = new SalesSystemUI(domainController);
+		ui.setVisible(true);
+
+		introUI.setAlwaysOnTop(false);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		// System.out.println(d);
-		return d;
+		introUI.setVisible(false);
 	}
-
-	public static void main(String[] args) {
-		Map<String, String> andmed = loeFail("application.properties");
-		Map<String, String> versioon = loeFail("version.properties");
-		andmed.put(
-				"versioon",
-				versioon.get("build.major.number") + "."
-						+ versioon.get("build.minor.number") + "."
-						+ versioon.get("build.revision.number"));
-		//System.out.println(andmed);
-		IntroUI uus = new IntroUI();
-		uus.Create(andmed);
-
-	}
-}
+}}

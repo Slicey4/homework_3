@@ -4,19 +4,53 @@
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
-<project basedir="." default="build" name="POS">
+<project basedir="." name="POS">
 	<property name="main-class" value="ee.ut.math.tvt.slicey4.Intro" />
 	<property environment="env" />
 	<property name="debuglevel" value="source,lines,vars" />
 	<property file="application.properties" prefix="app" />
 	<property file="version.properties" prefix="version" />
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="src.dir" value="${basedir}/src"/>
 	<property name="target" value="1.7" />
 	<property name="source" value="1.7" />
 	<property name="build.dir" value="build" />
 	<property name="jar.dir" value="${build.dir}/jar" />
-	<path id="POS.classpath">
-		<pathelement location="${build.dir}" />
+
+
+	<path id="compile.classpath">
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
 	</path>
+
+	<path id="POS.classpath">
+		<pathelement location="${build.dir}"/>
+		<!-- configuration -->
+		<pathelement location="${conf.dir}"/>
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+
+	<target name="build" description="Build the system">
+		<mkdir dir="${build.dir}"/>
+		<javac
+            srcdir="${src.dir}"
+            destdir="${build.dir}"
+            debug="true"
+			debuglevel="${debuglevel}"
+            encoding="utf-8"
+            compiler="modern"
+			target="${target}"
+			source="${source}"
+			includeantruntime="false">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+
+
 
 
 	<target name="init">
@@ -33,7 +67,7 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-
+	<!-- 
 	<target depends="init" name="build">
 		<echo message="${ant.project.name}: ${ant.file}" />
 		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.dir}" includeantruntime="false" source="${source}" target="${target}">
@@ -42,8 +76,13 @@
 		</javac>
 	</target>
 
+	-->
+
+
 	<target name="run" depends="build">
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
+		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
+	
 	</target>
 
 
@@ -54,14 +93,23 @@
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
 		</jar>
+		
+		<copy file="application.properties"  tofile="${jar.dir}/${app.team.name}.jar"/>
+		<copy file="version.properties" tofile="${jar.dir}/${app.team.name}.jar" />
+		<copy file="logo.png"  tofile="${jar.dir}/${app.team.name}.jar"/>
 	</target>
 
 
 	<target name="jrun" depends="dist">
+
+		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
+		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
 		<fileset file="application.properties"/>
 		<fileset file="version.properties"/>
+		<fileset file="log4j.properties"/>
 		<fileset file="logo.png"/>
+
 
 
 	</target>
@@ -80,9 +128,9 @@
 		</sequential>
 	</macrodef>
 
-	
-	
-	
+
+
+
 	<target name="git_commit">
 		<input message="Commit message" addproperty="commit-message" />
 		<echo message="Commiting all changes with message ${commit-message}" />
@@ -95,21 +143,30 @@
 			<args>
 				<arg value="-m ${commit-message}" />
 			</args>
-		</git>		
-		
-		<git command="push" />	
-	</target>
+		</git>
 
-	<!--		
+		<git command="push" />
+	</target>
+	
 	<target name="git_tag">
 		<input message="Homework number" addproperty="n" />
-		<exec dir="" <_____see siin **see on jama**************** executable="cmd.exe">
-		  <arg line='git tag -a homework_${n} -m "Homework ${n}"'/>
-		  <arg line='git push -tags'/>
-		</exec>
+		
+		<git command="tag">
+			<args>
+				<arg value="-a" />
+					<arg value="homework_${n}" />
+				<arg value="-m" />
+				
+					<arg value="Homework ${toString:n}" />
+			</args>
+		</git>
+		<git command="push">
+			<args>
+				<arg value="--tags" />
+			</args>
+		</git>
 		
 	</target>
 
- WARNING -->
-	
+
 </project>

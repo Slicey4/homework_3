@@ -18,16 +18,22 @@
 	<property name="jar.dir" value="${build.dir}/jar" />
 
 
+	<path id="properties">
+		<dirset dir="." />
+	</path>
 	<path id="compile.classpath">
 		<fileset dir="lib">
-			<include name="*.jar"/>
+			<include name="*.jar" />
 		</fileset>
+		<path id="properties">
+			<dirset dir="." />
+		</path>
 	</path>
 
 	<path id="POS.classpath">
-		<pathelement location="${build.dir}"/>
+		<pathelement location="${build.dir}" />
 		<!-- configuration -->
-		<pathelement location="${conf.dir}"/>
+		<pathelement location="${conf.dir}" />
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
@@ -67,22 +73,10 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<!-- 
-	<target depends="init" name="build">
-		<echo message="${ant.project.name}: ${ant.file}" />
-		<javac debug="true" debuglevel="${debuglevel}" destdir="${build.dir}" includeantruntime="false" source="${source}" target="${target}">
-			<src path="src" />
-			<classpath refid="POS.classpath" />
-		</javac>
-	</target>
-
-	-->
-
 
 	<target name="run" depends="build">
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
 		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
-	
 	</target>
 
 
@@ -93,7 +87,6 @@
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
 		</jar>
-		
 		<copy file="application.properties"  tofile="${jar.dir}/${app.team.name}.jar"/>
 		<copy file="version.properties" tofile="${jar.dir}/${app.team.name}.jar" />
 		<copy file="logo.png"  tofile="${jar.dir}/${app.team.name}.jar"/>
@@ -101,20 +94,18 @@
 
 
 	<target name="jrun" depends="dist">
-
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
 		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
+<!---
 		<fileset file="application.properties"/>
 		<fileset file="version.properties"/>
 		<fileset file="log4j.properties"/>
 		<fileset file="logo.png"/>
-
-
-
+		-->		
 	</target>
 
-
+	
 	<macrodef name="git">
 		<attribute name="command" />
 		<attribute name="dir" default="" />
@@ -127,9 +118,6 @@
 			</exec>
 		</sequential>
 	</macrodef>
-
-
-
 
 	<target name="git_commit">
 		<input message="Commit message" addproperty="commit-message" />
@@ -147,17 +135,17 @@
 
 		<git command="push" />
 	</target>
-	
+
 	<target name="git_tag">
 		<input message="Homework number" addproperty="n" />
-		
+
 		<git command="tag">
 			<args>
 				<arg value="-a" />
-					<arg value="homework_${n}" />
+				<arg value="homework_${n}" />
 				<arg value="-m" />
-				
-					<arg value="Homework ${toString:n}" />
+
+				<arg value="Homework ${toString:n}" />
 			</args>
 		</git>
 		<git command="push">
@@ -165,7 +153,6 @@
 				<arg value="--tags" />
 			</args>
 		</git>
-		
 	</target>
 
 

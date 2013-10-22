@@ -10,11 +10,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
+
 import java.util.NoSuchElementException;
 
+
 import javax.swing.BorderFactory;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -32,10 +33,9 @@ public class PurchaseItemPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
-	private JComboBox<String> items;
+	private JComboBox <String> items;
 	private JTextField barCodeField;
 	private JTextField quantityField;
-	private JTextField nameField;
 	private JTextField priceField;
 
 	private JButton addItemButton;
@@ -79,79 +79,88 @@ public class PurchaseItemPanel extends JPanel {
 	}
 
 	// purchase dialog
+	
 	private JComponent drawDialogPane() {
 
-        // Create the panel
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 2));
-        panel.setBorder(BorderFactory.createTitledBorder("Product"));
+		// Create the panel
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(5, 2));
+		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-        // Initialize the textfields
-        String [] combo ={"","b","c"};
-        
-     /*   for (int i=0; i<model.getWarehouseTableModel().getRowCount();i++){
-        	combo.add(model.getWarehouseTableModel().getItemById(i).getName());
-        	
-        }*/
-       
-  
-        
-        items = new JComboBox<String>(combo);
-        barCodeField = new JTextField();
-        quantityField = new JTextField("1");
-        priceField = new JTextField();
+		// Combo selection parandada vaja
+		
+		
+		//Vector<String> combo=new Vector<String>();
+		
+		JComboBox <String>combo = new JComboBox();
+		// System.out.println(model.getWarehouseTableModel().getRowCount());
+		for (StockItem x :  model.getWarehouseTableModel().getTableRows()) {
+			combo.addItem(x.getName());
+		}
+	
+		
+		// Initialize the textfields
+		
+		items=combo;
+		barCodeField = new JTextField();
+		quantityField = new JTextField("1");
+		priceField = new JTextField();
 
-        // Fill the dialog fields if the bar code text field loses focus
-        barCodeField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-            }
+		// Fill the dialog fields if the bar code text field loses focus
+		items.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+ 
+			public void focusGained(FocusEvent e) {
+			}
 
-            public void focusLost(FocusEvent e) {
-                fillDialogFields();
-            }
-        });
-        
-       
-       
-        priceField.setEditable(false);
+			public void focusLost(FocusEvent e) {
+				fillDialogFields();
+			}
+		});
 
-        // == Add components to the panel
-        
-        // -items
-        panel.add(new JLabel("Items"));
-        panel.add(items);
+		priceField.setEditable(false);
 
-        // - bar code
-        panel.add(new JLabel("Bar code:"));
-        panel.add(barCodeField);
+		// == Add components to the panel
 
-        // - amount
-        panel.add(new JLabel("Amount:"));
-        panel.add(quantityField);
+		// -items
+		panel.add(new JLabel("Items"));
+		panel.add(items);
 
-        // - price
-        panel.add(new JLabel("Price:"));
-        panel.add(priceField);
+		// - bar code
+		panel.add(new JLabel("Bar code:"));
+		panel.add(barCodeField);
 
-        // Create and add the button
-        addItemButton = new JButton("Add to cart");
-        addItemButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addItemEventHandler();
-            }
-        });
+		// - amount
+		panel.add(new JLabel("Amount:"));
+		panel.add(quantityField);
 
-        panel.add(addItemButton);
+		// - price
+		panel.add(new JLabel("Price:"));
+		panel.add(priceField);
 
-        return panel;
-    }
+		// Create and add the button
+		addItemButton = new JButton("Add to cart");
+		addItemButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addItemEventHandler();
+			}
+		});
+
+		panel.add(addItemButton);
+
+		return panel;
+	}
 
 	// Fill dialog with data from the "database".
 	public void fillDialogFields() {
-		StockItem stockItem = getStockItemByBarcode();
+		StockItem stockItem = getStockItemByName();
 
 		if (stockItem != null) {
-			nameField.setText(stockItem.getName());
+			
 			String priceString = String.valueOf(stockItem.getPrice());
 			priceField.setText(priceString);
 		} else {
@@ -161,7 +170,7 @@ public class PurchaseItemPanel extends JPanel {
 
 	// Search the warehouse for a StockItem with the bar code entered
 	// to the barCode textfield.
-	private StockItem getStockItemByBarcode() {
+	private StockItem getStockItemByName() {
 		try {
 			int code = Integer.parseInt(barCodeField.getText());
 			return model.getWarehouseTableModel().getItemById(code);
@@ -177,7 +186,7 @@ public class PurchaseItemPanel extends JPanel {
 	 */
 	public void addItemEventHandler() {
 		// add chosen item to the shopping cart.
-		StockItem stockItem = getStockItemByBarcode();
+		StockItem stockItem = getStockItemByName();
 		if (stockItem != null) {
 			int quantity;
 			try {
@@ -195,10 +204,11 @@ public class PurchaseItemPanel extends JPanel {
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {
+		this.items.setEnabled(enabled);
 		this.addItemButton.setEnabled(enabled);
 		this.barCodeField.setEnabled(enabled);
 		this.quantityField.setEnabled(enabled);
-		this.items.setEnabled(enabled);
+		
 	}
 
 	/**

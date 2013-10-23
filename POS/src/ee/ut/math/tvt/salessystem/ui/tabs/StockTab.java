@@ -17,6 +17,7 @@ public class StockTab {
 
   private JButton addItem;
 
+
   private SalesSystemModel model;
 
   public StockTab(SalesSystemModel model) {

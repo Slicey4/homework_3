@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 /**
@@ -19,7 +20,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	}
 
 	@Override
-	protected Object getColumnValue(StockItem item, int columnIndex) {
+	public Object getColumnValue(StockItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
 			return item.getId();
@@ -38,6 +39,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * same id, then existing item's quantity will be increased.
 	 * @param stockItem
 	 */
+	
 	public void addItem(final StockItem stockItem) {
 		try {
 			StockItem item = getItemById(stockItem.getId());
@@ -52,7 +54,23 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 		fireTableDataChanged();
 	}
-
+	public void removeQuantity(final StockItem stockItem, int q){
+		try { if(stockItem.getQuantity()<=q){
+			stockItem.setQuantity(stockItem.getQuantity()-stockItem.getQuantity());
+			
+			log.debug("Found existing item " + stockItem.getName()
+					+ " decreased quantity by " + stockItem.getQuantity()
+					+ "No more: " + stockItem.getName());;
+		}else{	stockItem.setQuantity(stockItem.getQuantity() - q);
+				log.debug("Found existing item " + stockItem.getName()
+					+ " decreased quantity by " + q);}
+				
+		
+		} catch (NoSuchElementException e) {
+			
+			log.debug("No Such Element in Rows");
+		}
+	}
 	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();

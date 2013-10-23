@@ -10,12 +10,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.NoSuchElementException;
 
 
-import javax.swing.BorderFactory;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -107,20 +108,31 @@ public class PurchaseItemPanel extends JPanel {
 		priceField = new JTextField();
 
 		// Fill the dialog fields if the bar code text field loses focus
-		items.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
- 
-			public void focusGained(FocusEvent e) {
-			}
+		items.addItemListener(
+				new ItemListener(){
+					int q;
+					public void itemStateChanged(ItemEvent event){
+						if(event.getStateChange()==ItemEvent.SELECTED)
+						
+						{
+							q=Integer.parseInt(quantityField.getText()); // saan teada mitu seda toodet tellitakse
+							StockItem stockItem = getStockItemByName();
 
-			public void focusLost(FocusEvent e) {
-				fillDialogFields();
-			}
-		});
+						if (stockItem != null) {
+							
+							priceField.setText(String.valueOf(stockItem.getPrice()*q));
+							barCodeField.setText(String.valueOf(stockItem.getId()));
+							
+							
+							
+						} else {
+							reset();
+						}}
+						
+					}
+				}
+		);
+
 
 		priceField.setEditable(false);
 
@@ -157,7 +169,7 @@ public class PurchaseItemPanel extends JPanel {
 
 	// Fill dialog with data from the "database".
 	public void fillDialogFields() {
-		StockItem stockItem = getStockItemByName();
+		StockItem stockItem = getStockItemByBarCode();
 
 		if (stockItem != null) {
 			
@@ -168,9 +180,23 @@ public class PurchaseItemPanel extends JPanel {
 		}
 	}
 
+	// Search the warehouse for a StockItem with the name selected in combolist
+	// to the items field.
+	private StockItem getStockItemByName() {
+		try {
+			
+			String name = String.valueOf(items.getSelectedItem());
+			model.getWarehouseTableModel().getTableRows();
+			return model.getWarehouseTableModel().getItemByName(name);
+		} catch (NumberFormatException ex) {
+			return null;
+		} catch (NoSuchElementException ex) {
+			return null;
+		}
+	}
 	// Search the warehouse for a StockItem with the bar code entered
 	// to the barCode textfield.
-	private StockItem getStockItemByName() {
+	private StockItem getStockItemByBarCode() {
 		try {
 			int code = Integer.parseInt(barCodeField.getText());
 			return model.getWarehouseTableModel().getItemById(code);
@@ -180,22 +206,38 @@ public class PurchaseItemPanel extends JPanel {
 			return null;
 		}
 	}
-
 	/**
 	 * Add new item to the cart.
 	 */
 	public void addItemEventHandler() {
 		// add chosen item to the shopping cart.
-		StockItem stockItem = getStockItemByName();
+		StockItem stockItem = getStockItemByBarCode();
 		if (stockItem != null) {
 			int quantity;
 			try {
 				quantity = Integer.parseInt(quantityField.getText());
+				
 			} catch (NumberFormatException ex) {
 				quantity = 1;
 			}
+			
+			if ( quantity>= stockItem.getQuantity()){
+				model.getCurrentPurchaseTableModel().addItem(
+						new SoldItem(stockItem, stockItem.getQuantity()));
+				model.getWarehouseTableModel().removeQuantity(stockItem, quantity);
+				System.out.println("No more items: "+ stockItem.getName());	
+			}else{
 			model.getCurrentPurchaseTableModel().addItem(
 					new SoldItem(stockItem, quantity));
+			model.getWarehouseTableModel().removeQuantity(stockItem, quantity);
+			}
+			// v2hendab laos oleva toote hulka kui seda ostetakse vms.
+			//hetkel tehes oste rohkem kui v6imalik l2heb laoseis miinusesse aga peaks 
+			//tegema nii palju kui v6imalik ja siis edastama teate et rohkem ei ole laos,
+			//if-ga ei 6nnestunud kuskil midagi muuta....
+			
+			
+			
 		}
 	}
 

@@ -14,13 +14,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.NoSuchElementException;
 
-
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,7 +33,7 @@ public class PurchaseItemPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
-	private JComboBox <String> items;
+	private JComboBox<String> items;
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
@@ -80,7 +79,7 @@ public class PurchaseItemPanel extends JPanel {
 	}
 
 	// purchase dialog
-	
+
 	private JComponent drawDialogPane() {
 
 		// Create the panel
@@ -88,53 +87,52 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-		// Combo selection parandada vaja
 		
-		
-		//Vector<String> combo=new Vector<String>();
-		
-		JComboBox <String>combo = new JComboBox();
+		//Combo items 
+		JComboBox<String> combo = new JComboBox();
+		combo.addItem("Select one");
 		// System.out.println(model.getWarehouseTableModel().getRowCount());
-		for (StockItem x :  model.getWarehouseTableModel().getTableRows()) {
+		for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
 			combo.addItem(x.getName());
 		}
-	
-		
+
 		// Initialize the textfields
-		
-		items=combo;
+
+		items = combo;
 		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		priceField = new JTextField();
 
 		// Fill the dialog fields if the bar code text field loses focus
-		items.addItemListener(
-				new ItemListener(){
-					int q;
-					public void itemStateChanged(ItemEvent event){
-						if(event.getStateChange()==ItemEvent.SELECTED)
-						
-						{
-							q=Integer.parseInt(quantityField.getText()); // saan teada mitu seda toodet tellitakse
-							StockItem stockItem = getStockItemByName();
+		items.addItemListener(new ItemListener() {
+			int q;
 
-						if (stockItem != null) {
-							
-							priceField.setText(String.valueOf(stockItem.getPrice()*q));
-							barCodeField.setText(String.valueOf(stockItem.getId()));
-							
-							
-							
-						} else {
-							reset();
-						}}
-						
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED)
+
+				{
+					q = Integer.parseInt(quantityField.getText()); // saan teada
+																	// mitu seda
+																	// toodet
+																	// tellitakse
+					StockItem stockItem = getStockItemByName();
+
+					if (stockItem != null) {
+
+						priceField.setText(String.valueOf(stockItem.getPrice()
+								* q));
+						barCodeField.setText(String.valueOf(stockItem.getId()));
+
+					} else {
+						reset();
 					}
 				}
-		);
 
+			}
+		});
 
 		priceField.setEditable(false);
+		barCodeField.setEditable(false);//
 
 		// == Add components to the panel
 
@@ -172,7 +170,7 @@ public class PurchaseItemPanel extends JPanel {
 		StockItem stockItem = getStockItemByBarCode();
 
 		if (stockItem != null) {
-			
+
 			String priceString = String.valueOf(stockItem.getPrice());
 			priceField.setText(priceString);
 		} else {
@@ -184,7 +182,7 @@ public class PurchaseItemPanel extends JPanel {
 	// to the items field.
 	private StockItem getStockItemByName() {
 		try {
-			
+
 			String name = String.valueOf(items.getSelectedItem());
 			model.getWarehouseTableModel().getTableRows();
 			return model.getWarehouseTableModel().getItemByName(name);
@@ -194,6 +192,7 @@ public class PurchaseItemPanel extends JPanel {
 			return null;
 		}
 	}
+
 	// Search the warehouse for a StockItem with the bar code entered
 	// to the barCode textfield.
 	private StockItem getStockItemByBarCode() {
@@ -206,6 +205,7 @@ public class PurchaseItemPanel extends JPanel {
 			return null;
 		}
 	}
+
 	/**
 	 * Add new item to the cart.
 	 */
@@ -216,28 +216,23 @@ public class PurchaseItemPanel extends JPanel {
 			int quantity;
 			try {
 				quantity = Integer.parseInt(quantityField.getText());
-				
+
 			} catch (NumberFormatException ex) {
 				quantity = 1;
+
 			}
-			
-			if ( quantity>= stockItem.getQuantity()){
+
+			if (quantity > stockItem.getQuantity()) {
+				JOptionPane.showMessageDialog(null, "There isn't enough "
+						+ stockItem.getName() + " in the stock.");
+
+			} else {
 				model.getCurrentPurchaseTableModel().addItem(
-						new SoldItem(stockItem, stockItem.getQuantity()));
-				model.getWarehouseTableModel().removeQuantity(stockItem, quantity);
-				System.out.println("No more items: "+ stockItem.getName());	
-			}else{
-			model.getCurrentPurchaseTableModel().addItem(
-					new SoldItem(stockItem, quantity));
-			model.getWarehouseTableModel().removeQuantity(stockItem, quantity);
+						new SoldItem(stockItem, quantity));
+				model.getWarehouseTableModel().removeQuantity(stockItem,
+						quantity);
 			}
-			// v2hendab laos oleva toote hulka kui seda ostetakse vms.
-			//hetkel tehes oste rohkem kui v6imalik l2heb laoseis miinusesse aga peaks 
-			//tegema nii palju kui v6imalik ja siis edastama teate et rohkem ei ole laos,
-			//if-ga ei 6nnestunud kuskil midagi muuta....
-			
-			
-			
+
 		}
 	}
 
@@ -250,7 +245,7 @@ public class PurchaseItemPanel extends JPanel {
 		this.addItemButton.setEnabled(enabled);
 		this.barCodeField.setEnabled(enabled);
 		this.quantityField.setEnabled(enabled);
-		
+
 	}
 
 	/**

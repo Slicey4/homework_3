@@ -9,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.NoSuchElementException;
@@ -87,8 +86,7 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-		
-		//Combo items 
+		// Combo items
 		JComboBox<String> combo = new JComboBox();
 		combo.addItem("Select one");
 		// System.out.println(model.getWarehouseTableModel().getRowCount());
@@ -223,17 +221,38 @@ public class PurchaseItemPanel extends JPanel {
 			}
 
 			if (quantity > stockItem.getQuantity()) {
+
 				JOptionPane.showMessageDialog(null, "There isn't enough "
 						+ stockItem.getName() + " in the stock.");
 
 			} else {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
+
 				model.getWarehouseTableModel().removeQuantity(stockItem,
 						quantity);
+				// System.out.println(getTotalSumOfTheOrder() );//katse kas
+				// arvutab summa
+
 			}
 
 		}
+	}
+
+	// The total sum of the order
+
+	public double getTotalSumOfTheOrder() {
+		double sum = 0;
+		int row = model.getCurrentPurchaseTableModel().getRowCount();
+		int column = model.getCurrentPurchaseTableModel().getColumnCount() - 1;
+		for (int i = 0; i < row; i++) {
+			double add = (double) model.getCurrentPurchaseTableModel()
+					.getValueAt(i, column);
+			sum += add;
+
+		}
+		return sum;
+
 	}
 
 	/**

@@ -15,6 +15,7 @@
 	<property name="target" value="1.7" />
 	<property name="source" value="1.7" />
 	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 
 
@@ -31,7 +32,7 @@
 	</path>
 
 	<path id="POS.classpath">
-		<pathelement location="${build.dir}" />
+		<pathelement location="${classes.dir}" />
 		<!-- configuration -->
 		<pathelement location="${conf.dir}" />
 		<fileset dir="lib">
@@ -42,9 +43,10 @@
 
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${classes.dir}"/>
 		<javac
             srcdir="${src.dir}"
-            destdir="${build.dir}"
+            destdir="${classes.dir}"
             debug="true"
 			debuglevel="${debuglevel}"
             encoding="utf-8"
@@ -86,14 +88,18 @@
 			<entry key="build.revision.number" type="int" default="0" operation="+" />
 		</propertyfile>
 		<mkdir dir="${jar.dir}" />
-		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${build.dir}">
+		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
+			<zipgroupfileset dir="lib" includes="**/*.jar" />
+			<fileset dir="." includes="*.properties logo.png" />
 		</jar>
+		<!--
 		<copy file="application.properties"  tofile="${jar.dir}/${app.team.name}.jar"/>
 		<copy file="version.properties" tofile="${jar.dir}/${app.team.name}.jar" />
 		<copy file="logo.png"  tofile="${jar.dir}/${app.team.name}.jar"/>
+		-->
 	</target>
 
 

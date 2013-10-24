@@ -68,6 +68,7 @@ public class IntroUI extends JFrame {
 	};
 
 	static Map<String, String> loeFail(String fail) {
+		// IntroUI.class.getClassLoader().getResourceAsStream(fail);
 		Map<String, String> d = new HashMap<String, String>();
 		try {
 			File file = new File(fail);

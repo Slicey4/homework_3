@@ -86,14 +86,15 @@
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
 
 			<zipgroupfileset dir="lib" includes="**/*.jar" />
-			<fileset dir="." includes="*.properties logo.png" />
+			<fileset dir="${basedir}">
+				<include name="*.properties" />
+				<include name="etc/*" />
+			</fileset>
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
-				<!--<attribute name="Class-Path" value=". etc/" />-->
+				<attribute name="Class-Path" value=". etc/" />
 			</manifest>
-
 		</jar>
-
 	</target>
 
 
@@ -135,24 +136,24 @@
 	</target>
 
 	<target name="git_tag">
-			<input message="Homework number" addproperty="n" />
+		<input message="Homework number" addproperty="n" />
 
-			<git command="tag">
-				<args>
-					<arg value="-a" />
-					<arg value="homework_${n}" />
-					<arg value="-m" />
+		<git command="tag">
+			<args>
+				<arg value="-a" />
+				<arg value="homework_${n}" />
+				<arg value="-m" />
 
-					<arg value="Homework ${toString:n}" />
-				</args>
-			</git>
-			<git command="push">
-				<args>
-					<arg value="https://Slicey4:tarkvaratehnika1@github.com/Slicey4/homework_3.git"/>
-					<arg value="--tags" />
-				</args>
-		
-			</git>
-		</target>
+				<arg value="Homework ${toString:n}" />
+			</args>
+		</git>
+		<git command="push">
+			<args>
+				<arg value="https://Slicey4:tarkvaratehnika1@github.com/Slicey4/homework_3.git" />
+				<arg value="--tags" />
+			</args>
+
+		</git>
+	</target>
 
 </project>

@@ -68,11 +68,12 @@ public class IntroUI extends JFrame {
 	};
 
 	static Map<String, String> loeFail(String fail) {
-		// IntroUI.class.getClassLoader().getResourceAsStream(fail);
+		
 		Map<String, String> d = new HashMap<String, String>();
 		try {
 			File file = new File(fail);
-			FileInputStream fileInput = new FileInputStream(file);
+			//FileInputStream fileInput = new FileInputStream(file);
+			InputStream fileInput = IntroUI.class.getClassLoader().getResourceAsStream(fail);
 			Properties properties = new Properties();
 			properties.load(fileInput);
 

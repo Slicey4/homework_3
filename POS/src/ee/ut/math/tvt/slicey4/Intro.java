@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.slicey4;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
@@ -12,7 +14,7 @@ public class Intro {
 private static final Logger log = Logger.getLogger(Intro.class);
 private static final String MODE = "console";
 
-public static void main(String[] args) {
+public static void main(String[] args) throws IOException {
 
 	final SalesDomainController domainController = new SalesDomainControllerImpl();
 

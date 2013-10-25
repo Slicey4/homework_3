@@ -79,6 +79,9 @@
 	<target name="run" depends="build">
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
 		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
+		<jvmarg value="-Xdebug" />
+		<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+		
 	</target>
 
 
@@ -87,6 +90,7 @@
 		<propertyfile file="version.properties" comment="version properties">
 			<entry key="build.revision.number" type="int" default="0" operation="+" />
 		</propertyfile>
+		
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
 			<manifest>
@@ -95,11 +99,7 @@
 			<zipgroupfileset dir="lib" includes="**/*.jar" />
 			<fileset dir="." includes="*.properties logo.png" />
 		</jar>
-		<!--
-		<copy file="application.properties"  tofile="${jar.dir}/${app.team.name}.jar"/>
-		<copy file="version.properties" tofile="${jar.dir}/${app.team.name}.jar" />
-		<copy file="logo.png"  tofile="${jar.dir}/${app.team.name}.jar"/>
-		-->
+		
 	</target>
 
 
@@ -107,12 +107,7 @@
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
 		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
-		<!---
-		<fileset file="application.properties"/>
-		<fileset file="version.properties"/>
-		<fileset file="log4j.properties"/>
-		<fileset file="logo.png"/>
-		-->
+
 	</target>
 
 

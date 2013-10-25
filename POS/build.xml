@@ -68,11 +68,12 @@
 
 
 	<target name="run" depends="build">
-		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
-		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
-		<jvmarg value="-Xdebug" />
-		<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 
+		<!---<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />-->
+		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes">
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+		</java>
 	</target>
 
 
@@ -84,10 +85,13 @@
 
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
-
+			<zipfileset src="lib/log4j-1.2.17.jar" />
+			<zipfileset src="lib/jgoodies-common-1.4.0.jar" />
+			<zipfileset src="lib/jgoodies-looks-2.5.2.jar" />
 			<zipgroupfileset dir="lib" includes="**/*.jar" />
 			<fileset dir="${basedir}">
 				<include name="*.properties" />
+				<include name="logo.png" />
 				<include name="etc/*" />
 			</fileset>
 			<manifest>

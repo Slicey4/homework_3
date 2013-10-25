@@ -1,16 +1,32 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
+
+import com.sun.media.sound.Toolkit;
+
+
 
 
 public class StockTab {
@@ -63,11 +79,33 @@ public class StockTab {
     gc.gridwidth = GridBagConstraints.RELATIVE;
     gc.weightx = 1.0;
     panel.add(addItem, gc);
+   
+    handelerClass handler= new handelerClass();
 
+	addItem.addItemListener(handler);
+    
     panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     return panel;
   }
+  
+ 
+ 
+  private class handelerClass implements ItemListener{
+		public void actionPerformed(ActionEvent event){
+			
+			model.CreateWindow();
+		}
 
+		public void itemStateChanged(ItemEvent event) {
+			if(event.getStateChange() == ItemEvent.SELECTED){
+				model.CreateWindow();
+					    					
+			}
+			
+		}
+		
+		
+	}
 
   // table of the wareshouse stock
   private Component drawStockMainPane() {

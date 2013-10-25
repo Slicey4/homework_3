@@ -1,5 +1,11 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
@@ -54,6 +60,24 @@ public class SalesSystemModel {
 
 	public HistoryTableModel getHistoryTableModel() {
 		return historyTableModel;
+	}
+
+	public void CreateWindow(){
+		JFrame.setDefaultLookAndFeelDecorated(true);
+	    JFrame frame = new JFrame();
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setTitle("JFrame Test");
+	    frame.setLayout(new GridLayout(3, 2));
+	    frame.add(new JLabel("First Name:"));
+	    frame.add(new JTextField());
+	    frame.add(new JLabel("Last Name:"));
+	    frame.add(new JTextField());
+	    frame.add(new JButton("Register"));
+
+	   				    
+	    frame.setSize(200, 100);
+	    frame.setVisible(true);
+		
 	}
 
 }

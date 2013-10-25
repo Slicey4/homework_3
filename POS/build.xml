@@ -84,7 +84,7 @@
 
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
-			
+
 			<zipgroupfileset dir="lib" includes="**/*.jar" />
 			<fileset dir="." includes="*.properties logo.png" />
 			<manifest>
@@ -104,55 +104,23 @@
 
 	</target>
 
-
-	<macrodef name="git">
-		<attribute name="command" />
-		<attribute name="dir" default="" />
-		<element name="args" optional="true" />
-		<sequential>
-			<echo message="git @{command}" />
-			<exec executable="git" dir="@{dir}">
-				<arg value="@{command}" />
-				<args />
-			</exec>
-		</sequential>
-	</macrodef>
-
-	<target name="git_commit">
-		<input message="Commit message" addproperty="commit-message" />
-		<echo message="Commiting all changes with message ${commit-message}" />
-		<git command="add">
-			<args>
-				<arg value="-A" />
-			</args>
-		</git>
-		<git command="commit">
-			<args>
-				<arg value="-m ${commit-message}" />
-			</args>
-		</git>
-
-		<git command="push" />
+	<target name="git_commit" >
+		<input message="Commit message" addproperty="commit.message" />
+		<echo message="Commiting all changes with message ${commit.message}" />
+		<exec executable="git" dir="${basedir}" failifexecutionfails="false" errorproperty="">
+			<arg value="add" />
+			<arg value="-A" />
+		</exec>
+		<exec executable="git" dir="${basedir}" failifexecutionfails="false" errorproperty="">
+			<arg value="commit" />
+			<arg value="-m" />
+			<arg value="${commit.message}" />
+		</exec>
+		<exec executable="git" dir="${basedir}" failifexecutionfails="false" errorproperty="">
+			<arg value="push" />
+		</exec>
 	</target>
 
-	<target name="git_tag">
-		<input message="Homework number" addproperty="n" />
-
-		<git command="tag">
-			<args>
-				<arg value="-a" />
-				<arg value="homework_${n}" />
-				<arg value="-m" />
-
-				<arg value="Homework ${toString:n}" />
-			</args>
-		</git>
-		<git command="push">
-			<args>
-				<arg value="--tags" />
-			</args>
-		</git>
-	</target>
 
 
 </project>

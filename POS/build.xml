@@ -137,8 +137,10 @@
 
 	<target name="git_tag">
 		<input message="Homework number" addproperty="n" />
-
+		<input message="Username:" addproperty="username" />
+		<input message="Password:" addproperty="password" />
 		<git command="tag">
+
 			<args>
 				<arg value="-a" />
 				<arg value="homework_${n}" />
@@ -149,7 +151,7 @@
 		</git>
 		<git command="push">
 			<args>
-				<arg value="https://Slicey4:tarkvaratehnika1@github.com/Slicey4/homework_3.git" />
+				<arg value="https://${username}:${password}@github.com/Slicey4/homework_3.git" />
 				<arg value="--tags" />
 			</args>
 

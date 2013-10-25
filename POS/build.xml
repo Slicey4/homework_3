@@ -148,7 +148,7 @@
 			</git>
 			<git command="push">
 				<args>
-					<arg value="https://Slicey4:tarkvaratehnika1@github.com/homework_3.git"/>
+					<arg value="https://Slicey4:tarkvaratehnika1@github.com/Slicey4/homework_3.git"/>
 					<arg value="--tags" />
 				</args>
 		

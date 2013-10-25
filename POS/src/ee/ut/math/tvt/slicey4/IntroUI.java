@@ -36,7 +36,7 @@ public class IntroUI extends JFrame {
 		setLayout(new GridLayout(0, 2));
 		setSize(950, 400);
 
-		Team_logo = new ImageIcon("logo.png");
+		Team_logo = new ImageIcon(getClass().getClassLoader().getResource("logo.png"));
 
 		Imagelabel = new JLabel(Team_logo);
 

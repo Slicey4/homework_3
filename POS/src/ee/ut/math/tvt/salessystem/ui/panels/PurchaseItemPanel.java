@@ -235,7 +235,6 @@ public class PurchaseItemPanel extends JPanel {
 				// arvutab summa
 
 			}
-
 		}
 	}
 

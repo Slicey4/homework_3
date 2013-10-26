@@ -90,8 +90,8 @@ public class StockTab {
 	addItem.addActionListener(new ActionListener() {
 		
 		public void actionPerformed(ActionEvent e) {
-			CreateWindow uus=new CreateWindow();
-			System.out.println(uus.getName1());
+			new CreateWindow();
+			
 			
 			
 			

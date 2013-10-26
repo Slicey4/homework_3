@@ -2,12 +2,15 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -32,6 +35,8 @@ import com.sun.media.sound.Toolkit;
 public class StockTab {
 
   private JButton addItem;
+  private JLabel name, quantity,price,id;
+  
 
 
   private SalesSystemModel model;
@@ -80,9 +85,15 @@ public class StockTab {
     gc.weightx = 1.0;
     panel.add(addItem, gc);
    
-    handelerClass handler= new handelerClass();
+   
 
-	addItem.addItemListener(handler);
+	addItem.addActionListener(new ActionListener() {
+		
+		public void actionPerformed(ActionEvent e) {
+			new CreateWindow();
+			
+		}
+	});
     
     panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     return panel;
@@ -90,22 +101,6 @@ public class StockTab {
   
  
  
-  private class handelerClass implements ItemListener{
-		public void actionPerformed(ActionEvent event){
-			
-			model.CreateWindow();
-		}
-
-		public void itemStateChanged(ItemEvent event) {
-			if(event.getStateChange() == ItemEvent.SELECTED){
-				model.CreateWindow();
-					    					
-			}
-			
-		}
-		
-		
-	}
 
   // table of the wareshouse stock
   private Component drawStockMainPane() {
@@ -130,5 +125,7 @@ public class StockTab {
     panel.setBorder(BorderFactory.createTitledBorder("Warehouse status"));
     return panel;
   }
+
+
 
 }

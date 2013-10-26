@@ -41,7 +41,9 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 */
 	
 	public void addItem(final StockItem stockItem) {
+		
 		try {
+			
 			StockItem item = getItemById(stockItem.getId());
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
 			log.debug("Found existing item " + stockItem.getName()

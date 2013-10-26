@@ -99,6 +99,8 @@
 				<attribute name="Class-Path" value=". etc/" />
 			</manifest>
 		</jar>
+		<copy file="logo.png" todir="${jar.dir}">
+		</copy>
 	</target>
 
 

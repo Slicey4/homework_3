@@ -10,9 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class CreateWindow {
-	private JFrame newitem=new JFrame("Add new item information");
+	
 	
 	public CreateWindow(){
+		
+		
+		JFrame newitem=new JFrame("Item information");
+		
 		newitem.setSize(300,300);
 		newitem.setVisible(true);
 	}

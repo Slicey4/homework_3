@@ -85,20 +85,24 @@
 
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
+			
 			<zipfileset src="lib/log4j-1.2.17.jar" />
 			<zipfileset src="lib/jgoodies-common-1.4.0.jar" />
 			<zipfileset src="lib/jgoodies-looks-2.5.2.jar" />
 			<zipgroupfileset dir="lib" includes="**/*.jar" />
+			
 			<fileset dir="${basedir}">
 				<include name="*.properties" />
 				<include name="logo.png" />
 				<include name="etc/*" />
 			</fileset>
+		
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 				<attribute name="Class-Path" value=". etc/" />
 			</manifest>
 		</jar>
+		
 		<copy file="logo.png" todir="${jar.dir}">
 		</copy>
 	</target>

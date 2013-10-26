@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ConcurrentModificationException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,13 +16,14 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 public class CreateWindow {
 
-	private JTextField price, quantity, name, description;
+	private JTextField price, quantity, name, description, id;
 	private JButton addok, cancel;
 	private JFrame frame;
 	private String name1, description1;
 	private int quantity1;
 	private JLabel teave;
 	private double price1;
+	private long id1;
 
 	private SalesSystemModel model;
 
@@ -33,10 +35,14 @@ public class CreateWindow {
 
 		frame = new JFrame("New Item");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JPanel panel = new JPanel(new GridLayout(6, 2, 30, 50));
+		JPanel panel = new JPanel(new GridLayout(7, 2, 30, 50));
 		panel.add(new JLabel("Enter name"));
 		name = new JTextField(20);
 		panel.add(name);
+		panel.add(new JLabel("Enter Id"));
+		id = new JTextField(20);
+		panel.add(id);
+
 		panel.add(new JLabel("Enter description"));
 		description = new JTextField(20);
 		panel.add(description);
@@ -81,31 +87,37 @@ public class CreateWindow {
 	}
 
 	protected void AddItemButtonClicked() {
-
-		try {
+		//try {
 			name1 = name.getText();
 
 			teave.setVisible(false);
 			quantity1 = Integer.parseInt(quantity.getText());
 			price1 = (double) Math
 					.round(Double.parseDouble(price.getText()) * 100) / 100;
+			id1=Integer.parseInt(id.getText());
 			long indeks = model.getWarehouseTableModel().getRowCount() + 1;
-
+			model.getWarehouseTableModel()
+			.addItem(
+					new StockItem(id1,name1,description1,price1,quantity1));
+			frame.dispose();
+/*
 			for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
-				// System.out.println(name1);
+				// System.out.println(x);
 				if (x.getName().equals(name1)) {
-					long i = x.getId();
-					int qu = x.getQuantity();
-					model.getWarehouseTableModel().addItem(
-							new StockItem(i, name1, x.getDescription(), x
-									.getPrice(), qu + quantity1));
+					System.out.println(12312);
+
+					model.getWarehouseTableModel()
+							.addItem(
+									new StockItem(x.getId(), x.getName(), x
+											.getDescription(), x.getPrice(),
+											quantity1));
 
 				} else {
 					model.getWarehouseTableModel().addItem(
 							new StockItem(indeks, name1, description1, price1,
 									quantity1));
-					
-					//System.out.println(12);
+
+					// System.out.println(12);
 					frame.dispose();
 				}
 
@@ -120,9 +132,28 @@ public class CreateWindow {
 			e.getMessage();
 
 		} catch (NumberFormatException e) {
+			teave.setVisible(true);
 			System.out.println(e.getCause());
-		}
+		} catch (ConcurrentModificationException e) {
+			e.printStackTrace();
+		}*/
 
+	}
+
+	public JTextField getId() {
+		return id;
+	}
+
+	public void setId(JTextField id) {
+		this.id = id;
+	}
+
+	public long getId1() {
+		return id1;
+	}
+
+	public void setId1(int id1) {
+		this.id1 = id1;
 	}
 
 	public JTextField getPrice() {

@@ -229,8 +229,7 @@ public class PurchaseItemPanel extends JPanel {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
 
-				model.getWarehouseTableModel().removeQuantity(stockItem,
-						quantity);
+				stockItem.setQuantity(stockItem.getQuantity()-quantity);;
 				// System.out.println(getTotalSumOfTheOrder() );//katse kas
 				// arvutab summa
 

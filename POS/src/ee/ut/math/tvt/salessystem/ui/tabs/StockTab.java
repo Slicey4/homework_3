@@ -35,7 +35,7 @@ import com.sun.media.sound.Toolkit;
 public class StockTab {
 
   private JButton addItem;
-  private JLabel name, quantity,price,id;
+  //private JLabel name, quantity,price,id;
   
 
 
@@ -90,7 +90,10 @@ public class StockTab {
 	addItem.addActionListener(new ActionListener() {
 		
 		public void actionPerformed(ActionEvent e) {
-			new CreateWindow();
+			CreateWindow uus=new CreateWindow();
+			System.out.println(uus.getName1());
+			
+			
 			
 		}
 	});

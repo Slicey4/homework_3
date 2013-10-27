@@ -43,7 +43,7 @@ public class CreateConfirmWindow {
 		
 		panel.add(new JLabel("Change Amount: "));
 		ChangeAmount = new JTextField(20);
-		ChangeAmount.setText(ChangeAmount(summa));
+		ChangeAmount.setText(String.valueOf(summa));
 		panel.add(ChangeAmount);
 		
 		
@@ -67,7 +67,7 @@ public class CreateConfirmWindow {
 		panel.add(cancel);
 		JLabel tekst = new JLabel();
 		panel.add(tekst);
-		panel.add(teave);
+		// panel.add(teave);
 		frame.add(panel);
 		frame.setSize(400, 400);
 		frame.setVisible(true);

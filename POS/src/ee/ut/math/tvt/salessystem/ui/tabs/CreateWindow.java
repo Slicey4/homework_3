@@ -96,6 +96,7 @@ public class CreateWindow {
 					.round(Double.parseDouble(price.getText()) * 100) / 100;
 			id1=Integer.parseInt(id.getText());
 			long indeks = model.getWarehouseTableModel().getRowCount() + 1;
+			//model.getWarehouseTableModel().getItemByName(name1);
 			model.getWarehouseTableModel()
 			.addItem(
 					new StockItem(id1,name1,description1,price1,quantity1));

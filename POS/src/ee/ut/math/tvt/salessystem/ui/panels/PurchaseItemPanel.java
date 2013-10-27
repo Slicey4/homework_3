@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
@@ -36,7 +37,7 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
-
+	
 	private JButton addItemButton;
 
 	// Warehouse model
@@ -81,13 +82,14 @@ public class PurchaseItemPanel extends JPanel {
 
 	private JComponent drawDialogPane() {
 
+	
 		// Create the panel
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
 		// Combo items
-		JComboBox<String> combo = new JComboBox();
+		JComboBox<String> combo = new JComboBox<String>();
 		combo.addItem("Select one");
 		// System.out.println(model.getWarehouseTableModel().getRowCount());
 		for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
@@ -252,6 +254,9 @@ public class PurchaseItemPanel extends JPanel {
 		return sum;
 
 	}
+	
+	
+	
 
 	/**
 	 * Sets whether or not this component is enabled.

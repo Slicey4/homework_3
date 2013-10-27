@@ -37,12 +37,10 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
-<<<<<<< HEAD
+
 	private double sum;
 
-=======
-	
->>>>>>> 1e5f57d21f825402d588ab914b8ff47235dcf43a
+
 	private JButton addItemButton;
 
 	// Warehouse model
@@ -244,8 +242,7 @@ public class PurchaseItemPanel extends JPanel {
 		}
 	}
 
-<<<<<<< HEAD
-=======
+
 	// The total sum of the order
 
 	public double getTotalSumOfTheOrder() {
@@ -263,8 +260,6 @@ public class PurchaseItemPanel extends JPanel {
 	}
 	
 	
-	
->>>>>>> 1e5f57d21f825402d588ab914b8ff47235dcf43a
 
 	/**
 	 * Sets whether or not this component is enabled.

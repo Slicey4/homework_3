@@ -62,22 +62,5 @@ public class SalesSystemModel {
 		return historyTableModel;
 	}
 
-	public void CreateWindow(){
-		JFrame.setDefaultLookAndFeelDecorated(true);
-	    JFrame frame = new JFrame();
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setTitle("JFrame Test");
-	    frame.setLayout(new GridLayout(3, 2));
-	    frame.add(new JLabel("First Name:"));
-	    frame.add(new JTextField());
-	    frame.add(new JLabel("Last Name:"));
-	    frame.add(new JTextField());
-	    frame.add(new JButton("Register"));
-
-	   				    
-	    frame.setSize(200, 100);
-	    frame.setVisible(true);
-		
-	}
 
 }

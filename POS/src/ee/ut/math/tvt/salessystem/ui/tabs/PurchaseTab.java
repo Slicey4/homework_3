@@ -106,13 +106,29 @@ public class PurchaseTab {
 
     return b;
   }
+//The total sum of the order
 
+	public double getTotalSumOfTheOrder() {
+		double sum = 0;
+		int row = model.getCurrentPurchaseTableModel().getRowCount();
+		int column = model.getCurrentPurchaseTableModel().getColumnCount() - 1;
+		for (int i = 0; i < row; i++) {
+			double add = (double) model.getCurrentPurchaseTableModel()
+					.getValueAt(i, column);
+			sum += add;
+
+		}
+		return sum;
+
+	}
   // Creates the "Confirm" button
   private JButton createConfirmButton() {
     JButton b = new JButton("Confirm");
     b.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         submitPurchaseButtonClicked();
+       
+       
       }
     });
     b.setEnabled(false);
@@ -171,10 +187,13 @@ public class PurchaseTab {
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
     log.info("Sale complete");
+    double sum=getTotalSumOfTheOrder();
     try {
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
       domainController.submitCurrentPurchase(
           model.getCurrentPurchaseTableModel().getTableRows());
+      
+      new CreateConfirmWindow(sum);
       endSale();
       model.getCurrentPurchaseTableModel().clear();
     } catch (VerificationFailedException e1) {

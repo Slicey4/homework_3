@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -17,7 +18,11 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
@@ -191,14 +196,57 @@ public class PurchaseTab {
   protected void submitPurchaseButtonClicked() {
     log.info("Sale complete");
     double sum=getTotalSumOfTheOrder();
-    try {
-      log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(
-          model.getCurrentPurchaseTableModel().getTableRows());
+    try {    	
+    	log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+    	
+    	// TODO: move confirmpane creation to better place
+    	// confirm options 
+    	Object[] options = {"Accept", "Cancel"};
+    	
+    	JTextField sumField = new JTextField(String.valueOf(sum));
+    	JTextField paidField = new JTextField(); // TODO: add listener for this field
+    	JLabel changeLabel = new JLabel();
+    	
+    	// TODO: use better layout
+    	// TODO: dynamically calculate change
+    	final JComponent[] inputs = new JComponent[] {
+    		new JLabel("Sum"),
+    		sumField,
+    		new JLabel("Paid"),
+    		paidField,
+    		new JLabel("Change"),
+    		changeLabel
+    	};
+    	
+    	int n = JOptionPane.showOptionDialog(
+    		null,
+    		inputs,
+    		"Confirm",
+    		JOptionPane.YES_NO_OPTION,
+    		JOptionPane.QUESTION_MESSAGE,
+    		null, // no icon
+    		options,
+    		options[1]
+    	);
+    	
+      log.info(n);
+      // 0 Accept
+      if(n == 0){
+    	  // TODO: perhaps validate before monetary actions
+          domainController.submitCurrentPurchase(
+        	      model.getCurrentPurchaseTableModel().getTableRows());
+          
+          // actually submit item to history
+          model.getHistoryTableModel().addItem(new HistoryItem(
+        		  model.getCurrentPurchaseTableModel().getTableRows()));
+          
+          endSale();
+          model.getCurrentPurchaseTableModel().clear();
+      } else {
+    	  domainController.cancelCurrentPurchase();
+      }
       
-      new CreateConfirmWindow(sum);
-      endSale();
-      model.getCurrentPurchaseTableModel().clear();
+      log.info(model.getHistoryTableModel());
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
     }

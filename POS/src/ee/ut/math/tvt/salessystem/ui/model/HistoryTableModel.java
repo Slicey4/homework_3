@@ -1,61 +1,53 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
-
-import ee.ut.math.tvt.salessystem.domain.data.DisplayableItem;
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
-public class HistoryTableModel extends SalesSystemTableModel {
+public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(HistoryTableModel.class);
 
 	public HistoryTableModel() {
 		super(new String[] { "Date", "Time", "Price" });
 	}
 	
-		
-
-	
-	 public void addDate(final Date d) {
-	  
-	        
-	        rows.add(0, d);
-	        log.debug("Added date ");
-	        fireTableDataChanged();
-	    }
-	 public void addTime(final long time) {
-	     
-	        
-	        rows.add(1, time);
-	        log.debug("Added time: " + time);
-	        fireTableDataChanged();
-	    }
-	 
-	 public void addPrice(final double summa) {
-
-		 	
-	        rows.add(2, summa);
-//	        rows.add(item);
-	        log.debug("Added ");
-	        fireTableDataChanged();
-	    }
+	public void addItem(HistoryItem item) {
+		rows.add(item);
+		fireTableDataChanged();
+	}
 
 
 	@Override
-	protected Object getColumnValue(DisplayableItem item, int columnIndex) {
+	public Object getColumnValue(HistoryItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return item.getId();
+			return item.getDate();
 		case 1:
-			return item.getName();
+			return item.getTime();
 		case 2:
-			
-	
+			return item.getPrice();
 		}
 		throw new IllegalArgumentException("Column index out of range");
+	}
+	
+	@Override
+	public String toString() {
+		final StringBuffer buffer = new StringBuffer();
+
+		for (int i = 0; i < headers.length; i++)
+			buffer.append(headers[i] + "\t");
+		buffer.append("\n");
+
+		for (final HistoryItem historyItem : rows) {
+			buffer.append(historyItem.getId() + "\t");
+			buffer.append(historyItem.getName() + "\t");
+			buffer.append(historyItem.getPrice() + "\t");
+			buffer.append("\n");
+		}
+
+		return buffer.toString();
 	}
 }

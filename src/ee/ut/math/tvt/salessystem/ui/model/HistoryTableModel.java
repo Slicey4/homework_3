@@ -2,7 +2,6 @@ package ee.ut.math.tvt.salessystem.ui.model;
 
 import org.apache.log4j.Logger;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 
@@ -11,7 +10,7 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	private static final Logger log = Logger.getLogger(HistoryTableModel.class);
 
 	public HistoryTableModel() {
-		super(new String[] { "Date", "Time", "Price" });
+		super(new String[] { "Date & Time", "Price" });
 	}
 	
 	public void addItem(HistoryItem item) {
@@ -26,9 +25,8 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 		case 0:
 			return item.getDate();
 		case 1:
-			return item.getTime();
-		case 2:
 			return item.getPrice();
+
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}

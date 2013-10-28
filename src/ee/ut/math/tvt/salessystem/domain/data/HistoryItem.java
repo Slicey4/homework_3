@@ -9,7 +9,7 @@ import java.util.List;
 
 // Implements fake DisplayItem
 public class HistoryItem implements Cloneable, DisplayableItem {
-    private String date;
+    private Date date;
     private long time;
     private double price;
     private List<SoldItem> goods;
@@ -17,9 +17,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     
     public HistoryItem(List<SoldItem> goods) {
     	Calendar a = new GregorianCalendar();
-    	DateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd");
-    	Date today = new Date();
-        this.date = formatter.format(today);
+        this.date = a.getTime();
         this.time = a.getTimeInMillis();
         price = 0.0;
    
@@ -31,11 +29,11 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     	this.goods = goods;
     }
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
+
 // Implements fake DisplayItem
 public class HistoryItem implements Cloneable, DisplayableItem {
     private Date date;
@@ -27,6 +29,8 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     	}
     	
     	this.goods = goods;
+    	
+    	
     }
 
 	public Date getDate() {

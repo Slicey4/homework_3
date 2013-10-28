@@ -11,6 +11,7 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 
 	public HistoryTableModel() {
 		super(new String[] { "Date & Time", "Price" });
+		
 	}
 	
 	public void addItem(HistoryItem item) {

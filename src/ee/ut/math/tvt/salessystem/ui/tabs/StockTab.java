@@ -15,7 +15,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
@@ -31,21 +30,25 @@ import javax.swing.table.JTableHeader;
 
 import org.apache.log4j.Logger;
 
-
 public class StockTab {
-	
+
 	private static final Logger log = Logger.getLogger(StockTab.class);
 
 	private JButton addItem;
 	// private JLabel name, quantity,price,id;
 
 	private SalesSystemModel model;
-	
+
 	private String name, description;
 	private int quantity;
 	private JLabel teave;
 	private double price;
 	private long id;
+	private JTextField nameField;
+	private JTextField idField;
+	private JTextField descField;
+	private JTextField quantityField;
+	private JTextField priceField;
 
 	public StockTab(SalesSystemModel model) {
 		this.model = model;
@@ -73,88 +76,73 @@ public class StockTab {
 		panel.add(drawStockMainPane(), gc);
 		return panel;
 	}
-	
-	  protected final void CreateAddWindow() {
-		    try {            
-		            log.debug("Add new stick item:\n" + model.getWarehouseTableModel());
 
-		            Object[] options = {"Add item", "Cancel"};
-		            
-		            JTextField nameField = new JTextField();
-		            JTextField idField = new JTextField();
-		            JTextField descField = new JTextField();
-		            JTextField quantityField = new JTextField();
-		            JTextField priceField = new JTextField();
-		            
-		            final JComponent[] inputs = new JComponent[] {
-		                    new JLabel("Product name"),
-		                    nameField,
-		                    new JLabel("Product id"),
-		                    idField,
-		                    new JLabel("Product description"),
-		                    descField,
-		                    new JLabel("Product quantity"),
-		                    quantityField,
-		                    new JLabel("Product price"),
-		                    priceField,
-		                    
-		            };
-		            
-		            int n = JOptionPane.showOptionDialog(
-		                    null,
-		                    inputs,
-		                    "Add item",
-		                    JOptionPane.YES_NO_OPTION,
-		                    JOptionPane.QUESTION_MESSAGE,
-		                    null, // no icon
-		                    options,
-		                    options[1]
-		            );
-		            
-		      log.info(n);
-		      // 0 Accept
-		      if(n == 0){
-		    	  try {
-		  			name = nameField.getText();
-		  			teave.setVisible(false);
-		  			
-		  			quantity = Integer.parseInt(quantityField.getText());
-		  			price = (double) Math
-		  					.round(Double.parseDouble(priceField.getText()) * 100) / 100;
-		  			id = Integer.parseInt(idField.getText());
-		  			long indeks = model.getWarehouseTableModel().getRowCount() + 1;
-		  			//model.getWarehouseTableModel().getItemByName(name1);
-		  			model.getWarehouseTableModel()
-		  			.addItem(
-		  					new StockItem(id,name,description,price,quantity));
-		  			//frame.dispose();
+	protected final void CreateAddWindow() {
+		try {
+			log.debug("Add new stick item:\n" + model.getWarehouseTableModel());
 
+			Object[] options = { "Add item", "Cancel" };
 
-		  		} catch (NullPointerException e) {
-		  			teave.setVisible(true);
-		  			e.getMessage();
+			nameField = new JTextField();
+			idField = new JTextField();
+			descField = new JTextField();
+			quantityField = new JTextField();
+			priceField = new JTextField();
 
-		  		} catch (NumberFormatException e) {
-		  			teave.setVisible(true);
-		  			System.out.println(e.getCause());
-		  		} catch (ConcurrentModificationException e) {
-		  			e.printStackTrace();
-		  		}
-         
-		          // actually submit item to history
-		          model.getWarehouseTableModel().addItem(new StockItem());
-		          //model.getCurrentPurchaseTableModel().clear();
-		      } else {
-		    	  drawStockMenuPane();   
-		      }
-		      } catch (NullPointerException e) {
-		  			teave.setVisible(true);
-		  			e.getMessage();
+			final JComponent[] inputs = new JComponent[] {
+					new JLabel("Product name"), nameField,
+					new JLabel("Product id"), idField,
+					new JLabel("Product description"), descField,
+					new JLabel("Product quantity"), quantityField,
+					new JLabel("Product price"), priceField,
 
-		  		}
-		     
-	          
-	  }
+			};
+
+			int n = JOptionPane.showOptionDialog(null, inputs, "Add item",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+					null, // no icon
+					options, options[1]);
+
+			log.info(n);
+			// 0 Accept
+			if (n == 0) {
+				try {
+
+					quantity = Integer.parseInt(quantityField.getText());
+					price = (double) Math.round(Double.parseDouble(priceField
+							.getText()) * 100) / 100;
+					id = Integer.parseInt(idField.getText());
+					long indeks = model.getWarehouseTableModel().getRowCount() + 1;
+					// model.getWarehouseTableModel().getItemByName(name1);
+					model.getWarehouseTableModel().addItem(
+							new StockItem(id, nameField.getText(), descField
+									.getText(), price, quantity));
+					// frame.dispose();
+
+				} catch (NullPointerException e) {
+
+					e.getMessage();
+
+				} catch (NumberFormatException e) {
+
+					System.out.println(e.getCause());
+				} catch (ConcurrentModificationException e) {
+					e.printStackTrace();
+				}
+
+				// actually submit item to history
+				model.getWarehouseTableModel().addItem(new StockItem());
+				// model.getCurrentPurchaseTableModel().clear();
+			} else {
+				drawStockMenuPane();
+			}
+		} catch (NullPointerException e) {
+			
+			e.getMessage();
+
+		}
+
+	}
 
 	// warehouse menu
 	private Component drawStockMenuPane() {

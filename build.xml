@@ -40,7 +40,7 @@
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
-		<copy file="${basedir}/log4j.properties" todir="${classes.dir}" overwrite="true"/>
+		<copy file="${basedir}/src/log4j.properties" todir="${classes.dir}" overwrite="true"/>
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" debuglevel="${debuglevel}" encoding="utf-8" compiler="modern" target="${target}" source="${source}" includeantruntime="false">
 			<classpath refid="compile.classpath" />
 		</javac>

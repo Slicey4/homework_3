@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
+
+
 <project basedir="." name="POS">
 	<property name="main-class" value="ee.ut.math.tvt.slicey4.Intro" />
 	<property environment="env" />
@@ -34,7 +31,6 @@
 	<path id="POS.classpath">
 		<pathelement location="${classes.dir}" />
 		<!-- configuration -->
-		<pathelement location="${conf.dir}" />
 		<fileset dir="lib">
 			<include name="*.jar" />
 		</fileset>
@@ -44,21 +40,10 @@
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
+		<copy file="${basedir}/log4j.properties" todir="${classes.dir}" overwrite="true"/>
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" debuglevel="${debuglevel}" encoding="utf-8" compiler="modern" target="${target}" source="${source}" includeantruntime="false">
 			<classpath refid="compile.classpath" />
 		</javac>
-	</target>
-
-
-
-
-	<target name="init">
-		<mkdir dir="${build.dir}" />
-		<copy includeemptydirs="false" todir="${build.dir}">
-			<fileset dir="src">
-				<exclude name="**/*.java" />
-			</fileset>
-		</copy>
 	</target>
 
 
@@ -69,7 +54,6 @@
 
 	<target name="run" depends="build">
 
-		<!---<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />-->
 		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes">
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
@@ -85,24 +69,17 @@
 
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${app.team.name}.jar" basedir="${classes.dir}">
-			
-			<zipfileset src="lib/log4j-1.2.17.jar" />
-			<zipfileset src="lib/jgoodies-common-1.4.0.jar" />
-			<zipfileset src="lib/jgoodies-looks-2.5.2.jar" />
+
+
 			<zipgroupfileset dir="lib" includes="**/*.jar" />
-			
-			<fileset dir="${basedir}">
-				<include name="*.properties" />
-				<include name="logo.png" />
-				<include name="etc/*" />
-			</fileset>
-		
+
+			<fileset dir="${basedir}" includes="*.properties logo.png" />
+
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
-				<attribute name="Class-Path" value=". etc/" />
 			</manifest>
 		</jar>
-		
+
 		<copy file="logo.png" todir="${jar.dir}">
 		</copy>
 	</target>

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "Point-of-sale" in the menu).
  */
-public class PurchaseTab implements PropertyChangeListener {
+public class PurchaseTab extends JDialog implements PropertyChangeListener {
 
         private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
@@ -53,9 +54,9 @@ public class PurchaseTab implements PropertyChangeListener {
         
         private double sum;
         private double changeAmount;
-        JFormattedTextField sumField;
-        JFormattedTextField paidField;
-        JFormattedTextField changeField;
+        private JFormattedTextField sumField;
+        private JFormattedTextField paidField;
+        private JFormattedTextField changeField;
         
         
 
@@ -209,8 +210,6 @@ public class PurchaseTab implements PropertyChangeListener {
       	    try {            
       	            log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
       	            
-      	            // TODO: move confirmpane creation to better place
-      	            // confirm options 
       	            Object[] options = {"Accept", "Cancel"};
       	            
       	            NumberFormat amountFormat = NumberFormat.getNumberInstance();
@@ -231,8 +230,7 @@ public class PurchaseTab implements PropertyChangeListener {
       	            changeField.setEditable(false);
       	            
       	            changeAmount = ((Number)paidField.getValue()).doubleValue() - sum;
-      	            // TODO: use better layout
-      	            // TODO: dynamically calculate change
+
       	            final JComponent[] inputs = new JComponent[] {
       	                    new JLabel("Sum"),
       	                    sumField,
@@ -256,19 +254,34 @@ public class PurchaseTab implements PropertyChangeListener {
       	      log.info(n);
       	      // 0 Accept
       	      if(n == 0){
-      	    	  if (((Number)paidField.getValue()).doubleValue() >= 0) {
-      	              // TODO: perhaps validate before monetary actions
-      	          domainController.submitCurrentPurchase(
-      	                      model.getCurrentPurchaseTableModel().getTableRows());
-      	          
-      	          // actually submit item to history
-      	          model.getHistoryTableModel().addItem(new HistoryItem(
-      	                          model.getCurrentPurchaseTableModel().getTableRows()));
-      	          endSale();
-      	          model.getCurrentPurchaseTableModel().clear();
+      	    	  changeAmount = ((Number)paidField.getValue()).doubleValue() - sum;
+      	    	  if (((Number)paidField.getValue()).doubleValue() <= sum) {
+      	    		JOptionPane.showMessageDialog(this,
+                            "Need more money!",
+                            "Try again",
+                            JOptionPane.ERROR_MESSAGE);
+      	    		
+      	    		changeField.setValue(new Double(0.0));
+      	    		domainController.cancelCurrentPurchase();
+                    dispose();
+                    
+      	    		
       	    	  }
+      	    	  else{
+    	              
+	      	          domainController.submitCurrentPurchase(
+	      	                      model.getCurrentPurchaseTableModel().getTableRows());
+	      	          
+	      	          // actually submit item to history
+	      	          model.getHistoryTableModel().addItem(new HistoryItem(
+	      	                          model.getCurrentPurchaseTableModel().getTableRows()));
+	      	          endSale();
+	      	          model.getCurrentPurchaseTableModel().clear();
+	      	    		  
+      	      }
       	      } else {
-      	              domainController.cancelCurrentPurchase();
+      	    	  //log.info(n);
+      	          domainController.cancelCurrentPurchase();
       	      }
       	      } catch (VerificationFailedException e1) {
       	          log.error(e1.getMessage());

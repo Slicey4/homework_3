@@ -193,64 +193,70 @@ public class PurchaseTab {
         }
 
   /** Event handler for the <code>submit purchase</code> event. */
-  protected void submitPurchaseButtonClicked() {
-    log.info("Sale complete");
-    double sum=getTotalSumOfTheOrder();
-    try {            
-            log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-            
-            // TODO: move confirmpane creation to better place
-            // confirm options 
-            Object[] options = {"Accept", "Cancel"};
-            
-            JTextField sumField = new JTextField(String.valueOf(sum));
-            JTextField paidField = new JTextField(); // TODO: add listener for this field
-            JLabel changeLabel = new JLabel();
-            
-            // TODO: use better layout
-            // TODO: dynamically calculate change
-            final JComponent[] inputs = new JComponent[] {
-                    new JLabel("Sum"),
-                    sumField,
-                    new JLabel("Paid"),
-                    paidField,
-                    new JLabel("Change"),
-                    changeLabel
-            };
-            
-            int n = JOptionPane.showOptionDialog(
-                    null,
-                    inputs,
-                    "Confirm",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, // no icon
-                    options,
-                    options[1]
-            );
-            
-      log.info(n);
-      // 0 Accept
-      if(n == 0){
-              // TODO: perhaps validate before monetary actions
-          domainController.submitCurrentPurchase(
-                      model.getCurrentPurchaseTableModel().getTableRows());
-          
-          // actually submit item to history
-          model.getHistoryTableModel().addItem(new HistoryItem(
-                          model.getCurrentPurchaseTableModel().getTableRows()));
-          
-          endSale();
-          model.getCurrentPurchaseTableModel().clear();
-      } else {
-              domainController.cancelCurrentPurchase();
-      }
-      
-      log.info(model.getHistoryTableModel());
-    } catch (VerificationFailedException e1) {
-      log.error(e1.getMessage());
-    }
-  }
+        protected final void CreateConfirmWindow (){
+      	  double sum=getTotalSumOfTheOrder();
+      	    try {            
+      	            log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+      	            
+      	            // TODO: move confirmpane creation to better place
+      	            // confirm options 
+      	            Object[] options = {"Accept", "Cancel"};
+      	            
+      	            JTextField sumField = new JTextField(String.valueOf(sum));
+      	            JTextField paidField = new JTextField(); // TODO: add listener for this field
+      	            
+      	            JLabel changeLabel = new JLabel("0.0");
+      	            
+      	            // TODO: use better layout
+      	            // TODO: dynamically calculate change
+      	            final JComponent[] inputs = new JComponent[] {
+      	                    new JLabel("Sum"),
+      	                    sumField,
+      	                    new JLabel("Paid"),
+      	                    paidField,
+      	                    new JLabel("Change"),
+      	                    changeLabel
+      	            };
+      	            
+      	            int n = JOptionPane.showOptionDialog(
+      	                    null,
+      	                    inputs,
+      	                    "Confirm",
+      	                    JOptionPane.YES_NO_OPTION,
+      	                    JOptionPane.QUESTION_MESSAGE,
+      	                    null, // no icon
+      	                    options,
+      	                    options[1]
+      	            );
+      	            
+      	      log.info(n);
+      	      // 0 Accept
+      	      if(n == 0){
+      	              // TODO: perhaps validate before monetary actions
+      	          domainController.submitCurrentPurchase(
+      	                      model.getCurrentPurchaseTableModel().getTableRows());
+      	          
+      	          // actually submit item to history
+      	          model.getHistoryTableModel().addItem(new HistoryItem(
+      	                          model.getCurrentPurchaseTableModel().getTableRows()));
+      	          endSale();
+      	          model.getCurrentPurchaseTableModel().clear();
+      	      } else {
+      	              domainController.cancelCurrentPurchase();
+      	      }
+      	      } catch (VerificationFailedException e1) {
+      	          log.error(e1.getMessage());
+      	      }
+                
+        }
+        
+
+        /** Event handler for the <code>submit purchase</code> event. */
+        protected void submitPurchaseButtonClicked() {
+          log.info("Sale complete");
+          CreateConfirmWindow ();
+                
+        }
 
 
   /* === Helper methods that bring the whole purchase-tab to a certain state

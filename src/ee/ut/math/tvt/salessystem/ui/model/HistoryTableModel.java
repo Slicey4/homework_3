@@ -16,6 +16,7 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	
 	public void addItem(HistoryItem item) {
 		rows.add(item);
+		
 		fireTableDataChanged();
 	}
 
@@ -49,4 +50,5 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 
 		return buffer.toString();
 	}
+	
 }

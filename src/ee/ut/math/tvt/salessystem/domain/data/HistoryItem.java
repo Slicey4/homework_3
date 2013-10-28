@@ -31,6 +31,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     	this.goods = goods;
     	
     	
+    	
     }
 
 	public Date getDate() {

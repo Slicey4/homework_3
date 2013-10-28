@@ -224,10 +224,10 @@ public class PurchaseTab implements PropertyChangeListener {
       	            paidField.setColumns(10);
       	            paidField.addPropertyChangeListener("value", this);
       	            
-      	            double changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
+      	            //double changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
       	            
       	            changeField = new JFormattedTextField(amountFormat);
-      	            changeField.setValue(new Double(changeAmount));
+      	            changeField.setValue(new Double(0.0));
       	            changeField.setColumns(10);
       	            changeField.setEditable(false);
       	            

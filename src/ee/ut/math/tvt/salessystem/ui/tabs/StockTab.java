@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
 
 import javax.swing.table.JTableHeader;
 
@@ -47,14 +47,25 @@ public class StockTab {
 	private double price;
 	private long id;
 	
+<<<<<<< Updated upstream
 	private JTextField nameField;
 	private JFormattedTextField idField;
 	private JTextField descField;
+=======
+	private JFormattedTextField nameField;
+	private JFormattedTextField idField;
+	private JFormattedTextField descField;
+>>>>>>> Stashed changes
 	private JFormattedTextField quantityField;
 	private JFormattedTextField priceField;
 	
     private NumberFormat intFormat;
     private NumberFormat numFormat;
+<<<<<<< Updated upstream
+=======
+	
+	
+>>>>>>> Stashed changes
 
 	public StockTab(SalesSystemModel model) {
 		this.model = model;
@@ -82,6 +93,7 @@ public class StockTab {
 		panel.add(drawStockMainPane(), gc);
 		return panel;
 	}
+<<<<<<< Updated upstream
 
 	protected final void CreateAddWindow() {
 		try {
@@ -157,6 +169,98 @@ public class StockTab {
 		}
 
 	}
+=======
+	
+	  protected final void CreateAddWindow() {
+		    try {            
+		            log.debug("Add new stick item:\n" + model.getWarehouseTableModel());
+
+		            Object[] options = {"Add item", "Cancel"};
+		            
+		            intFormat = NumberFormat.getIntegerInstance();
+		            numFormat = NumberFormat.getNumberInstance();
+		            
+		            nameField = new JFormattedTextField();
+		            nameField.setValue(new String());
+		            idField = new JFormattedTextField(intFormat);
+		            //idField.setValue(new Integer(""));
+		            descField = new JFormattedTextField();
+		            descField.setValue(new String());
+		            quantityField = new JFormattedTextField(intFormat);
+		            //quantityField.setValue(new Integer(""));
+		            priceField = new JFormattedTextField(numFormat);
+		            //priceField.setValue(new Long(""));
+		            
+		            final JComponent[] inputs = new JComponent[] {
+		                    new JLabel("Product name"),
+		                    nameField,
+		                    new JLabel("Product id"),
+		                    idField,
+		                    new JLabel("Product description"),
+		                    descField,
+		                    new JLabel("Product quantity"),
+		                    quantityField,
+		                    new JLabel("Product price"),
+		                    priceField,
+		                    
+		            };
+		            
+		            int n = JOptionPane.showOptionDialog(
+		                    null,
+		                    inputs,
+		                    "Add item",
+		                    JOptionPane.YES_NO_OPTION,
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null, // no icon
+		                    options,
+		                    options[1]
+		            );
+		            
+		      log.info(n);
+		      // 0 Accept
+		      if(n == 0){
+		    	  try {
+		  			name = nameField.getText();
+		  			teave.setVisible(false);
+		  			
+		  			quantity = Integer.parseInt(quantityField.getText());
+		  			price = (double) Math
+		  					.round(Double.parseDouble(priceField.getText()) * 100) / 100;
+		  			id = Integer.parseInt(idField.getText());
+		  			long indeks = model.getWarehouseTableModel().getRowCount() + 1;
+		  			//model.getWarehouseTableModel().getItemByName(name1);
+		  			model.getWarehouseTableModel()
+		  			.addItem(
+		  					new StockItem(id,name,description,price,quantity));
+		  			//frame.dispose();
+
+
+		  		} catch (NullPointerException e) {
+		  			teave.setVisible(true);
+		  			e.getMessage();
+
+		  		} catch (NumberFormatException e) {
+		  			teave.setVisible(true);
+		  			System.out.println(e.getCause());
+		  		} catch (ConcurrentModificationException e) {
+		  			e.printStackTrace();
+		  		}
+         
+		          // actually submit item to history
+		          model.getWarehouseTableModel().addItem(new StockItem());
+		          //model.getCurrentPurchaseTableModel().clear();
+		      } else {
+		    	  drawStockMenuPane();   
+		      }
+		      } catch (NullPointerException e) {
+		  			teave.setVisible(true);
+		  			e.getMessage();
+
+		  		}
+		     
+	          
+	  }
+>>>>>>> Stashed changes
 
 	// warehouse menu
 	private Component drawStockMenuPane() {

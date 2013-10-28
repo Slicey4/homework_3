@@ -14,11 +14,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +34,7 @@ import org.apache.log4j.Logger;
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "Point-of-sale" in the menu).
  */
-public class PurchaseTab {
+public class PurchaseTab implements PropertyChangeListener {
 
         private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
@@ -46,6 +50,13 @@ public class PurchaseTab {
 
         private SalesSystemModel model;
         private ArrayList<Integer> quantities;
+        
+        double sum;
+        JFormattedTextField sumField;
+        JFormattedTextField paidField;
+        JFormattedTextField changeField;
+        
+        
 
         public PurchaseTab(SalesDomainController controller, SalesSystemModel model) {
                 this.domainController = controller;
@@ -192,9 +203,8 @@ public class PurchaseTab {
                 }
         }
 
-  /** Event handler for the <code>submit purchase</code> event. */
         protected final void CreateConfirmWindow (){
-      	  double sum=getTotalSumOfTheOrder();
+      	    sum=getTotalSumOfTheOrder();
       	    try {            
       	            log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
       	            
@@ -202,10 +212,25 @@ public class PurchaseTab {
       	            // confirm options 
       	            Object[] options = {"Accept", "Cancel"};
       	            
-      	            JTextField sumField = new JTextField(String.valueOf(sum));
-      	            JTextField paidField = new JTextField(); // TODO: add listener for this field
+      	            NumberFormat amountFormat = NumberFormat.getNumberInstance();
       	            
-      	            JLabel changeLabel = new JLabel("0.0");
+      	            sumField = new JFormattedTextField(amountFormat);
+      	            sumField.setValue(new Double(sum));
+      	            sumField.setColumns(10);
+      	            sumField.setEditable(false);
+      	            
+      	            paidField = new JFormattedTextField(amountFormat); 
+      	            paidField.setValue(new Double(0.0));
+      	            paidField.setColumns(10);
+      	            paidField.addPropertyChangeListener("value", this);
+      	            
+      	            double changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
+      	            
+      	            changeField = new JFormattedTextField(amountFormat);
+      	            changeField.setValue(new Double(changeAmount));
+      	            changeField.setColumns(10);
+      	            changeField.setEditable(false);
+      	            
       	            
       	            // TODO: use better layout
       	            // TODO: dynamically calculate change
@@ -215,7 +240,7 @@ public class PurchaseTab {
       	                    new JLabel("Paid"),
       	                    paidField,
       	                    new JLabel("Change"),
-      	                    changeLabel
+      	                    changeField
       	            };
       	            
       	            int n = JOptionPane.showOptionDialog(
@@ -223,8 +248,8 @@ public class PurchaseTab {
       	                    inputs,
       	                    "Confirm",
       	                    JOptionPane.YES_NO_OPTION,
-      	                    JOptionPane.QUESTION_MESSAGE,
-      	                    null, // no icon
+      	                    JOptionPane.PLAIN_MESSAGE,
+      	                    null,
       	                    options,
       	                    options[1]
       	            );
@@ -248,6 +273,12 @@ public class PurchaseTab {
       	          log.error(e1.getMessage());
       	      }
                 
+        }
+        
+        public void propertyChange(PropertyChangeEvent e) {
+            double sum=getTotalSumOfTheOrder();
+            double changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
+            changeField.setValue(new Double(changeAmount));
         }
         
 
@@ -345,6 +376,7 @@ public class PurchaseTab {
 
     return gc;
   }
+
         
 
 

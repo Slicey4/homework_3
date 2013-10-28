@@ -51,7 +51,8 @@ public class PurchaseTab implements PropertyChangeListener {
         private SalesSystemModel model;
         private ArrayList<Integer> quantities;
         
-        double sum;
+        private double sum;
+        private double changeAmount;
         JFormattedTextField sumField;
         JFormattedTextField paidField;
         JFormattedTextField changeField;
@@ -224,14 +225,12 @@ public class PurchaseTab implements PropertyChangeListener {
       	            paidField.setColumns(10);
       	            paidField.addPropertyChangeListener("value", this);
       	            
-      	            //double changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
-      	            
       	            changeField = new JFormattedTextField(amountFormat);
       	            changeField.setValue(new Double(0.0));
       	            changeField.setColumns(10);
       	            changeField.setEditable(false);
       	            
-      	            
+      	            changeAmount = ((Number)paidField.getValue()).doubleValue() - sum;
       	            // TODO: use better layout
       	            // TODO: dynamically calculate change
       	            final JComponent[] inputs = new JComponent[] {
@@ -257,6 +256,7 @@ public class PurchaseTab implements PropertyChangeListener {
       	      log.info(n);
       	      // 0 Accept
       	      if(n == 0){
+      	    	  if (((Number)paidField.getValue()).doubleValue() >= 0) {
       	              // TODO: perhaps validate before monetary actions
       	          domainController.submitCurrentPurchase(
       	                      model.getCurrentPurchaseTableModel().getTableRows());
@@ -266,6 +266,7 @@ public class PurchaseTab implements PropertyChangeListener {
       	                          model.getCurrentPurchaseTableModel().getTableRows()));
       	          endSale();
       	          model.getCurrentPurchaseTableModel().clear();
+      	    	  }
       	      } else {
       	              domainController.cancelCurrentPurchase();
       	      }
@@ -277,7 +278,7 @@ public class PurchaseTab implements PropertyChangeListener {
         
         public void propertyChange(PropertyChangeEvent e) {
             double sum=getTotalSumOfTheOrder();
-            double changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
+            changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
             changeField.setValue(new Double(changeAmount));
         }
         

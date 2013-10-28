@@ -52,7 +52,7 @@ public class CreateWindow {
 		panel.add(new JLabel("Enter price"));
 		price = new JTextField(20);
 		panel.add(price);
-		String error = ("<html><p>The input was incorrect. Please enter numbers in price and quantity and item name in name field.</p></html>");
+		String error = ("<html><p>The input was incorrect.</p></html>");
 		teave = new JLabel(error);
 		teave.setVisible(false);
 
@@ -87,7 +87,7 @@ public class CreateWindow {
 	}
 
 	protected void AddItemButtonClicked() {
-		//try {
+		try {
 			name1 = name.getText();
 
 			teave.setVisible(false);
@@ -101,32 +101,9 @@ public class CreateWindow {
 			.addItem(
 					new StockItem(id1,name1,description1,price1,quantity1));
 			frame.dispose();
-/*
-			for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
-				// System.out.println(x);
-				if (x.getName().equals(name1)) {
-					System.out.println(12312);
 
-					model.getWarehouseTableModel()
-							.addItem(
-									new StockItem(x.getId(), x.getName(), x
-											.getDescription(), x.getPrice(),
-											quantity1));
+			
 
-				} else {
-					model.getWarehouseTableModel().addItem(
-							new StockItem(indeks, name1, description1, price1,
-									quantity1));
-
-					// System.out.println(12);
-					frame.dispose();
-				}
-
-			}
-			if (name1.length() == 0) {
-				teave.setVisible(true);
-
-			}
 
 		} catch (NullPointerException e) {
 			teave.setVisible(true);
@@ -137,7 +114,7 @@ public class CreateWindow {
 			System.out.println(e.getCause());
 		} catch (ConcurrentModificationException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 	}
 

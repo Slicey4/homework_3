@@ -8,5 +8,7 @@
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate"/>
 	<classpathentry kind="src" path="/lab3-demo"/>
+	<classpathentry kind="lib" path="/lab5-demo/lib/hibernate/hibernate-ehcache-4.1.7.Final.jar"/>
+	<classpathentry kind="lib" path="/lab5-demo/lib/hibernate/hibernate-core-4.1.7.Final.jar" sourcepath="D:/Development/Maven/repository/org/hibernate/hibernate-core/4.1.7.Final/hibernate-core-4.1.7.Final-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

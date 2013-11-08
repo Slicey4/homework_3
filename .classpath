@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate"/>
+	<classpathentry kind="src" path="/lab3-demo"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

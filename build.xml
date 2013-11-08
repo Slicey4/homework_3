@@ -15,6 +15,15 @@
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 
+	<property name="lib.dir" value="${basedir}/lib" />
+
+	<!-- database variables -->
+	<property name="data.dir" value="${basedir}/data" />
+	<property name="db.file" value="${data.dir}/POSdb" />
+	<property name="db.alias" value="POS" />
+	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS" />
+	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate" />
+
 
 	<path id="properties">
 		<dirset dir="." />
@@ -36,11 +45,33 @@
 		</fileset>
 	</path>
 
+	<path id="run.classpath">
+		<pathelement location="${build.classes.dir}" />
+		<!-- configuration -->
+		<pathelement location="${conf.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+
+		<fileset dir="${lib.hibernate.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.hibernate.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
 
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
-		<copy file="${basedir}/src/log4j.properties" todir="${classes.dir}" overwrite="true"/>
+		<copy file="${basedir}/src/log4j.properties" todir="${classes.dir}" overwrite="true" />
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" debuglevel="${debuglevel}" encoding="utf-8" compiler="modern" target="${target}" source="${source}" includeantruntime="false">
 			<classpath refid="compile.classpath" />
 		</javac>
@@ -79,7 +110,6 @@
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
 		</jar>
-
 		<copy file="logo.png" todir="${jar.dir}">
 		</copy>
 	</target>
@@ -144,5 +174,26 @@
 
 		</git>
 	</target>
+
+	<target name="dbmanager" description="Start the HSQLDB manager">
+	        <java
+	            classname="org.hsqldb.util.DatabaseManagerSwing"
+	            classpathref="run.classpath"
+	            fork="yes"
+	        >
+	            <arg line="--user sa --url ${db.url}" />
+	        </java>
+	    </target>
+
+	    <target name="startdb" description="Start the HSQLDB with the default params">
+	        <java
+	            classname="org.hsqldb.Server"
+	            classpathref="run.classpath"
+	            fork="yes"
+	        >
+	            <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
+	        </java>
+	</target>
+
 
 </project>

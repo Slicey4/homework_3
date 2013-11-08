@@ -14,9 +14,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -35,7 +38,7 @@ import org.apache.log4j.Logger;
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "Point-of-sale" in the menu).
  */
-public class PurchaseTab extends JDialog implements PropertyChangeListener {
+public class PurchaseTab extends JDialog {
 
         private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
@@ -222,7 +225,19 @@ public class PurchaseTab extends JDialog implements PropertyChangeListener {
       	            paidField = new JFormattedTextField(amountFormat); 
       	            paidField.setValue(new Double(0.0));
       	            paidField.setColumns(10);
-      	            paidField.addPropertyChangeListener("value", this);
+      	            paidField.addKeyListener(new KeyListener() {
+						@Override
+						public void keyTyped(KeyEvent e) {}
+
+						@Override
+						public void keyPressed(KeyEvent e) {}
+
+						@Override
+						public void keyReleased(KeyEvent e) {
+							log.debug(e.getKeyChar());
+							propertyChange();
+						}
+					});
       	            
       	            changeField = new JFormattedTextField(amountFormat);
       	            changeField.setValue(new Double(0.0));
@@ -289,9 +304,14 @@ public class PurchaseTab extends JDialog implements PropertyChangeListener {
                 
         }
         
-        public void propertyChange(PropertyChangeEvent e) {
-            double sum=getTotalSumOfTheOrder();
-            changeAmount = ((Number)paidField.getValue()).doubleValue() - sum; 
+        public void propertyChange() {
+            double sum = getTotalSumOfTheOrder();
+            try {
+				paidField.commitEdit();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+            changeAmount = Double.parseDouble(paidField.getValue().toString()) - sum;
             changeField.setValue(new Double(changeAmount));
         }
         
@@ -390,9 +410,5 @@ public class PurchaseTab extends JDialog implements PropertyChangeListener {
 
     return gc;
   }
-
-        
-
-
 
 }

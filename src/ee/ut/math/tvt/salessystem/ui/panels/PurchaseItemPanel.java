@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
@@ -37,9 +36,6 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
-
-	private double sum;
-
 
 	private JButton addItemButton;
 
@@ -85,7 +81,6 @@ public class PurchaseItemPanel extends JPanel {
 
 	private JComponent drawDialogPane() {
 
-	
 		// Create the panel
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 2));
@@ -234,14 +229,14 @@ public class PurchaseItemPanel extends JPanel {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
 
-				stockItem.setQuantity(stockItem.getQuantity()-quantity);;
+				stockItem.setQuantity(stockItem.getQuantity() - quantity);
+				;
 				// System.out.println(getTotalSumOfTheOrder() );//katse kas
 				// arvutab summa
 
 			}
 		}
 	}
-
 
 	// The total sum of the order
 
@@ -250,7 +245,7 @@ public class PurchaseItemPanel extends JPanel {
 		int row = model.getCurrentPurchaseTableModel().getRowCount();
 		int column = model.getCurrentPurchaseTableModel().getColumnCount() - 1;
 		for (int i = 0; i < row; i++) {
-			double add = (double) model.getCurrentPurchaseTableModel()
+			double add = (Double) model.getCurrentPurchaseTableModel()
 					.getValueAt(i, column);
 			sum += add;
 
@@ -258,8 +253,6 @@ public class PurchaseItemPanel extends JPanel {
 		return sum;
 
 	}
-	
-	
 
 	/**
 	 * Sets whether or not this component is enabled.
@@ -331,6 +324,11 @@ public class PurchaseItemPanel extends JPanel {
 		gc.weighty = 1.0;
 
 		return gc;
+	}
+
+	public void setItems(JComboBox<String> combo) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

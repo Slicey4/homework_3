@@ -1,169 +1,99 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.*;
-import javax.swing.table.JTableHeader;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.model.SalesSystemTableModel;
 
-/**
- * Encapsulates everything that has to do with the purchase tab (the tab
- * labelled "History" in the menu).
- */
-public class HistoryTab extends JTable {
-JPanel contentpane;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	// TODO - implement!
+public class HistoryTab {
+
 	private SalesSystemModel model;
-	private JTable table;
+
+	private PurchaseInfoTableModel purchase;
+
+	private JTable sold;
+	private JTable purchases;
 
 	public HistoryTab(SalesSystemModel model) {
-    	this.model=model;
-    	addMouseListener(new MouseAdapter() { 
-            public void mousePressed(MouseEvent me) { 
-            	System.out.println(me);}});
-    	
-    	
-    	
-    	
-    } 
-	
+		this.model = model;
+	}
 
 	public Component draw() {
 		JPanel panel = new JPanel();
-		
-		panel.add(new HistoryTab(model));
-		
-		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		GridBagLayout gb = new GridBagLayout();
-		GridBagConstraints gc = new GridBagConstraints();
-		panel.setLayout(gb);
+		panel.setLayout(new GridBagLayout());
 
-		gc.fill = GridBagConstraints.HORIZONTAL;
-		gc.anchor = GridBagConstraints.NORTH;
-		gc.gridwidth = GridBagConstraints.REMAINDER;
-		gc.weightx = 1.0d;
-		gc.weighty = 0d;
+		purchase = new PurchaseInfoTableModel();
 
-		panel.add(drawHistoryMenuPane(), gc);
+		purchases = new JTable(model.getHistoryTableModel());
+		sold= new JTable(purchase);
 
-		gc.weighty = 1.0;
-		gc.fill = GridBagConstraints.BOTH;
-		panel.add(drawHistoryMainPane(), gc);
+		JScrollPane purchasesScroll = new JScrollPane(purchases);
+		purchasesScroll.setBorder(BorderFactory
+				.createTitledBorder("Purchase History"));
+
+		JScrollPane soldItemScroll = new JScrollPane(sold);
+		soldItemScroll.setBorder(BorderFactory
+				.createTitledBorder("Purchase Details"));
+
+		purchases.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent e) {
+						SelectedPurchase();
+					}
+				});
+
+		panel.add(purchasesScroll, getPurchasesScrollConstraints());
+		panel.add(soldItemScroll, getItemScrollConstraints());
+
 		return panel;
 	}
 
-	private Component drawHistoryMainPane() {
-		JPanel panel = new JPanel();
+	private void SelectedPurchase() {
+		purchase.clear();
 
-		table = new JTable(model.getHistoryTableModel()){
-			 /**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+		int selected = purchases.getSelectedRow();
 
-			public JPopupMenu getComponentPopupMenu() {
-		            Point p = getMousePosition();
-		            // mouse over table and valid row
-		            if (p != null && rowAtPoint(p) >= 0) {
-		                // condition for showing popup triggered by mouse
-		                if (isRowSelected(rowAtPoint(p))) {
-		                    return super.getComponentPopupMenu();
-		                } else {
-		                    return null;
-		                }
-		            }
-		            return super.getComponentPopupMenu();
-		        }
+		if (selected == -1)
+			return;
 
-		    };
-		
+		HistoryItem sold = model.getHistoryTableModel().getTableRows()
+				.get(selected);
+		for (SoldItem item : sold.getGoods()) {
+			purchase.addItem(item);
+		}
+	}
 
-		JTableHeader header = table.getTableHeader();
-		header.setReorderingAllowed(false);
-
-		JScrollPane scrollPane = new JScrollPane(table);
-
+	private GridBagConstraints getPurchasesScrollConstraints() {
 		GridBagConstraints gc = new GridBagConstraints();
-		GridBagLayout gb = new GridBagLayout();
+
 		gc.fill = GridBagConstraints.BOTH;
 		gc.weightx = 1.0;
-		gc.weighty = 1.0;
+		gc.weighty = 0.5;
 
-		panel.setLayout(gb);
-		panel.add(scrollPane, gc);
-		createPopupMenu();
-
-		panel.setBorder(BorderFactory.createTitledBorder("Purchase history"));
-		return panel;
+		return gc;
 	}
 
-	private Component drawHistoryMenuPane() {
-		JPanel panel = new JPanel();
-
+	private GridBagConstraints getItemScrollConstraints() {
 		GridBagConstraints gc = new GridBagConstraints();
-		GridBagLayout gb = new GridBagLayout();
 
-		panel.setLayout(gb);
+		gc.fill = GridBagConstraints.BOTH;
+		gc.gridy = 1;
+		gc.weightx = 1.0;
+		gc.weighty = 0.5;
 
-		gc.anchor = GridBagConstraints.NORTHWEST;
-		gc.weightx = 0;
-
-		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		return panel;
+		return gc;
 	}
-	private void createPopupMenu() {
-        JPopupMenu popup = new JPopupMenu();
-        JMenuItem myMenuItem1 = new JMenuItem("Info about bought items");
-        popup.add(myMenuItem1);
-       
-        MouseListener popupListener = new PopupListener(popup);
-        table.addMouseListener(popupListener);
-    }
-	
-	 private class PopupListener extends MouseAdapter {
-
-	        private JPopupMenu popup;
-
-	        PopupListener(JPopupMenu popupMenu) {
-	            popup = popupMenu;
-	        }
-
-	        @Override
-	        public void mousePressed(MouseEvent e) {
-	            maybeShowPopup(e);
-	        }
-
-	        @Override
-	        public void mouseReleased(MouseEvent e) {
-	            if (table.getSelectedRow() != -1) {
-	                maybeShowPopup(e);
-	            }
-	        }
-
-	        private void maybeShowPopup(MouseEvent e) {
-	            if (e.isPopupTrigger()) {
-	                popup.show(e.getComponent(), e.getX(), e.getY());
-	            }
-	        }
-	    }
-
-
 }

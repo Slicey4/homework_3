@@ -1,9 +1,8 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 import java.text.NumberFormat;
 import java.util.ConcurrentModificationException;
@@ -41,20 +40,18 @@ public class StockTab {
 
 	private SalesSystemModel model;
 
-	private String name, description;
 	private int quantity;
-	private JLabel teave;
 	private double price;
 	private long id;
-	
+
 	private JTextField nameField;
 	private JFormattedTextField idField;
 	private JTextField descField;
 	private JFormattedTextField quantityField;
 	private JFormattedTextField priceField;
-	
-    private NumberFormat intFormat;
-    private NumberFormat numFormat;
+
+	private NumberFormat intFormat;
+	private NumberFormat numFormat;
 
 	public StockTab(SalesSystemModel model) {
 		this.model = model;
@@ -90,13 +87,13 @@ public class StockTab {
 			Object[] options = { "Add item", "Cancel" };
 
 			intFormat = NumberFormat.getIntegerInstance();
-            numFormat = NumberFormat.getNumberInstance();
-            
-            nameField = new JTextField();
-            idField = new JFormattedTextField(intFormat);
-            descField = new JTextField();
-            quantityField = new JFormattedTextField(intFormat);
-            priceField = new JFormattedTextField(numFormat);
+			numFormat = NumberFormat.getNumberInstance();
+
+			nameField = new JTextField();
+			idField = new JFormattedTextField(intFormat);
+			descField = new JTextField();
+			quantityField = new JFormattedTextField(intFormat);
+			priceField = new JFormattedTextField(numFormat);
 
 			final JComponent[] inputs = new JComponent[] {
 					new JLabel("Product name"), nameField,
@@ -107,17 +104,11 @@ public class StockTab {
 
 			};
 
-			int n = JOptionPane.showOptionDialog(
-                    null,
-                    inputs,
-                    "Add item",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.PLAIN_MESSAGE,
-                    null, // no icon
-                    options,
-                    options[1]
-            );
-			
+			int n = JOptionPane.showOptionDialog(null, inputs, "Add item",
+					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, // no
+																				// icon
+					options, options[1]);
+
 			log.info(n);
 			// 0 Accept
 			if (n == 0) {
@@ -127,11 +118,10 @@ public class StockTab {
 					price = (double) Math.round(Double.parseDouble(priceField
 							.getText()) * 100) / 100;
 					id = Integer.parseInt(idField.getText());
-					long indeks = model.getWarehouseTableModel().getRowCount() + 1;
-					// model.getWarehouseTableModel().getItemByName(name1);
 					model.getWarehouseTableModel().addItem(
 							new StockItem(id, nameField.getText(), descField
 									.getText(), price, quantity));
+					
 
 				} catch (NullPointerException e) {
 
@@ -145,13 +135,15 @@ public class StockTab {
 				}
 
 				// actually submit item to history
+
 				model.getWarehouseTableModel().addItem(new StockItem());
-				// model.getCurrentPurchaseTableModel().clear();
+				
+
 			} else {
 				drawStockMenuPane();
 			}
 		} catch (NullPointerException e) {
-			
+
 			e.getMessage();
 
 		}

@@ -1,8 +1,11 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import javax.swing.JComboBox;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
 /**
@@ -75,5 +78,12 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
     	log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
     }
+
+	public  JComboBox<String> setItems(JComboBox<String> combo,StockItem item) {
+		
+		combo.addItem(item.getName());
+		log.debug("Added " + item.getName() + "to ComboBox ");
+		return combo;
+	}
     
 }

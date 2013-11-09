@@ -32,7 +32,7 @@ public class PurchaseItemPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
-	private JComboBox<String> items;
+	public static JComboBox<String> items;
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
@@ -162,9 +162,17 @@ public class PurchaseItemPanel extends JPanel {
 
 		return panel;
 	}
+	public JComboBox<String> getItems() {
+		return items;
+	}
+
+	private JComboBox<String> setItems(StockItem item) {
+		this.items.addItem(item.getName());
+		return items;
+	}
 
 	// Fill dialog with data from the "database".
-	public void fillDialogFields() {
+	private void fillDialogFields() {
 		StockItem stockItem = getStockItemByBarCode();
 
 		if (stockItem != null) {

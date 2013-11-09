@@ -1,23 +1,22 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 import java.text.NumberFormat;
 import java.util.ConcurrentModificationException;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -26,7 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
 import javax.swing.table.JTableHeader;
 
 import org.apache.log4j.Logger;
@@ -40,18 +38,20 @@ public class StockTab {
 
 	private SalesSystemModel model;
 
+	private String name, description;
 	private int quantity;
+	private JLabel teave;
 	private double price;
 	private long id;
-
+	
 	private JTextField nameField;
 	private JFormattedTextField idField;
 	private JTextField descField;
 	private JFormattedTextField quantityField;
 	private JFormattedTextField priceField;
-
-	private NumberFormat intFormat;
-	private NumberFormat numFormat;
+	
+    private NumberFormat intFormat;
+    private NumberFormat numFormat;
 
 	public StockTab(SalesSystemModel model) {
 		this.model = model;
@@ -87,13 +87,13 @@ public class StockTab {
 			Object[] options = { "Add item", "Cancel" };
 
 			intFormat = NumberFormat.getIntegerInstance();
-			numFormat = NumberFormat.getNumberInstance();
-
-			nameField = new JTextField();
-			idField = new JFormattedTextField(intFormat);
-			descField = new JTextField();
-			quantityField = new JFormattedTextField(intFormat);
-			priceField = new JFormattedTextField(numFormat);
+            numFormat = NumberFormat.getNumberInstance();
+            
+            nameField = new JTextField();
+            idField = new JFormattedTextField(intFormat);
+            descField = new JTextField();
+            quantityField = new JFormattedTextField(intFormat);
+            priceField = new JFormattedTextField(numFormat);
 
 			final JComponent[] inputs = new JComponent[] {
 					new JLabel("Product name"), nameField,
@@ -104,23 +104,35 @@ public class StockTab {
 
 			};
 
-			int n = JOptionPane.showOptionDialog(null, inputs, "Add item",
-					JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, // no
-																				// icon
-					options, options[1]);
-
+			int n = JOptionPane.showOptionDialog(
+                    null,
+                    inputs,
+                    "Add item",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.PLAIN_MESSAGE,
+                    null, // no icon
+                    options,
+                    options[1]
+            );
+			
 			log.info(n);
 			// 0 Accept
 			if (n == 0) {
+				
 				try {
 
 					quantity = Integer.parseInt(quantityField.getText());
 					price = (double) Math.round(Double.parseDouble(priceField
 							.getText()) * 100) / 100;
 					id = Integer.parseInt(idField.getText());
-					model.getWarehouseTableModel().addItem(
-							new StockItem(id, nameField.getText(), descField
-									.getText(), price, quantity));
+					long indeks = model.getWarehouseTableModel().getRowCount() + 1;
+					// model.getWarehouseTableModel().getItemByName(name1);
+					StockItem a=new StockItem(id, nameField.getText(), descField
+							.getText(), price, quantity);
+					
+					model.getWarehouseTableModel().addItem(a);
+				
+					model.getCurrentPurchaseTableModel().setItems(PurchaseItemPanel.items, a);
 					
 
 				} catch (NullPointerException e) {
@@ -135,15 +147,13 @@ public class StockTab {
 				}
 
 				// actually submit item to history
-
 				model.getWarehouseTableModel().addItem(new StockItem());
-				
-
+				// model.getCurrentPurchaseTableModel().clear();
 			} else {
 				drawStockMenuPane();
 			}
 		} catch (NullPointerException e) {
-
+			
 			e.getMessage();
 
 		}

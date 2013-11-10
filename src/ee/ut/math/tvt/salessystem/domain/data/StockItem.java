@@ -3,6 +3,8 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,6 +16,7 @@ import javax.persistence.Table;
 public class StockItem implements Cloneable, DisplayableItem {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
     private Long id;
 
@@ -26,7 +29,7 @@ public class StockItem implements Cloneable, DisplayableItem {
 	@Column(name = "description")
     private String description;
     
-	//Indices??
+	
 	
 	
     private int quantity;

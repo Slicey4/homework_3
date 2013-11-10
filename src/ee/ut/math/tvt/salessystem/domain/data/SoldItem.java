@@ -4,6 +4,8 @@ package ee.ut.math.tvt.salessystem.domain.data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -22,7 +24,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	private Long id;
 	
 	
-	
+	@ManyToOne
+	@JoinColumn(name= "stockitem_id", nullable=false)
 	private StockItem stockItem;
 
 	@Column(name = "name")

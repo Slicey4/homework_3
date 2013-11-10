@@ -7,13 +7,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 
 // Implements fake DisplayItem
 public class HistoryItem implements Cloneable, DisplayableItem {
-    private Date date;
+    
+	@Column(name="date&time")
+	private Date date;
     private long time;
+    @Column (name="price")
     private double price;
+    
+    @OneToMany(mappedBy ="sale")
     private List<SoldItem> goods;
     
     

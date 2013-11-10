@@ -21,7 +21,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     @Column (name="price")
     private double price;
     
-    @OneToMany(mappedBy ="sale")
+    @OneToMany(mappedBy ="SoldItem")
     private List<SoldItem> goods;
     
     

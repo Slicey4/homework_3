@@ -8,6 +8,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
@@ -15,10 +18,11 @@ import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 // Implements fake DisplayItem
 public class HistoryItem implements Cloneable, DisplayableItem {
     
-	@Column(name="date&time")
-	private Date date;
-    private long time;
-    
+	@Column(name="date")
+	private String date;
+	
+	@Column(name="time")
+	private String time;
     
     @Column (name="price")
     private double price;
@@ -26,37 +30,37 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     @OneToMany(mappedBy ="SoldItem")
     private List<SoldItem> goods;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
     
     public HistoryItem(List<SoldItem> goods) {
-    	Calendar a = new GregorianCalendar();
-        this.date = a.getTime();
-        this.time = a.getTimeInMillis();
+    	this.goods = goods;
+        this.date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        this.time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         price = 0.0;
-   
     	
     	for(int i = 0; i < goods.size(); i++) {
     		price += goods.get(i).getPrice();
     	}
-    	
-    	this.goods = goods;
-    	
-    	
+    	this.id = 0; 	
     	
     }
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public long getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(long time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
@@ -81,6 +85,10 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void setId(long itemId){
+		this.id = itemId;
+	}
 
 	@Override
 	public String getName() {
@@ -94,6 +102,5 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 		return 0;
 	}
 
-	
 
 }

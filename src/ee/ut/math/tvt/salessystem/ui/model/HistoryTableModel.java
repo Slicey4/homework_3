@@ -9,14 +9,17 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	@SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(HistoryTableModel.class);
 
+	private long itemId = 0;
+	
 	public HistoryTableModel() {
-		super(new String[] { "Date & Time", "Price" });
+		super(new String[] { "Id", "Date", "Time", "Price" });
 		
 	}
 	
 	public void addItem(HistoryItem item) {
+		itemId += 1;
+		item.setId(itemId);
 		rows.add(item);
-		
 		fireTableDataChanged();
 	}
 
@@ -25,9 +28,13 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	public Object getColumnValue(HistoryItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return item.getDate();
-		case 1:
-			return item.getPrice();
+            	return item.getId();
+	    case 1:
+	            return item.getDate();
+	    case 2:
+	            return item.getTime();
+	    case 3:
+	            return item.getPrice();
 
 		}
 		throw new IllegalArgumentException("Column index out of range");

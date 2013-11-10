@@ -166,10 +166,7 @@ public class PurchaseItemPanel extends JPanel {
 		return items;
 	}
 
-	private JComboBox<String> setItems(StockItem item) {
-		this.items.addItem(item.getName());
-		return items;
-	}
+
 
 	// Fill dialog with data from the "database".
 	private void fillDialogFields() {

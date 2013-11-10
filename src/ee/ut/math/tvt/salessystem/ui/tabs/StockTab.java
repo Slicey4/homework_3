@@ -1,8 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
@@ -38,9 +36,7 @@ public class StockTab {
 
 	private SalesSystemModel model;
 
-	private String name, description;
 	private int quantity;
-	private JLabel teave;
 	private double price;
 	private long id;
 	

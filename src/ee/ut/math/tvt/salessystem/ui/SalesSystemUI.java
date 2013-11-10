@@ -49,6 +49,7 @@ public class SalesSystemUI extends JFrame {
     purchaseTab = new PurchaseTab(domainController, model);
 
     setTitle("Sales system");
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     // set L&F to the nice Windows style
     try {
@@ -66,12 +67,11 @@ public class SalesSystemUI extends JFrame {
     setSize(width, height);
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     setLocation((screen.width - width) / 2, (screen.height - height) / 2);
-
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
-    	 domainController.endSession();
-        System.exit(0);
+    	domainController.endSession();
       }
     });
   }
@@ -86,6 +86,10 @@ public class SalesSystemUI extends JFrame {
 
     getContentPane().add(tabbedPane);
   }
+
+	public SalesDomainController getDomainController() {
+		return domainController;
+	}
 
 }
 

@@ -48,6 +48,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	}
 	
 	public void endSession() {
+		System.exit(0);
 	    HibernateUtil.closeSession();
 	}
 }

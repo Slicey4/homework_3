@@ -18,6 +18,8 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	@Column(name="date&time")
 	private Date date;
     private long time;
+    
+    
     @Column (name="price")
     private double price;
     

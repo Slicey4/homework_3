@@ -20,7 +20,11 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "stockitem_id", nullable = false)
+	@JoinColumn(name = "SALE_ID", nullable = true)
+	private HistoryItem historyItem;
+	
+	
+	@Column(name = "stockitem_id")
 	private StockItem stockItem;
 
 	@Column(name = "name")
@@ -34,9 +38,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@Column(name = "itemprice")
 	private double price;
 
-	@ManyToOne
-	@JoinColumn(name = "SALE_ID", nullable = false)
-	private HistoryItem historyItem;
+	
 
 	// @Id
 	// Indices??

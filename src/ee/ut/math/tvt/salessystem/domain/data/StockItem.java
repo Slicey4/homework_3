@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -25,14 +23,16 @@ public class StockItem implements Cloneable, DisplayableItem {
 
 	@Column(name = "price")
 	private double price;
+	
+	@Column(name = "quantity")
+	private int quantity;
 
 	@Column(name = "description")
 	private String description;
 
 	// @Id
 	// Indices??
-
-	private int quantity;
+	
 	
 
 

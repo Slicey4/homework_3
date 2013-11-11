@@ -21,7 +21,7 @@ import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 	@Column(name="sale_date")
 	private String date;
 	
-	@Column(name="time")
+	
 	private String time;
     
     @Column (name="price_total")

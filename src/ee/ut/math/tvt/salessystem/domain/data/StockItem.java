@@ -19,8 +19,6 @@ public class StockItem implements Cloneable, DisplayableItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@OneToOne
-	@PrimaryKeyJoinColumn
 	private Long id;
 
 	@Column(name = "name")

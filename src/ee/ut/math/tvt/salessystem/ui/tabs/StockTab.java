@@ -124,8 +124,6 @@ public class StockTab {
 					price = (double) Math.round(Double.parseDouble(priceField
 							.getText()) * 100) / 100;
 					id = Integer.parseInt(idField.getText());
-					long indeks = model.getWarehouseTableModel().getRowCount() + 1;
-					// model.getWarehouseTableModel().getItemByName(name1);
 					item=new StockItem(id, nameField.getText(), descField
 							.getText(), price, quantity);
 					
@@ -147,7 +145,6 @@ public class StockTab {
 				} catch (ConcurrentModificationException e) {
 					e.printStackTrace();
 				}
-
 				// actually submit item to history
 				model.getWarehouseTableModel().addItem(new StockItem());
 				// model.getCurrentPurchaseTableModel().clear();

@@ -5,21 +5,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 
 // Implements fake DisplayItem
-@Entity
-//@Table(name="HistoryItem")
-public class HistoryItem implements Cloneable, DisplayableItem {
+	@Entity
+	@Table(name="History")
+	public class HistoryItem implements Cloneable, DisplayableItem {
     
 	@Column(name="date")
 	private String date;
@@ -30,16 +27,24 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     @Column (name="price")
     private double price;
     
-    @OneToMany(mappedBy ="historyitem")
-    private List<SoldItem> goods;
+    @OneToMany(mappedBy ="history")
+    private  Set<SoldItem>  goods;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
+    static long counter = 0;
+    
+    public HistoryItem() {
+            goods = new HashSet<SoldItem>();
+            price = 0;
+    }
     
     public HistoryItem(List<SoldItem> goods) {
-    	this.goods = goods;
+    	this.goods = new HashSet<SoldItem>();
+        this.goods.addAll(goods);
+        id = counter++;
         this.date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         this.time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         price = 0.0;
@@ -75,11 +80,11 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 		this.price = price;
 	}
 
-	public List<SoldItem> getGoods() {
+	public Set<SoldItem> getGoods() {
 		return goods;
 	}
 
-	public void setGoods(List<SoldItem> goods) {
+	public void setGoods(Set<SoldItem> goods) {
 		this.goods = goods;
 	}
 

@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
@@ -18,6 +19,7 @@ import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -273,14 +275,32 @@ Session session;
 							.getCurrentPurchaseTableModel().getTableRows());
 
 					// actually submit item to history
+					HistoryItem item=new HistoryItem(model
+							.getCurrentPurchaseTableModel()
+							.getTableRows());
+					
 					model.getHistoryTableModel().addItem(
-							new HistoryItem(model
-									.getCurrentPurchaseTableModel()
-									.getTableRows()));
-					session.save(new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows()));
-					endSale();
+							item);
+					
+					session.beginTransaction();
+					session.save(item);
+					Set<SoldItem>items=item.getGoods();
+					for(SoldItem i:items){
+						StockItem stock=i.getStockItem();
+						int vahe=stock.getQuantity()- i.getQuantity();
+						stock.setQuantity(vahe);
+						session.saveOrUpdate(stock);
+						session.save(items);
+						model.getCurrentPurchaseTableModel().clear();
+
+					
+						
+					}
+					session.getTransaction().commit();
 					model.getCurrentPurchaseTableModel().clear();
 
+					endSale();
+					
 				}
 			} else {
 				// log.info(n);
@@ -289,6 +309,8 @@ Session session;
 		} catch (VerificationFailedException e1) {
 			log.error(e1.getMessage());
 		}finally{
+			model.getCurrentPurchaseTableModel().clear();
+			endSale();
 			session.close();
 		}
 

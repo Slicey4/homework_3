@@ -34,7 +34,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	public List<StockItem> loadWarehouseState() {
 		// XXX mock implementation
-		String query = "from Person";
+		String query = "from STOCKITEM";
 		List<StockItem> dataset = session.createQuery(query).list();
 		
 		

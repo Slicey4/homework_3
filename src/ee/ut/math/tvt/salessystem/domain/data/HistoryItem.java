@@ -18,13 +18,13 @@ import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 	@Table(name="History")
 	public class HistoryItem implements Cloneable, DisplayableItem {
     
-	@Column(name="date")
+	@Column(name="sale_date")
 	private String date;
 	
 	@Column(name="time")
 	private String time;
     
-    @Column (name="price")
+    @Column (name="price_total")
     private double price;
     
     @OneToMany(mappedBy ="history")

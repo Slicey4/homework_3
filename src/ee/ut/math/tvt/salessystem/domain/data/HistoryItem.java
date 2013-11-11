@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 
 // Implements fake DisplayItem
+
 public class HistoryItem implements Cloneable, DisplayableItem {
     
 	@Column(name="date")

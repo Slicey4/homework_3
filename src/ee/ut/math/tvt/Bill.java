@@ -22,9 +22,6 @@ public class Bill {
 		rows.add(br);
 	}
 	
-	/**
-	 * Calculate the overall sum of all BillRows on this bill.
-	 */
 	public double getTotalSum() {
 	    double price = 0.0;
 	    for (BillRow row : rows) {

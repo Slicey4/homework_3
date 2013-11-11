@@ -147,6 +147,12 @@ public class StockTab {
 				}
 				// actually submit item to history
 				model.getWarehouseTableModel().addItem(new StockItem());
+				session.beginTransaction();//begin the db operations
+				  
+				  //Insertion to the table
+				  //set data that you want to store in db
+				session.saveOrUpdate(item);
+				session.getTransaction().commit();
 				// model.getCurrentPurchaseTableModel().clear();
 			} else {
 				drawStockMenuPane();

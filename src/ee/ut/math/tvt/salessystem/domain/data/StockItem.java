@@ -2,9 +2,12 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -14,9 +17,10 @@ import javax.persistence.Table;
 @Table(name = "STOCKITEM")
 public class StockItem implements Cloneable, DisplayableItem {
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@OneToOne
+	@PrimaryKeyJoinColumn
 	private Long id;
 
 	@Column(name = "name")
@@ -31,8 +35,6 @@ public class StockItem implements Cloneable, DisplayableItem {
 	@Column(name = "description")
 	private String description;
 
-	// @Id
-	// Indices??
 	
 	
 

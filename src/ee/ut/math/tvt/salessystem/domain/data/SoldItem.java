@@ -85,7 +85,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 		this.quantity = quantity;
 	}
 
-	//
+
 	public void setnewQuantity(Integer a) {
 		this.quantity = quantity - a;
 	}

@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -40,7 +41,7 @@ public class PurchaseTab extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+Session session;
 	private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
 	private final SalesDomainController domainController;
@@ -276,6 +277,7 @@ public class PurchaseTab extends JDialog {
 							new HistoryItem(model
 									.getCurrentPurchaseTableModel()
 									.getTableRows()));
+					session.save(new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows()));
 					endSale();
 					model.getCurrentPurchaseTableModel().clear();
 
@@ -286,6 +288,8 @@ public class PurchaseTab extends JDialog {
 			}
 		} catch (VerificationFailedException e1) {
 			log.error(e1.getMessage());
+		}finally{
+			session.close();
 		}
 
 	}

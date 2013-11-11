@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +17,8 @@ import javax.persistence.OneToMany;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 
 // Implements fake DisplayItem
-
+@Entity
+//@Table(name="HistoryItem")
 public class HistoryItem implements Cloneable, DisplayableItem {
     
 	@Column(name="date")
@@ -28,7 +30,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
     @Column (name="price")
     private double price;
     
-    @OneToMany(mappedBy ="SoldItem")
+    @OneToMany(mappedBy ="historyitem")
     private List<SoldItem> goods;
     
     @Id

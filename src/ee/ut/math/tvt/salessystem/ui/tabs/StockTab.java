@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 public class StockTab {
 
@@ -35,6 +36,8 @@ public class StockTab {
 	// private JLabel name, quantity,price,id;
 
 	private SalesSystemModel model;
+	Session session;
+	StockItem item;
 
 	private int quantity;
 	private double price;
@@ -123,12 +126,15 @@ public class StockTab {
 					id = Integer.parseInt(idField.getText());
 					long indeks = model.getWarehouseTableModel().getRowCount() + 1;
 					// model.getWarehouseTableModel().getItemByName(name1);
-					StockItem a=new StockItem(id, nameField.getText(), descField
+					item=new StockItem(id, nameField.getText(), descField
 							.getText(), price, quantity);
 					
-					model.getWarehouseTableModel().addItem(a);
+					model.getWarehouseTableModel().addItem(item);
 				
-					model.getCurrentPurchaseTableModel().setItems(PurchaseItemPanel.items, a);
+					model.getCurrentPurchaseTableModel().setItems(PurchaseItemPanel.items, item);
+					session.save(item);//save the object to db
+					  
+					session.getTransaction().commit();
 					
 
 				} catch (NullPointerException e) {
@@ -152,6 +158,8 @@ public class StockTab {
 			
 			e.getMessage();
 
+		}finally{
+			session.close();
 		}
 
 	}

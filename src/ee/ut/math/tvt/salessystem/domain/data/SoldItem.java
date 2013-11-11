@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -17,14 +19,16 @@ import javax.persistence.Table;
 public class SoldItem implements Cloneable, DisplayableItem {
 
 	@Column(name = "id")
+	@Id
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "SALE_ID", nullable = true)
-	private HistoryItem historyItem;
+	@JoinColumn(name = "SALE_ID", nullable = false)
+	private HistoryItem historyitem;
 	
 	
-	@Column(name = "stockitem_id")
+	
+	@OneToOne(mappedBy= "stockitem_id")
 	private StockItem stockItem;
 
 	@Column(name = "name")
@@ -38,10 +42,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@Column(name = "itemprice")
 	private double price;
 
-	
 
-	// @Id
-	// Indices??
 
 	public SoldItem(StockItem stockItem, int quantity) {
 		this.id = stockItem.getId();
@@ -102,7 +103,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	}
 	
 	public HistoryItem getHistoryItem() {
-		return historyItem;
+		return historyitem;
 	}
 
 }

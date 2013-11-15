@@ -18,8 +18,8 @@ public class Client implements DisplayableItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "Name")
+    private String Name;
 
     @Column(name = "discount")
     private Integer discountPercentage;
@@ -32,12 +32,12 @@ public class Client implements DisplayableItem {
         this.discountPercentage = discountPercentage;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return Name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     public Long getId() {
@@ -50,6 +50,12 @@ public class Client implements DisplayableItem {
 
     @Override
     public String toString() {
-        return firstName;
+        return Name;
     }
+
+	@Override
+	public int getQuantity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

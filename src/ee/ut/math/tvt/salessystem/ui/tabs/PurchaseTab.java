@@ -195,13 +195,13 @@ public class PurchaseTab extends JDialog {
 	}
 
 	/** Event handler for the <code>cancel purchase</code> event. */
-	protected void cancelPurchaseButtonClicked() {
+	public void cancelPurchaseButtonClicked() {
 		log.info("Sale cancelled");
 
 		try {
 			domainController.cancelCurrentPurchase();
 
-			endSale();
+			endPurchaseAfterPaying();
 			model.getCurrentPurchaseTableModel().clear();
 
 		} catch (VerificationFailedException e1) {
@@ -293,7 +293,7 @@ public class PurchaseTab extends JDialog {
 					
 						model.getCurrentPurchaseTableModel().clear();
 
-					endSale();
+						endPurchaseAfterPaying();
 					
 				}
 			} else {
@@ -304,7 +304,7 @@ public class PurchaseTab extends JDialog {
 			log.error(e1.getMessage());
 		}finally{
 			model.getCurrentPurchaseTableModel().clear();
-			endSale();
+			endPurchaseAfterPaying();
 			
 		}
 
@@ -345,7 +345,7 @@ public class PurchaseTab extends JDialog {
 	}
 
 	// switch UI to the state that allows to initiate new purchase
-	private void endSale() {
+	public void endPurchaseAfterPaying() {
 		purchasePane.reset();
 
 		cancelPurchase.setEnabled(false);
@@ -415,5 +415,7 @@ public class PurchaseTab extends JDialog {
 
 		return gc;
 	}
+
+	
 
 }

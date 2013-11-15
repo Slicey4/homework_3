@@ -2,6 +2,8 @@ package ee.ut.math.tvt.salessystem.ui.model;
 
 import java.util.List;
 
+import javax.swing.table.TableModel;
+
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
@@ -19,6 +21,9 @@ public class SalesSystemModel {
 
 	// History model
 	private HistoryTableModel historyTableModel;
+	
+	//Client model
+	private ClientTableModel clientTableModel;
 
 	private final SalesDomainController domainController;
 
@@ -35,7 +40,9 @@ public class SalesSystemModel {
 		currentPurchaseTableModel = new PurchaseInfoTableModel();
 
 		historyTableModel = new HistoryTableModel();
-
+		
+		clientTableModel = new ClientTableModel();
+		
 		// populate stock model with data from the database
 		warehouseTableModel.populateWithData(domainController
 				.loadWarehouseState());
@@ -44,6 +51,7 @@ public class SalesSystemModel {
 				.createQuery("from HistoryItem").list();
 
 		historyTableModel.populateWithData(previous);
+		
 
 	}
 
@@ -57,6 +65,11 @@ public class SalesSystemModel {
 
 	public HistoryTableModel getHistoryTableModel() {
 		return historyTableModel;
+	}
+
+	public TableModel getClientTableModel() {
+		// TODO Auto-generated method stub
+		return clientTableModel;
 	}
 
 }

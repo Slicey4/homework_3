@@ -107,6 +107,10 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	}
 
 	public void setSale(Sale sale) {
+<<<<<<< HEAD
+=======
+		// TODO Auto-generated method stub
+>>>>>>> 15666a27326ba8a19b8104f53a3afaa04f5f3511
 		
 	}
 

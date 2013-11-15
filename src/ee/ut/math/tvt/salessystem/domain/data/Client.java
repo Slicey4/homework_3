@@ -54,15 +54,6 @@ public class Client implements DisplayableItem {
     }
 
 	@Override
-<<<<<<< HEAD
-=======
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
->>>>>>> 15666a27326ba8a19b8104f53a3afaa04f5f3511
 	public int getQuantity() {
 		// TODO Auto-generated method stub
 		return 0;

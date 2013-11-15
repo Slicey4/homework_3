@@ -416,18 +416,5 @@ public class PurchaseTab extends JDialog {
 		return gc;
 	}
 
-<<<<<<< HEAD
-	
-=======
-	public void cancelPaying() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void endPurchaseAfterPaying() {
-		// TODO Auto-generated method stub
-		
-	}
->>>>>>> 15666a27326ba8a19b8104f53a3afaa04f5f3511
 
 }

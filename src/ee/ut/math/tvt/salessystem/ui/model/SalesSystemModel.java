@@ -68,12 +68,8 @@ public class SalesSystemModel {
 	}
 
 	public TableModel getClientTableModel() {
-		// TODO Auto-generated method stub
-<<<<<<< HEAD
 		return clientTableModel;
-=======
-		return null;
->>>>>>> 15666a27326ba8a19b8104f53a3afaa04f5f3511
+
 	}
 
 }

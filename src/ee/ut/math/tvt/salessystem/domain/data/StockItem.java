@@ -26,16 +26,12 @@ public class StockItem implements Cloneable, DisplayableItem {
 
 	@Column(name = "price")
 	private double price;
-	
+
 	@Column(name = "quantity")
 	private int quantity;
 
 	@Column(name = "description")
 	private String description;
-
-	
-	
-
 
 	/**
 	 * Constucts new <code>StockItem</code> with the specified values.
@@ -61,6 +57,13 @@ public class StockItem implements Cloneable, DisplayableItem {
 		this.id = id;
 		this.name = name;
 		this.description = desc;
+		this.price = price;
+		this.quantity = quantity;
+	}
+
+	public StockItem(Long id, String name, double price, int quantity) {
+		this.id = id;
+		this.name = name;
 		this.price = price;
 		this.quantity = quantity;
 	}

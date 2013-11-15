@@ -30,7 +30,7 @@ import org.hibernate.Session;
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
-private Session session;
+	private Session session;
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
@@ -164,11 +164,10 @@ private Session session;
 
 		return panel;
 	}
+
 	public JComboBox<String> getItems() {
 		return items;
 	}
-
-
 
 	// Fill dialog with data from the "database".
 	private void fillDialogFields() {
@@ -232,28 +231,16 @@ private Session session;
 				JOptionPane.showMessageDialog(null, "There isn't enough "
 						+ stockItem.getName() + " in the stock.");
 
-			} else  try{
-				model.getCurrentPurchaseTableModel().addItem(
-						new SoldItem(stockItem, quantity));
+			} else
+				try {
+					model.getCurrentPurchaseTableModel().addItem(
+							new SoldItem(stockItem, quantity));
 
-				stockItem.setQuantity(stockItem.getQuantity() - quantity);
-				;
-				int uus=stockItem.getQuantity()-quantity;
-				String searhdID =stockItem.getId().toString();
-				String query ="update STOCKITEM as p set p.quanity=:newQuantity where p-id=:keyId";
-				session.createQuery(query)
-	            .setInteger("newQuantity", uus)//this will set the string 'newName' to name variable
-	            .setString("keyId", searhdID)
-	            .executeUpdate();
-	        
-	        session.getTransaction().commit();//end of transaction
-	        session.close();//end of  session
-				// System.out.println(getTotalSumOfTheOrder() );//katse kas
-				// arvutab summa
+				
 
-			}catch(NullPointerException e){
-				System.out.println(e.getMessage());
-			}
+				} catch (NullPointerException e) {
+					System.out.println(e.getMessage());
+				}
 		}
 	}
 

@@ -7,6 +7,7 @@ import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +20,7 @@ import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -43,7 +45,7 @@ public class PurchaseTab extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-Session session;
+
 	private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
 	private final SalesDomainController domainController;
@@ -270,34 +272,26 @@ Session session;
 					dispose();
 
 				} else {
-
-					domainController.submitCurrentPurchase(model
-							.getCurrentPurchaseTableModel().getTableRows());
-
 					// actually submit item to history
-					HistoryItem item=new HistoryItem(model
-							.getCurrentPurchaseTableModel()
-							.getTableRows());
+					List<SoldItem>a=model.getCurrentPurchaseTableModel().getTableRows();
+					
+					HistoryItem item=new HistoryItem(a);
 					
 					model.getHistoryTableModel().addItem(
 							item);
+					Session session = HibernateUtil.currentSession();
 					
-					session.beginTransaction();
-					session.save(item);
-					Set<SoldItem>items=item.getGoods();
-					for(SoldItem i:items){
-						StockItem stock=i.getStockItem();
-						int vahe=stock.getQuantity()- i.getQuantity();
-						stock.setQuantity(vahe);
-						session.saveOrUpdate(stock);
-						session.save(items);
+					session.getTransaction().begin();
+					
+					for(SoldItem i:a){
+						i.getStockItem().setQuantity(i.getStockItem().getQuantity()-i.getQuantity());
+						i.setHistoryItem(item);
+						session.update(i.getStockItem());
+					}session.getTransaction().commit();
+					
+					domainController.submitCurrentPurchase(a);
+					
 						model.getCurrentPurchaseTableModel().clear();
-
-					
-						
-					}
-					session.getTransaction().commit();
-					model.getCurrentPurchaseTableModel().clear();
 
 					endSale();
 					
@@ -311,7 +305,7 @@ Session session;
 		}finally{
 			model.getCurrentPurchaseTableModel().clear();
 			endSale();
-			session.close();
+			
 		}
 
 	}

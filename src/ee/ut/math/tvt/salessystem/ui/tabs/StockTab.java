@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 import java.text.NumberFormat;
 import java.util.ConcurrentModificationException;
@@ -128,10 +129,11 @@ public class StockTab {
 							.getText(), price, quantity);
 					
 					model.getWarehouseTableModel().addItem(item);
-				
+					Session session = HibernateUtil.currentSession();
+					session.getTransaction().begin();
 					model.getCurrentPurchaseTableModel().setItems(PurchaseItemPanel.items, item);
-					session.save(item);//save the object to db
-					  
+					session.saveOrUpdate(item);//save the object to db
+				  
 					session.getTransaction().commit();
 					
 

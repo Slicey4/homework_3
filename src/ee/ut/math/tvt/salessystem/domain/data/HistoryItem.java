@@ -15,13 +15,13 @@ import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 
 // Implements fake DisplayItem
 	@Entity
-	@Table(name="History")
+	@Table(name="HistoryItem")
 	public class HistoryItem implements Cloneable, DisplayableItem {
     
 	@Column(name="sale_date")
 	private String date;
 	
-	
+	@Column(name="sale_time")
 	private String time;
     
     @Column (name="price_total")

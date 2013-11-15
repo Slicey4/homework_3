@@ -102,4 +102,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
 		return history;
 	}
 
+	public void setHistoryItem(HistoryItem newHistoryItem) {
+		this.history=newHistoryItem;
+	}
+
 }

@@ -2,6 +2,8 @@ package ee.ut.math.tvt.salessystem.ui.model;
 
 import java.util.List;
 
+import javax.swing.table.TableModel;
+
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
@@ -57,6 +59,11 @@ public class SalesSystemModel {
 
 	public HistoryTableModel getHistoryTableModel() {
 		return historyTableModel;
+	}
+
+	public TableModel getClientTableModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

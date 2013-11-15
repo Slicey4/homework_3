@@ -87,4 +87,16 @@ public class Sale implements DisplayableItem {
         return sum;
     }
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getQuantity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

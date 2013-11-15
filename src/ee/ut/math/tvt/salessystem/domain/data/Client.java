@@ -52,4 +52,16 @@ public class Client implements DisplayableItem {
     public String toString() {
         return firstName;
     }
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getQuantity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

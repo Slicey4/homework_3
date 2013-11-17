@@ -13,12 +13,6 @@ public class StockTableModelTest {
 	}
 	
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-
-	}
-	
-	@Test
 	public void testValidateNameUniqueness(){
 		
 	}

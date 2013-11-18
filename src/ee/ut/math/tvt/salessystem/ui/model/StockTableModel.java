@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
@@ -38,6 +40,22 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * same id, then existing item's quantity will be increased.
 	 * @param stockItem
 	 */
+	 public int getColumnCount() {
+	        return headers.length;
+	    }
+	 
+	public int getColumn(StockItem item, int index){
+		List uus= new ArrayList();
+		int counter=0;
+		for (int i = 0; i < this.getColumnCount(); i++) {
+			if(uus.contains(this.getColumnValue(item, index)))
+				counter+=1;
+			else{
+				uus.add(this.getColumnValue(item, index));
+			}
+		}
+		return counter;
+	}
 	
 	public void addItem(final StockItem stockItem) {
 		
@@ -89,6 +107,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 
 		return buffer.toString();
+	}
+	public String hasEnough(StockItem item){
+		if(item.getQuantity()>5){
+			return "Yes";
+		}else
+		return "No";
 	}
 
 }

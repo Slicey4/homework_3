@@ -79,8 +79,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         rows.clear();
         rows.addAll(data);
     }
-    public List<T> getTableColumn(){
-    	return this.getTableColumn();
-    }
+  
     
 }

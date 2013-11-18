@@ -18,7 +18,7 @@ public class ClientTableModel extends SalesSystemTableModel<Client> {
 		case 0:
 			return client.getId();
 		case 1:
-			return client.getFirstName();
+			return client.getName();
 		case 2:
 			return client.getDiscountPercentage();
 		}
@@ -35,7 +35,7 @@ public class ClientTableModel extends SalesSystemTableModel<Client> {
 
 		for (final Client client : rows) {
 			buffer.append(client.getId() + "\t");
-			buffer.append(client.getFirstName() + "\t");
+			buffer.append(client.getName() + "\t");
 			buffer.append(client.getDiscountPercentage() + "\t");
 			buffer.append("\n");
 		}

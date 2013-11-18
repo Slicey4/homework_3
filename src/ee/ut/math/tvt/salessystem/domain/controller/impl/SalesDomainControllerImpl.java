@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -43,6 +42,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		String query = "from StockItem";
 		return session.createQuery(query).list();
 
+	}
+
+	public List<SoldItem>getGoods(){
+	return session.createQuery("from SOLDITME").list();
 	}
 
 	public void endSession() {

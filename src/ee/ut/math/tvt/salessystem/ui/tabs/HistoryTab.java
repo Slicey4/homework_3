@@ -3,7 +3,6 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -11,11 +10,11 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-
 
 public class HistoryTab {
 
@@ -38,7 +37,7 @@ public class HistoryTab {
 		purchase = new PurchaseInfoTableModel();
 
 		purchases = new JTable(model.getHistoryTableModel());
-		sold= new JTable(purchase);
+		sold = new JTable(purchase);
 
 		JScrollPane purchasesScroll = new JScrollPane(purchases);
 		purchasesScroll.setBorder(BorderFactory

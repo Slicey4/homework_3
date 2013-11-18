@@ -173,7 +173,7 @@ public class PayingWindow {
     
     private static void cancelPaying() {
         log.info("Checkout process cancelled");
-        parent.cancelPaying();
+        parent.cancelPurchaseButtonClicked();
         payingWindow.setVisible(false);
     }
 

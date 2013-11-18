@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
@@ -38,8 +39,9 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
-
+	private ArrayList<Integer> quantities;
 	private JButton addItemButton;
+	private int quantity;
 
 	// Warehouse model
 	private SalesSystemModel model;
@@ -154,10 +156,46 @@ public class PurchaseItemPanel extends JPanel {
 
 		// Create and add the button
 		addItemButton = new JButton("Add to cart");
+
 		addItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addItemEventHandler();
+				getAllQuantities();
+				// add chosen item to the shopping cart.
+				StockItem stockItem = getStockItemByBarCode();
+
+				if (stockItem != null) {
+
+					try {
+						// System.out.println(stockItem.getQuantity());
+						quantity = Integer.parseInt(quantityField.getText());
+
+						if (quantity > stockItem.getQuantity()) {
+
+							JOptionPane.showMessageDialog(null,
+									"There isn't enough " + stockItem.getName()
+											+ " in the stock.");
+
+						} else {
+							stockItem.setQuantity(stockItem.getQuantity()
+									- quantity);
+							model.getCurrentPurchaseTableModel().addItem(
+									new SoldItem(stockItem, quantity));
+						}
+					} catch (NumberFormatException ex) {
+						quantity = 1;
+
+					}
+
+				} else
+					try {
+						model.getCurrentPurchaseTableModel().addItem(
+								new SoldItem(stockItem, quantity));
+
+					} catch (NullPointerException ee) {
+						System.out.println(ee.getMessage());
+					}
 			}
+
 		});
 
 		panel.add(addItemButton);
@@ -236,8 +274,6 @@ public class PurchaseItemPanel extends JPanel {
 					model.getCurrentPurchaseTableModel().addItem(
 							new SoldItem(stockItem, quantity));
 
-				
-
 				} catch (NullPointerException e) {
 					System.out.println(e.getMessage());
 				}
@@ -245,20 +281,6 @@ public class PurchaseItemPanel extends JPanel {
 	}
 
 	// The total sum of the order
-
-	public double getTotalSumOfTheOrder() {
-		double sum = 0;
-		int row = model.getCurrentPurchaseTableModel().getRowCount();
-		int column = model.getCurrentPurchaseTableModel().getColumnCount() - 1;
-		for (int i = 0; i < row; i++) {
-			double add = (Double) model.getCurrentPurchaseTableModel()
-					.getValueAt(i, column);
-			sum += add;
-
-		}
-		return sum;
-
-	}
 
 	/**
 	 * Sets whether or not this component is enabled.
@@ -335,6 +357,26 @@ public class PurchaseItemPanel extends JPanel {
 	public void setItems(JComboBox<String> combo) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void getAllQuantities() {
+		quantities = new ArrayList<Integer>();
+		for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
+			System.out.println(x.getQuantity());
+			quantities.add(x.getQuantity());
+		}
+
+	}
+
+	public void resetQuantities() {
+		int i = -1;
+
+		for (StockItem a : model.getWarehouseTableModel().getTableRows()) {
+			i++;
+
+			a.setQuantity(quantities.get(i));
+			// System.out.println(a);
+		}
 	}
 
 }

@@ -1,11 +1,43 @@
-2009-10-18 16:20:54,517 [main] DEBUG - Strating SalesSystem with the Swing UI ..
-2009-10-18 16:20:54,985 [main] INFO - 4 items loaded from disk
-2009-10-18 16:20:55,001 [main] INFO - 1 clients loaded from disk
-2009-10-18 16:20:55,016 [main] INFO - 7 Sales loaded from disk
-2009-10-18 16:20:55,859 [main] INFO - SalesSystem started
-2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Layz krõpsud
-2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Õlle vorstikesed
-2009-10-18 16:22:11,270 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Pähklid
-2009-10-18 16:22:11,286 [AWT-EventQueue-0] DEBUG -  === Comparing: kohv vs. Kõrsikud 
-2009-10-18 16:22:11,332 [AWT-EventQueue-0] INFO - Added new stockItem : kohv
-2009-10-18 16:22:16,200 [AWT-EventQueue-0] INFO - SalesSystem closed
+2013-11-20 11:34:58,321 [main] INFO - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-11-20 11:34:58,391 [main] INFO - HHH000412: Hibernate Core {4.1.7.Final}
+2013-11-20 11:34:58,415 [main] INFO - HHH000206: hibernate.properties not found
+2013-11-20 11:34:58,426 [main] INFO - HHH000021: Bytecode provider name : javassist
+2013-11-20 11:34:58,693 [main] INFO - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-11-20 11:34:58,694 [main] INFO - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-11-20 11:34:59,215 [main] ERROR - Initial SessionFactory creation failed.
+java.lang.IncompatibleClassChangeError: class org.hibernate.cfg.ExtendedMappings has interface org.hibernate.cfg.Mappings as super class
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(Unknown Source)
+	at java.security.SecureClassLoader.defineClass(Unknown Source)
+	at java.net.URLClassLoader.defineClass(Unknown Source)
+	at java.net.URLClassLoader.access$100(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(Unknown Source)
+	at java.security.SecureClassLoader.defineClass(Unknown Source)
+	at java.net.URLClassLoader.defineClass(Unknown Source)
+	at java.net.URLClassLoader.access$100(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.hibernate.cfg.Configuration.createMappings(Configuration.java:870)
+	at org.hibernate.cfg.Configuration.addPackage(Configuration.java:776)
+	at org.hibernate.cfg.Configuration.parseMappingElement(Configuration.java:2130)
+	at org.hibernate.cfg.Configuration.parseSessionFactory(Configuration.java:2087)
+	at org.hibernate.cfg.Configuration.doConfigure(Configuration.java:2067)
+	at org.hibernate.cfg.Configuration.doConfigure(Configuration.java:2020)
+	at org.hibernate.cfg.Configuration.configure(Configuration.java:1935)
+	at org.hibernate.cfg.Configuration.configure(Configuration.java:1914)
+	at ee.ut.math.tvt.salessystem.util.HibernateUtil.<clinit>(HibernateUtil.java:24)
+	at ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl.<init>(SalesDomainControllerImpl.java:19)
+	at ee.ut.math.tvt.slicey4.Intro.main(Intro.java:19)

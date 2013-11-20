@@ -16,13 +16,13 @@
 	<property name="jar.dir" value="${build.dir}/jar" />
 
 	<property name="lib.dir" value="${basedir}/lib" />
-	
+
 	<!-- Source -->
-	<property name="test.dir"   value="${basedir}/test"/>
-	
+	<property name="test.dir" value="${basedir}/test" />
+
 	<!-- Build -->
-	<property name="build.test.dir"       value="${build.dir}/test"/>
-		
+	<property name="build.test.dir" value="${build.dir}/test" />
+
 	<!-- database variables -->
 	<property name="data.dir" value="${basedir}/data" />
 	<property name="db.file" value="${data.dir}/POSdb" />
@@ -32,117 +32,66 @@
 
 
 	<path id="libs">
-			<fileset dir="${lib.dir}">
-				<include name="*.jar"/>
-			</fileset>
-		</path>
-	
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
 	<path id="properties">
 		<dirset dir="." />
 	</path>
-	<path id="compile.classpath">
-		<fileset dir="lib">
-			<include name="*.jar" />
-		</fileset>
-		<path id="properties">
-			<dirset dir="." />
-		</path>
-	</path>
 
-	<path id="POS.classpath">
-		<pathelement location="${classes.dir}" />
-		<!-- configuration -->
-		<fileset dir="lib">
-			<include name="*.jar" />
-		</fileset>
-	</path>
 
 	<path id="run.classpath">
-		<pathelement location="${build.classes.dir}" />
+		<pathelement location="${classes.dir}" />
 		<!-- configuration -->
 		<pathelement location="${conf.dir}" />
-		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
-
-		<fileset dir="${lib.hibernate.dir}">
-			<include name="*.jar" />
-		</fileset>
+		<path refid="compile.classpath" />
 	</path>
 
 	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
-		<fileset dir="${lib.hibernate.dir}">
-			<include name="*.jar" />
+			<include name="**/*.jar" />
 		</fileset>
 	</path>
 
-	<path id="test-classpath">
-			<fileset dir="${lib.dir}">
-				<include name="*.jar"/>
-			</fileset>
-		    <pathelement path="${build.classes.dir}/" />
-			<pathelement path="${build.test.dir}/" />
-		</path>
+	<path id="test.classpath">
+		<pathelement path="${build.test.dir}/" />
+		<path refid="run.classpath" />
+	</path>
 
 
-		<target name="init" description="Initialize">
-			<mkdir dir="${build.dir}"/>
-			<mkdir dir="${build.classes.dir}"/>
-			<mkdir dir="${build.test.dir}"/>
-		</target>
 
-	<target name="build" depends="init" description="Build the system">
+
+	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
-		<copy file="${basedir}/src/log4j.properties" todir="${classes.dir}" overwrite="true" />
-		<javac 
-			srcdir="${src.dir}" 
-			destdir="${classes.dir}" 
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" 
 			debug="true" 
 			debuglevel="${debuglevel}" 
 			encoding="utf-8" 
 			compiler="modern" 
 			target="${target}" 
 			source="${source}" 
-			includeantruntime="false"
-			classpathref="libs">
-        	
-			<classpath refid="compile.classpath" />
-		</javac>
+			includeantruntime="false" 
+			classpathref="compile.classpath" />
+		<copy file="${basedir}/src/log4j.properties" todir="${classes.dir}" overwrite="true" />
+		<copy file="${basedir}/src/hibernate.cfg.xml" todir="${classes.dir}" overwrite="true" />
 	</target>
 
 	<target name="build-tests" depends="build" description="Build the system">
-		<javac
-            srcdir="${test.dir}"
-            destdir="${build.test.dir}"
-            debug="true"
-            debuglevel="lines,vars,source"
-            encoding="utf-8"
-            compiler="modern"
-            target="1.5"
-            source="1.5"
-        	classpathref="libs"
-        >
-			<classpath>
-				<pathelement path="${build.classes.dir}" />
-			</classpath>
-		</javac>
+		<mkdir dir="${build.test.dir}" />
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.5" source="1.5" classpathref="run.classpath" />
 	</target>
-	
+
 	<target name="clean">
 		<delete dir="${build.dir}" />
 	</target>
 
 
 	<target name="run" depends="build">
-	<!-- classpathref="libs" -->
-		<java classname="ee.ut.math.tvt.slicey4.Intro" 
-			classpathref="POS.classpath" 
-			
-			fork="yes">
+		<!-- classpathref="libs" -->
+		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="run.classpath" fork="yes">
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 		</java>
@@ -150,18 +99,16 @@
 
 	<target name="test" depends="build-tests" description="Run the template application">
 
-			<junit>
-				<classpath refid="test-classpath" />
+		<junit>
+			<classpath refid="test.classpath" />
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${build.test.dir}" includes="**/*.class" />
+			</batchtest>
+		</junit>
+	</target>
 
-				<formatter type="brief" usefile="false" />
-				<batchtest>
-					<fileset dir="${build.test.dir}" includes="**/*.class" />
-				</batchtest>
-			</junit>
 
-
-		</target>
-	
 	<target name="dist" depends="build">
 
 		<propertyfile file="version.properties" comment="version properties">
@@ -186,8 +133,6 @@
 
 
 	<target name="jrun" depends="dist">
-		<java classname="ee.ut.math.tvt.slicey4.Intro" classpathref="POS.classpath" fork="yes" />
-		<java classname="ee.ut.math.tvt.salessystem.SalesSystem" classpathref="POS.classpath" fork="yes" />
 		<java jar="${jar.dir}/${app.team.name}.jar" fork="true" />
 
 	</target>
@@ -246,23 +191,15 @@
 	</target>
 
 	<target name="dbmanager" description="Start the HSQLDB manager">
-	        <java
-	            classname="org.hsqldb.util.DatabaseManagerSwing"
-	            classpathref="run.classpath"
-	            fork="yes"
-	        >
-	            <arg line="--user sa --url ${db.url}" />
-	        </java>
-	    </target>
+		<java classname="org.hsqldb.util.DatabaseManagerSwing" classpathref="run.classpath" fork="yes">
+			<arg line="--user sa --url ${db.url}" />
+		</java>
+	</target>
 
-	    <target name="startdb" description="Start the HSQLDB with the default params">
-	        <java
-	            classname="org.hsqldb.Server"
-	            classpathref="run.classpath"
-	            fork="yes"
-	        >
-	            <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
-	        </java>
+	<target name="startdb" description="Start the HSQLDB with the default params">
+		<java classname="org.hsqldb.Server" classpathref="run.classpath" fork="yes">
+			<arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" />
+		</java>
 	</target>
 
 

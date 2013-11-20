@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.util;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -23,7 +24,8 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			configuration.configure();
 
-			serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+			serviceRegistry = new ServiceRegistryBuilder().applySettings(
+					configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
 		} catch (Throwable ex) {
@@ -45,7 +47,11 @@ public class HibernateUtil {
 
 	public static void closeSession() throws HibernateException {
 		if (session != null)
-			session.close();
+			try {
+				session.close();
+			} catch (SessionException ee) {
+				ee.printStackTrace();
+			}
 		session = null;
 	}
 

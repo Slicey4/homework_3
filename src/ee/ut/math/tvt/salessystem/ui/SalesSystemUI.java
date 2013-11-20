@@ -15,6 +15,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.log4j.Logger;
+import org.hibernate.SessionException;
 
 /**
  * Graphical user interface of the sales system.
@@ -71,7 +72,10 @@ public class SalesSystemUI extends JFrame {
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
+    	  try{
     	domainController.endSession();
+      }catch(SessionException ee){
+    	  ee.printStackTrace();}
       }
     });
   }

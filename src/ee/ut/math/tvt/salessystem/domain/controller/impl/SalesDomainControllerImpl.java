@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.domain.controller.impl;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionException;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
@@ -22,12 +23,11 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 			throws VerificationFailedException {
 		// XXX - Save purchase
 	}
-	   public void submitCurrentPurchase(List<SoldItem> goods,
-               SalesSystemModel model) throws VerificationFailedException {
-      
-   
-}
-	
+
+	public void submitCurrentPurchase(List<SoldItem> goods,
+			SalesSystemModel model) throws VerificationFailedException {
+
+	}
 
 	public void cancelCurrentPurchase() throws VerificationFailedException {
 		// XXX - Cancel current purchase
@@ -44,14 +44,18 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	}
 
-	public List<SoldItem>getGoods(){
-	return session.createQuery("from SOLDITME").list();
+	public List<SoldItem> getGoods() {
+		return session.createQuery("from SOLDITME").list();
 	}
 
 	public void endSession() {
-
-		HibernateUtil.closeSession();
-		System.exit(0);
+		try {
+			HibernateUtil.closeSession();
+		} catch (SessionException ee) {
+			ee.printStackTrace();
+		} finally {
+			System.exit(0);
+		}
 
 	}
 

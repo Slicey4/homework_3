@@ -23,8 +23,6 @@ public class SalesSystemModel {
 	// History model
 	private HistoryTableModel historyTableModel;
 
-	// Client model
-	private ClientTableModel clientTableModel;
 
 	private final SalesDomainController domainController;
 
@@ -42,7 +40,7 @@ public class SalesSystemModel {
 
 		historyTableModel = new HistoryTableModel();
 
-		clientTableModel = new ClientTableModel();
+
 
 		// populate stock model with data from the database
 		warehouseTableModel.populateWithData(domainController
@@ -63,9 +61,6 @@ public class SalesSystemModel {
 		return historyTableModel;
 	}
 
-	public TableModel getClientTableModel() {
-		return clientTableModel;
 
-	}
 	
 }

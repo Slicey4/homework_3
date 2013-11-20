@@ -1,10 +1,10 @@
-2013-11-19 14:28:36,057 [main] INFO - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
-2013-11-19 14:28:36,089 [main] INFO - HHH000412: Hibernate Core {4.1.7.Final}
-2013-11-19 14:28:36,100 [main] INFO - HHH000206: hibernate.properties not found
-2013-11-19 14:28:36,104 [main] INFO - HHH000021: Bytecode provider name : javassist
-2013-11-19 14:28:36,218 [main] INFO - HHH000043: Configuring from resource: /hibernate.cfg.xml
-2013-11-19 14:28:36,219 [main] INFO - HHH000040: Configuration resource: /hibernate.cfg.xml
-2013-11-19 14:28:36,452 [main] ERROR - Initial SessionFactory creation failed.
+2013-11-20 11:34:58,321 [main] INFO - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-11-20 11:34:58,391 [main] INFO - HHH000412: Hibernate Core {4.1.7.Final}
+2013-11-20 11:34:58,415 [main] INFO - HHH000206: hibernate.properties not found
+2013-11-20 11:34:58,426 [main] INFO - HHH000021: Bytecode provider name : javassist
+2013-11-20 11:34:58,693 [main] INFO - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-11-20 11:34:58,694 [main] INFO - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-11-20 11:34:59,215 [main] ERROR - Initial SessionFactory creation failed.
 java.lang.IncompatibleClassChangeError: class org.hibernate.cfg.ExtendedMappings has interface org.hibernate.cfg.Mappings as super class
 	at java.lang.ClassLoader.defineClass1(Native Method)
 	at java.lang.ClassLoader.defineClass(Unknown Source)

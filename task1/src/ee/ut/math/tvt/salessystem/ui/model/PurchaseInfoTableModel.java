@@ -85,5 +85,12 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		log.debug("Added " + item.getName() + "to ComboBox ");
 		return combo;
 	}
+
+	public double getSum() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
     
 }

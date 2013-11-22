@@ -17,6 +17,7 @@ public class SalesSystem {
     /**
      * Main method.
      */
+    //
     public static void main(String args[]) {
 
         final SalesDomainController domainController = new SalesDomainControllerImpl();

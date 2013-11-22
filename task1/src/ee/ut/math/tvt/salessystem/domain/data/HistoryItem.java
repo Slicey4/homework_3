@@ -40,18 +40,11 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	public HistoryItem(List<SoldItem> goods) {
 		this.goods = new HashSet<SoldItem>();
 		this.goods.addAll(goods);
-		id = counter++;
 		this.date = new SimpleDateFormat("yyyy-MM-dd").format(Calendar
 				.getInstance().getTime());
 		this.time = new SimpleDateFormat("HH:mm:ss").format(Calendar
-				.getInstance().getTime());
-		price = 0.0;
-
-		for (int i = 0; i < goods.size(); i++) {
-			price += goods.get(i).getPrice();
-		}
-		this.id = 0;
-
+				.getInstance().getTime());		
+		
 	}
 
 	public String getDate() {

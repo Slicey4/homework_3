@@ -45,7 +45,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	}
 
 	public List<SoldItem> getGoods() {
-		return session.createQuery("from SOLDITME").list();
+		return session.createQuery("from HistoryItem").list();
 	}
 
 	public void endSession() {

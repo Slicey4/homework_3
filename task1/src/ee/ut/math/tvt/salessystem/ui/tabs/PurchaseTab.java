@@ -278,18 +278,26 @@ public class PurchaseTab extends JDialog {
 							.getTableRows();
 
 					HistoryItem item = new HistoryItem(a);
+					item.setPrice(sum);
+					
 
 					model.getHistoryTableModel().addItem(item);
 					Session session = HibernateUtil.currentSession();
 
 					session.getTransaction().begin();
-
+					
 					for (SoldItem i : a) {
+						
 						i.getStockItem().setQuantity(
 								i.getStockItem().getQuantity());
 						i.setHistoryItem(item);
+						
 						session.update(i.getStockItem());
+										
+						
 					}
+					session.save(item);
+					
 					session.getTransaction().commit();
 
 					domainController.submitCurrentPurchase(a);
@@ -301,6 +309,7 @@ public class PurchaseTab extends JDialog {
 				}
 			} else {
 				// log.info(n);
+				resetQuantities();
 				domainController.cancelCurrentPurchase();
 			}
 		} catch (VerificationFailedException e1) {

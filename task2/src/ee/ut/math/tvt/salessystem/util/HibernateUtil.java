@@ -40,5 +40,5 @@ public class HibernateUtil {
 			session.close();
 		session = null;
 	}
-
+//Komm
 }

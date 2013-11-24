@@ -24,14 +24,14 @@ public class ConsoleUI {
 
 	private final SalesDomainController dc;
 
-	private List<StockItem> cart;
+	private List<StockItem> goods;
 
 	private List<StockItem> warehouse;
 
 	public ConsoleUI(SalesDomainController domainController) {
 		this.dc = domainController;
 
-		cart = new ArrayList<StockItem>();
+		goods = new ArrayList<StockItem>();
 		warehouse = new ArrayList<StockItem>();
 	}
 
@@ -113,22 +113,22 @@ public class ConsoleUI {
 		else if (c[0].equals("w"))
 			showStock(warehouse);
 		else if (c[0].equals("c"))
-			showStock(cart);
+			showStock(goods);
 		else if (c[0].equals("p"))
 			try {
 			    List<SoldItem> soldItems = new ArrayList<SoldItem>();
-			    for(StockItem stockItem : cart) {
+			    for(StockItem stockItem : goods) {
 			        soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
 			    }
 				dc.submitCurrentPurchase(soldItems);
-				cart.clear();
+				goods.clear();
 			} catch (VerificationFailedException e) {
 				log.error(e.getMessage());
 			}
 		else if (c[0].equals("r")) 
 			try {
 				dc.cancelCurrentPurchase();
-				cart.clear();
+				goods.clear();
 			} catch (VerificationFailedException e) {
 				log.error(e.getMessage());
 			}
@@ -137,7 +137,7 @@ public class ConsoleUI {
 			int amount = Integer.parseInt(c[2]);
 			StockItem item = getStockItemById(idx);
 			item.setQuantity(Math.min(amount, item.getQuantity()));
-			cart.add(item);
+			goods.add(item);
 		}
 	}
 	

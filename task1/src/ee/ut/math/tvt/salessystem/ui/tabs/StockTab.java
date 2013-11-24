@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -138,8 +139,8 @@ public class StockTab {
 
 						}
 					}
-					model.getCurrentPurchaseTableModel().setItems(
-							PurchaseItemPanel.items, item);
+					/*model.getCurrentPurchaseTableModel().setItems(
+							PurchaseItemPanel.items, item);*/
 					session.getTransaction().commit();
 					//session.close();
 
@@ -166,6 +167,13 @@ public class StockTab {
 			e.getMessage();
 
 		} finally {
+			JComboBox<String> combo = new JComboBox<String>();
+			combo.addItem("Select one");
+			// System.out.println(model.getWarehouseTableModel().getRowCount());
+			for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
+				combo.addItem(x.getName());
+			}
+			model.getCurrentPurchaseTableModel().setItems(combo, item);
 
 		}
 

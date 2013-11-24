@@ -284,8 +284,8 @@ public class PurchaseTab extends JDialog {
 					
 					item.setPrice(sum);
 					Set<SoldItem> b=item.getGoods();
-					session.save(item);
-
+					//session.save(item);
+					
 					
 					for (SoldItem i : b) {
 						i.setHistoryItem(item);
@@ -293,11 +293,10 @@ public class PurchaseTab extends JDialog {
 						i.getStockItem().setQuantity(
 								i.getStockItem().getQuantity());
 						
-						
 						session.update(i.getStockItem());	
 					}
 					session.save(item);
-					
+									
 					
 					session.getTransaction().commit();
 

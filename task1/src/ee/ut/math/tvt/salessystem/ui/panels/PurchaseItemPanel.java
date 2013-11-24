@@ -251,7 +251,7 @@ public class PurchaseItemPanel extends JPanel {
 	/**
 	 * Add new item to the cart.
 	 */
-	public void addItemEventHandler() {
+/*	public void addItemEventHandler() {
 		// add chosen item to the shopping cart.
 		StockItem stockItem = getStockItemByBarCode();
 		if (stockItem != null) {
@@ -278,7 +278,7 @@ public class PurchaseItemPanel extends JPanel {
 					System.out.println(e.getMessage());
 				}
 		}
-	}
+	}*/
 
 	// The total sum of the order
 
@@ -355,6 +355,7 @@ public class PurchaseItemPanel extends JPanel {
 	}
 
 	public void setItems(JComboBox<String> combo) {
+		this.items=combo;
 		// TODO Auto-generated method stub
 
 	}

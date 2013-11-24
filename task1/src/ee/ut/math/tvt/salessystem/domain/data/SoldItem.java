@@ -17,36 +17,28 @@ import javax.persistence.Table;
 @Table(name = "SOLDITEM")
 public class SoldItem implements Cloneable, DisplayableItem {
 
-
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-        
-    @ManyToOne
-    @JoinColumn(name = "stockitem_id", nullable = false)
-    private StockItem stockItem;
-    
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "quantity")
-    private Integer quantity;
-    
-    @Column(name = "itemprice")
-    private double price;
-    
-    @ManyToOne
-    @JoinColumn (name="history_id")
-<<<<<<< HEAD
-    private HistoryItem historyitem;
-=======
-    private HistoryItem historyItem;
->>>>>>> 2f89c27bc5cf9504c347a63fa435bd81cdea9dbf
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "stockitem_id")
+	private StockItem stockItem;
 
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "quantity")
+	private Integer quantity;
+
+	@Column(name = "itemprice")
+	private double price;
+
+	@ManyToOne
+	//@JoinColumn(name = "history_id", nullable=false)
+	private HistoryItem historyitem;
 
 	public SoldItem(StockItem stockItem, int quantity) {
-		this.id = stockItem.getId();
 		this.stockItem = stockItem;
 		this.name = stockItem.getName();
 		this.price = stockItem.getPrice();
@@ -86,7 +78,6 @@ public class SoldItem implements Cloneable, DisplayableItem {
 		this.quantity = quantity;
 	}
 
-
 	public void setnewQuantity(Integer a) {
 		this.quantity = quantity - a;
 	}
@@ -102,22 +93,13 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	public void setStockItem(StockItem stockItem) {
 		this.stockItem = stockItem;
 	}
-	
+
 	public HistoryItem getHistoryItem() {
-<<<<<<< HEAD
 		return historyitem;
 	}
 
 	public void setHistoryItem(HistoryItem newHistoryItem) {
-		this.historyitem=newHistoryItem;
-=======
-		return historyItem;
+		this.historyitem = newHistoryItem;
 	}
-
-	public void setHistoryItem(HistoryItem newHistoryItem) {
-		this.historyItem=newHistoryItem;
->>>>>>> 2f89c27bc5cf9504c347a63fa435bd81cdea9dbf
-	}
-
 
 }

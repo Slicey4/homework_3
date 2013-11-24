@@ -53,6 +53,9 @@ public class HistoryTab {
 						SelectedPurchase();
 					}
 				});
+		
+	
+
 	
 
 		panel.add(purchasesScroll, getPurchasesScrollConstraints());

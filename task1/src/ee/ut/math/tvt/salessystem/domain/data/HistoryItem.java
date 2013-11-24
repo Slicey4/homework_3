@@ -23,8 +23,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	@Column(name = "price_total")
 	private double price;
 
-	@OneToMany(mappedBy = "history")
-	@OrderBy("id ASC")
+	@OneToMany(mappedBy = "historyItem")
 	private Set<SoldItem> goods;
 
 	@Id

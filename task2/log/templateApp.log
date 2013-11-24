@@ -1,16 +1,4 @@
-2013-11-24 17:42:24,129 [main] DEBUG - Strating SalesSystem with the Swing UI ..
-2013-11-24 17:42:24,446 [main] INFO - 5 items loaded from disk
-2013-11-24 17:42:24,453 [main] INFO - 1 clients loaded from disk
-2013-11-24 17:42:24,474 [main] INFO - 17 Sales loaded from disk
-2013-11-24 17:42:24,831 [main] INFO - SalesSystem started
-2013-11-24 17:42:26,272 [AWT-EventQueue-0] INFO - New sale process started
-2013-11-24 17:42:26,272 [AWT-EventQueue-0] INFO - New purchase started
-2013-11-24 17:42:26,282 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
-2013-11-24 17:42:27,444 [AWT-EventQueue-0] INFO - Client Toomas with ID=1 got selected.
-2013-11-24 17:42:28,798 [AWT-EventQueue-0] DEBUG - Added Layz krõpsud quantity of 1
-2013-11-24 17:42:49,183 [AWT-EventQueue-0] INFO - Sale complete
-2013-11-24 17:42:49,184 [AWT-EventQueue-0] DEBUG - Contents of the current basket:
-Id	Name	Price	Quantity	Sum	
-null	Layz krõpsud	10.5	1	10.5	
-
-2013-11-24 17:48:55,094 [AWT-EventQueue-0] INFO - SalesSystem closed
+2013-11-24 23:10:14,179 [main] DEBUG - Starting SalesSystem with the Swing UI ..
+2013-11-24 23:10:14,351 [main] INFO - 5 items loaded from disk
+2013-11-24 23:10:14,357 [main] INFO - 1 clients loaded from disk
+2013-11-24 23:10:14,376 [main] INFO - 18 Sales loaded from disk

@@ -121,20 +121,7 @@ public class StockItem implements Cloneable, DisplayableItem {
      * shown as table rows in the SalesSstemTableModel. The order of the columns
      * is: id, name, price, quantity.
      */
-    public Object getColumn(int columnIndex) {
-        switch (columnIndex) {
-        case 0:
-            return id;
-        case 1:
-            return name;
-        case 2:
-            return new Double(price);
-        case 3:
-            return new Integer(quantity);
-        default:
-            throw new RuntimeException("invalid column!");
-        }
-    }
+
 
     @Override
     public Object clone() {

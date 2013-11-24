@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -107,6 +109,11 @@ public class StockTab {
         panel.setBorder(BorderFactory.createTitledBorder("Warehouse status"));
         return panel;
     }
+    
+    public void refresh(){
+        List <StockItem> stockItems = controller.getAllStockItems();
+        model.getWarehouseTableModel().populateWithData(stockItems);
+}
 
     /**
      * Add new item to the stock.

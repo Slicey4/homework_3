@@ -66,7 +66,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 			buffer.append(headers[i] + "\t");
 		buffer.append("\n");
 
-		for (final SoldItem item : rows) {
+		for (final SoldItem item : sale.getSoldItems()) {
 			buffer.append(item.getId() + "\t");
 			buffer.append(item.getName() + "\t");
 			buffer.append(item.getPrice() + "\t");
@@ -80,7 +80,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
 
 	public SoldItem getForStockItem(long stockItemId) {
-	    for (SoldItem item : rows) {
+	    for (SoldItem item : sale.getSoldItems()) {
 	        if (item.getStockItem().getId().equals(stockItemId)) {
 	            return item;
 	        }
@@ -108,7 +108,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
         } else {
             validateQuantityInStock(soldItem.getStockItem(), soldItem.getQuantity());
-            rows.add(soldItem);
+            sale.addSoldItem(soldItem);
             log.debug("Added " + soldItem.getName()
                     + " quantity of " + soldItem.getQuantity());
         }
@@ -121,7 +121,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
      */
     public double getTotalPrice() {
         double price = 0.0;
-        for (SoldItem item : rows) {
+        for (SoldItem item : sale.getSoldItems()) {
             price += item.getSum();
         }
         return price;
@@ -143,6 +143,11 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
     public static PurchaseInfoTableModel getEmptyTable() {
         return new PurchaseInfoTableModel();
     }
+    
+    public void clear() {
+        sale.getSoldItems().clear();
+        fireTableDataChanged();
+}
 
     /**
      * Replace the current contents of the table with the SoldItems of the given Sale.
@@ -157,6 +162,16 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	public List<SoldItem> getTableRows() {
 		 List<SoldItem> rows = new ArrayList<SoldItem>(sale.getSoldItems());
          return rows;
+	}
+
+	@Override
+	public int getRowCount() {
+		return sale.getSoldItems().size();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return getColumnValue(getTableRows().get(rowIndex), columnIndex);
 	}
 
 }

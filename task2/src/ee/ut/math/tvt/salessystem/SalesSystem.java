@@ -28,7 +28,7 @@ public class SalesSystem {
             cui.run();
         } else {
             // Swing UI
-            log.debug("Strating SalesSystem with the Swing UI ..");
+            log.debug("Starting SalesSystem with the Swing UI ..");
             final SalesSystemUI ui = new SalesSystemUI(domainController);
 
             ui.setVisible(true);

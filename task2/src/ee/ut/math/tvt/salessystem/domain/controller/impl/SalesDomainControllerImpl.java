@@ -70,9 +70,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         // Begin transaction
         Transaction tx = session.beginTransaction();
 
-        // construct new sale object
-       // Sale sale = new Sale(soldItems);
-        //sale.setId(null);
         sale.setSellingTime(new Date());
 
         // set client who made the sale
@@ -92,10 +89,9 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
         // end transaction
         tx.commit();
-     
-       
+        HibernateUtil.closeSession();
+        session=HibernateUtil.currentSession();
 
-       // model.getPurchaseHistoryTableModel().addRow(sale);
 
     }
 

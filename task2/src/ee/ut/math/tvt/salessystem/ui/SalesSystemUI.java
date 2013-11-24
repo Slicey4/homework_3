@@ -41,15 +41,15 @@ public class SalesSystemUI extends JFrame {
    * @param domainController Sales domain controller.
    */
   public SalesSystemUI(SalesDomainController domainController) {
-      this.domainController = domainController;
+    this.domainController = domainController;
     this.model = new SalesSystemModel(domainController);
     domainController.setModel(model);
 
     // Create singleton instances of the tab classes
-    historyTab = new HistoryTab(model);
+    historyTab = new HistoryTab(model, domainController);
     stockTab = new StockTab(model, domainController);
     purchaseTab = new PurchaseTab(domainController, model, this);
-    clientTab = new ClientTab(model);
+    clientTab = new ClientTab(model, domainController);
 
     setTitle("Sales system");
 

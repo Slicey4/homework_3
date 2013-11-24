@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,9 +15,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
+	
+	protected List<StockItem> rows;
 
 	public StockTableModel() {
 		super(new String[] {"Id", "Name", "Price", "Quantity"});
+		this.rows=new ArrayList<StockItem>();
 	}
 
 	@Override
@@ -39,6 +43,8 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * same id, then existing item's quantity will be increased.
 	 * @param stockItem
 	 */
+	
+// might need to delete??
 	public void addItem(final StockItem stockItem) {
 		try {
 			StockItem item = getItemById(stockItem.getId());
@@ -53,6 +59,15 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 		fireTableDataChanged();
 	}
+	
+	public StockItem getItemById(long id) {
+        for (StockItem item : rows){
+                if(item.getId()==id){
+                        return item;
+                }
+        }
+        throw new NoSuchElementException();
+}
 
 	
 	
@@ -98,8 +113,30 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 
 	@Override
 	public List<StockItem> getTableRows() {
-		// TODO Auto-generated method stub
 		return rows;
 	}
+
+	public void populateWithData(List<StockItem> stockItems) {
+		rows.clear();
+        rows.addAll(stockItems);
+        fireTableDataChanged();
+		
+	}
+
+	@Override
+	public int getRowCount() {
+		return rows.size();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return getColumnValue(rows.get(rowIndex),columnIndex);
+	}
+	
+	public void addRow(StockItem stockItem) {
+        rows.add(stockItem);
+        fireTableDataChanged();
+        
+}
 
 }

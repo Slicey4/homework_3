@@ -166,8 +166,9 @@ public class PurchaseTab {
             log.debug("Contents of the current basket:\n"
                     + model.getCurrentPurchaseTableModel());
             domainController.submitCurrentPurchase(
-                    model.getCurrentPurchaseTableModel().getTableRows(),
-                    model.getSelectedClient());
+                    model.getCurrentPurchaseTableModel().getSale());
+                    //getTableRows(),
+                    //model.getSelectedClient());
             endSale();
             model.getCurrentPurchaseTableModel().clear();
         } catch (VerificationFailedException e1) {
@@ -220,6 +221,7 @@ public class PurchaseTab {
         }
         // update selected client
         model.setSelectedClient(currentClient);
+        
     }
 
 

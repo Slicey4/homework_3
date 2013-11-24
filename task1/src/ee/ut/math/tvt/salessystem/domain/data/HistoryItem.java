@@ -30,7 +30,6 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	static long counter = 0;
 
 	public HistoryItem() {
 		goods = new HashSet<SoldItem>();
@@ -99,6 +98,12 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	public int getQuantity() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	public void addGoods(SoldItem item){
+		item.setHistoryItem(this);
+		goods.add(item);
+		
+		
 	}
 
 }

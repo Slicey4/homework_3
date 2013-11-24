@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.swing.table.AbstractTableModel;
 

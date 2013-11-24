@@ -1,4 +1,4 @@
-2013-11-24 23:10:14,179 [main] DEBUG - Starting SalesSystem with the Swing UI ..
-2013-11-24 23:10:14,351 [main] INFO - 5 items loaded from disk
-2013-11-24 23:10:14,357 [main] INFO - 1 clients loaded from disk
-2013-11-24 23:10:14,376 [main] INFO - 18 Sales loaded from disk
+2013-11-24 23:23:32,926 [main] DEBUG - Starting SalesSystem with the Swing UI ..
+2013-11-24 23:23:33,097 [main] INFO - 5 items loaded from disk
+2013-11-24 23:23:33,102 [main] INFO - 1 clients loaded from disk
+2013-11-24 23:23:33,116 [main] INFO - 18 Sales loaded from disk

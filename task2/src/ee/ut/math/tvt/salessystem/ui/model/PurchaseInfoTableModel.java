@@ -139,7 +139,6 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
     }
 
-
     public static PurchaseInfoTableModel getEmptyTable() {
         return new PurchaseInfoTableModel();
     }

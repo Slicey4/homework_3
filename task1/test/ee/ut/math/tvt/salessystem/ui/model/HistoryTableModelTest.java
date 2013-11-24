@@ -25,21 +25,22 @@ public class HistoryTableModelTest {
             goods.add(new SoldItem(new StockItem((long) 7, "vesi", 1.50, 10), 6));
            
             historyItem = new HistoryItem(goods);
-            
             htm = new HistoryTableModel();
             htm.addItem(historyItem);
     }
     
     @Test
-    public void testAddHistoryItem() {
+    public void testAddItem() {
             assertEquals(historyItem.getDate(), htm.getTableRows().get(1).getDate());
             assertEquals(historyItem.getTime(), htm.getTableRows().get(2).getTime());   
+            assertEquals(historyItem.getPrice(), htm.getTableRows().get(3).getPrice(), 0.0001); 
     }
     
     @Test
     public void testGetColumnValue() {
             assertEquals(historyItem.getDate(), htm.getColumnValue(historyItem, 1));
             assertEquals(historyItem.getTime(), htm.getColumnValue(historyItem, 2));
+            assertEquals(historyItem.getPrice(), (Double) htm.getColumnValue(historyItem, 3), 0.0001);
             
     }
 

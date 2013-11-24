@@ -87,8 +87,11 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	}
 
 	public double getSum() {
-		// TODO Auto-generated method stub
-		return 0;
+		double summa = 0.0;
+        for (SoldItem soldItem : getTableRows()) {
+                summa += soldItem.getSum();
+        }
+        return summa;
 	}
 
 	

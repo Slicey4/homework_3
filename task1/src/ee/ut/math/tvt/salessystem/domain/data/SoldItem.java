@@ -36,6 +36,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
     private double price;
     
     @ManyToOne
+    @JoinColumn (name="history_id")
     private HistoryItem history;
 
 

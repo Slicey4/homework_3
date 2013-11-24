@@ -24,6 +24,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	private double price;
 
 	@OneToMany(mappedBy = "history")
+	@OrderBy("id ASC")
 	private Set<SoldItem> goods;
 
 	@Id

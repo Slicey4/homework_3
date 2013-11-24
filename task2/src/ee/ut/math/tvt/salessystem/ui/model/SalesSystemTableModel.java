@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import ee.ut.math.tvt.salessystem.domain.data.DisplayableItem;
 
+
 /**
  * Generic table model implementation suitable for extending.
  */
@@ -59,9 +60,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         throw new NoSuchElementException();
     }
 
-    public List<T> getTableRows() {
-        return rows;
-    }
+    public abstract List<T> getTableRows();
 
     public void clear() {
         rows = new ArrayList<T>();

@@ -37,7 +37,11 @@ public class SoldItem implements Cloneable, DisplayableItem {
     
     @ManyToOne
     @JoinColumn (name="history_id")
+<<<<<<< HEAD
     private HistoryItem historyitem;
+=======
+    private HistoryItem historyItem;
+>>>>>>> 2f89c27bc5cf9504c347a63fa435bd81cdea9dbf
 
 
 
@@ -100,11 +104,19 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	}
 	
 	public HistoryItem getHistoryItem() {
+<<<<<<< HEAD
 		return historyitem;
 	}
 
 	public void setHistoryItem(HistoryItem newHistoryItem) {
 		this.historyitem=newHistoryItem;
+=======
+		return historyItem;
+	}
+
+	public void setHistoryItem(HistoryItem newHistoryItem) {
+		this.historyItem=newHistoryItem;
+>>>>>>> 2f89c27bc5cf9504c347a63fa435bd81cdea9dbf
 	}
 
 

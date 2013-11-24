@@ -141,7 +141,7 @@ public class StockTab {
 					model.getCurrentPurchaseTableModel().setItems(
 							PurchaseItemPanel.items, item);
 					session.getTransaction().commit();
-					session.close();
+					//session.close();
 
 				} catch (NullPointerException e) {
 

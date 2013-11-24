@@ -31,9 +31,9 @@ public class HistoryTableModelTest {
     
     @Test
     public void testAddItem() {
-            assertEquals(historyItem.getDate(), htm.getTableRows().get(1).getDate());
-            assertEquals(historyItem.getTime(), htm.getTableRows().get(2).getTime());   
-            assertEquals(historyItem.getPrice(), htm.getTableRows().get(3).getPrice(), 0.0001); 
+            assertEquals(historyItem.getDate(), htm.getTableRows().get(0).getDate());
+            assertEquals(historyItem.getTime(), htm.getTableRows().get(0).getTime());   
+            assertEquals(historyItem.getPrice(), htm.getTableRows().get(0).getPrice(), 0.0001); 
     }
     
     @Test

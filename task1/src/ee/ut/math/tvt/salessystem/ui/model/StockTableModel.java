@@ -109,10 +109,10 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		return buffer.toString();
 	}
 	public String hasEnough(StockItem item){
-		if(item.getQuantity()>5){
+		if ( (int) this.getColumnValue( item, 3) > 5){
 			return "Yes";
 		}else
-		return "No";
+			return "No";
 	}
 
 }

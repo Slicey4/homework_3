@@ -42,7 +42,7 @@ public class PurchaseInfoTableModelTest {
     @Test
     public void testGetSumWithOneItem() {
    	 	purchaseInfoTableModel.addItem(item1);
-            assertEquals(3.40, purchaseInfoTableModel.getSum(), 0.0001);
+            assertEquals(10.2, purchaseInfoTableModel.getSum(), 0.0001);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PurchaseInfoTableModelTest {
    	 	purchaseInfoTableModel.addItem(item1);
    	 	purchaseInfoTableModel.addItem(item2);
    	 	purchaseInfoTableModel.addItem(item3);
-        assertEquals(6.90, purchaseInfoTableModel.getSum(), 0.0001);
+        assertEquals(27.2, purchaseInfoTableModel.getSum(), 0.0001);
     }
 
 }

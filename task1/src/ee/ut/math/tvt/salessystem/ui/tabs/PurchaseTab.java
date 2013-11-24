@@ -294,6 +294,7 @@ public class PurchaseTab extends JDialog {
 								i.getStockItem().getQuantity());
 						
 						session.update(i.getStockItem());	
+						session.save(i);
 					}
 					session.save(item);
 									

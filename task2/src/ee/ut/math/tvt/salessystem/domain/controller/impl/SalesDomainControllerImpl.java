@@ -68,7 +68,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     public void registerSale(Sale sale) {
 
         // Begin transaction
-        Transaction tx = session.beginTransaction();
+        Transaction transac = session.beginTransaction();
 
         sale.setSellingTime(new Date());
 
@@ -88,7 +88,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         session.save(sale);
 
         // end transaction
-        tx.commit();
+        transac.commit();
         HibernateUtil.closeSession();
         session=HibernateUtil.currentSession();
 

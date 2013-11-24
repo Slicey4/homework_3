@@ -35,7 +35,7 @@ public class PurchaseItemPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
-	public static JComboBox<String> items;
+	public JComboBox<String> items;
 	private JTextField barCodeField;
 	private JTextField quantityField;
 	private JTextField priceField;
@@ -91,16 +91,11 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
 		// Combo items
-		JComboBox<String> combo = new JComboBox<String>();
-		combo.addItem("Select one");
-		// System.out.println(model.getWarehouseTableModel().getRowCount());
-		for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
-			combo.addItem(x.getName());
-		}
+		getItemsFromWarehouse();
 
 		// Initialize the textfields
 
-		items = combo;
+		
 		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		priceField = new JTextField();
@@ -251,7 +246,7 @@ public class PurchaseItemPanel extends JPanel {
 	/**
 	 * Add new item to the cart.
 	 */
-/*	public void addItemEventHandler() {
+	public void addItemEventHandler() {
 		// add chosen item to the shopping cart.
 		StockItem stockItem = getStockItemByBarCode();
 		if (stockItem != null) {
@@ -278,7 +273,7 @@ public class PurchaseItemPanel extends JPanel {
 					System.out.println(e.getMessage());
 				}
 		}
-	}*/
+	}
 
 	// The total sum of the order
 
@@ -303,6 +298,16 @@ public class PurchaseItemPanel extends JPanel {
 		quantityField.setText("1");
 		priceField.setText("");
 
+	}
+	public void getItemsFromWarehouse(){
+		JComboBox<String> combo = new JComboBox<String>();
+		combo.addItem("Select one");
+		// System.out.println(model.getWarehouseTableModel().getRowCount());
+		for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
+			combo.addItem(x.getName());
+		}
+		this.items=combo;
+		
 	}
 
 	/*
@@ -355,8 +360,7 @@ public class PurchaseItemPanel extends JPanel {
 	}
 
 	public void setItems(JComboBox<String> combo) {
-		this.items=combo;
-		// TODO Auto-generated method stub
+		items=combo;
 
 	}
 

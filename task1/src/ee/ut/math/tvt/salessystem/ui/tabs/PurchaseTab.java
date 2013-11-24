@@ -21,7 +21,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -277,28 +276,22 @@ public class PurchaseTab extends JDialog {
 					// actually submit item to history
 					List<SoldItem> a = model.getCurrentPurchaseTableModel()
 							.getTableRows();
-					Session session = HibernateUtil.currentSession();
-					session.getTransaction().begin();
+
 					HistoryItem item = new HistoryItem(a);
-					model.getHistoryTableModel().addItem(item);
-					
 					item.setPrice(sum);
-					Set<SoldItem> b=item.getGoods();
-					//session.save(item);
-					
-					
-					for (SoldItem i : b) {
-						i.setHistoryItem(item);
-						
+
+					model.getHistoryTableModel().addItem(item);
+					Session session = HibernateUtil.currentSession();
+
+					session.getTransaction().begin();
+
+					for (SoldItem i : a) {
 						i.getStockItem().setQuantity(
 								i.getStockItem().getQuantity());
-						
-						session.update(i.getStockItem());	
-						session.save(i);
+						i.setHistoryItem(item);
+						session.update(i.getStockItem());
 					}
 					session.save(item);
-									
-					
 					session.getTransaction().commit();
 
 					domainController.submitCurrentPurchase(a);
@@ -310,7 +303,6 @@ public class PurchaseTab extends JDialog {
 				}
 			} else {
 				// log.info(n);
-				resetQuantities();
 				domainController.cancelCurrentPurchase();
 			}
 		} catch (VerificationFailedException e1) {

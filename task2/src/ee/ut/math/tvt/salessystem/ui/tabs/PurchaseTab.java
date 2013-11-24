@@ -165,7 +165,7 @@ public class PurchaseTab {
 
             log.debug("Contents of the current basket:\n"
                     + model.getCurrentPurchaseTableModel());
-            domainController.submitCurrentPurchase(
+            domainController.registerSale(
                     model.getCurrentPurchaseTableModel().getSale());
                     //getTableRows(),
                     //model.getSelectedClient());

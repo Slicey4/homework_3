@@ -65,7 +65,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     }
 
 
-    public void submitCurrentPurchase(Sale sale) {
+    public void registerSale(Sale sale) {
 
         // Begin transaction
         Transaction tx = session.beginTransaction();

@@ -53,7 +53,7 @@ public interface SalesDomainController {
      * @throws VerificationFailedException
      */
     //public void submitCurrentPurchase(List<SoldItem> goods, Client client)
-    public void submitCurrentPurchase(Sale sale)
+    public void registerSale(Sale sale)
             throws VerificationFailedException;
 
 

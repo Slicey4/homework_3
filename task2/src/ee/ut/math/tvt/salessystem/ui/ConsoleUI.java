@@ -139,7 +139,7 @@ public class ConsoleUI {
                 Sale sale = new Sale(soldItems);
                 sale.setClient(selectedClient);
                 sale.setSellingTime(new Date());
-                dc.submitCurrentPurchase(sale);
+                dc.registerSale(sale);
                 cart.clear();
             } catch (VerificationFailedException e) {
                 log.error(e.getMessage());

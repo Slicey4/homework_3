@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
 
-<project basedir="." name="POS">
+<project basedir="." name="task1">
 	<property name="main-class" value="ee.ut.math.tvt.slicey4.Intro" />
 	<property environment="env" />
 	<property name="debuglevel" value="source,lines,vars" />

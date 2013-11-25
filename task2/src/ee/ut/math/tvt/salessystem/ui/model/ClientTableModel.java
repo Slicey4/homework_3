@@ -54,20 +54,34 @@ public class ClientTableModel extends SalesSystemTableModel<Client> {
 		return rows;
 	}
 
-	@Override
-	public int getRowCount() {
-		return rows.size();
-	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return getColumnValue(rows.get(rowIndex), columnIndex);
 	}
 	
+	@Override
+    public void addRow(Client row) {
+            rows.add(row);
+            fireTableDataChanged();
+    }
+	
 	public void populateWithData(List<Client> clients) {
         rows.clear();
         rows.addAll(clients);
         fireTableDataChanged();
 }
+
+	@Override
+	public void clear() {
+		rows.clear();
+        fireTableDataChanged();
+		
+	}
+
+	@Override
+	public Client getRow(int index) {
+		return getTableRows().get(index);
+	}
 		
 }

@@ -290,8 +290,11 @@ public class PurchaseTab extends JDialog {
 								i.getStockItem().getQuantity());
 						i.setHistoryItem(item);
 						session.update(i.getStockItem());
+						session.save(item);
 					}
-					session.save(item);
+					//session.save(item);
+					//session.save(a);
+					
 					session.getTransaction().commit();
 
 					domainController.submitCurrentPurchase(a);
@@ -303,6 +306,7 @@ public class PurchaseTab extends JDialog {
 				}
 			} else {
 				// log.info(n);
+				resetQuantities();
 				domainController.cancelCurrentPurchase();
 			}
 		} catch (VerificationFailedException e1) {

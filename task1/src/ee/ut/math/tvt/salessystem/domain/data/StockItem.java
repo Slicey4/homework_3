@@ -141,4 +141,17 @@ public class StockItem implements Cloneable, DisplayableItem {
 		return item;
 	}
 
+	public boolean equals(Object o) {
+		StockItem item = (StockItem) o;
+		if (this.getId() != item.getId()) return false;
+		if (this.getName() == null && item.getName() != null) return false;
+		if (!(this.getName() == null && item.getName() == null) && !this.getName().equals(item.getName())) return false;
+		if (this.getDescription() == null && item.getDescription() != null) return false;
+		if (!(this.getDescription() == null && item.getDescription() == null) && !this.getDescription().equals(item.getDescription())) return false;
+		if (this.getPrice() != item.getPrice()) return false;
+		if (this.getQuantity() != item.getQuantity()) return false;
+		return true;
+		
+	}
+
 }

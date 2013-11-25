@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class StockItemTest {
-	StockItem item1, item2;
+	StockItem item1;
 	
 	@Before
 	public void setUp() {
@@ -14,12 +14,12 @@ public class StockItemTest {
 	}
 	
 	@Test
-	public void	testClone(){
+	public void	testEquals(){
 		assertEquals(item1, item1.clone());
 	}
 	
 	@Test
 	public void testGetColumn(){
-		assertEquals(5, item2.getColumn(3));
+		assertEquals(5, item1.getColumn(3));
 	}
 }

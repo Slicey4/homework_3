@@ -21,7 +21,7 @@ public class SalesSystemTableModelTest {
 		 lst = new ArrayList<StockItem>();
              table = new StockTableModel();
              stockItem1 = new StockItem((long) 1, "siider", 2.00, 10);
-             stockItem2 = new StockItem((long) 2, "õlu", 3.00, 10);
+             stockItem2 = new StockItem((long) 2, "olu", 3.00, 10);
              lst.add(stockItem1);
      }
 

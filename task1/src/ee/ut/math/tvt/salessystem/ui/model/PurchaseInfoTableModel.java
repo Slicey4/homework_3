@@ -62,7 +62,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
      */
     public void addItem(final SoldItem item) {
         for (int i = 0; i < rows.size(); i++) {
-    		if (rows.get(i).getId() == item.getId()) {
+    		if (rows.get(i).getStockItem().getId() == item.getStockItem().getId()) {
     			SoldItem existingItem = rows.get(i);
         		existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
         		fireTableDataChanged(existingItem);

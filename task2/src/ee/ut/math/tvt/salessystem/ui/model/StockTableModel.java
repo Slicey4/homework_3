@@ -123,20 +123,23 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		
 	}
 
-	@Override
-	public int getRowCount() {
-		return rows.size();
-	}
 
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return getColumnValue(rows.get(rowIndex),columnIndex);
-	}
-	
 	public void addRow(StockItem stockItem) {
         rows.add(stockItem);
         fireTableDataChanged();
         
 }
+
+	@Override
+	public void clear() {
+		rows.clear();
+        fireTableDataChanged();
+		
+	}
+
+	@Override
+	public StockItem getRow(int index) {
+		return getTableRows().get(index);
+	}
 
 }

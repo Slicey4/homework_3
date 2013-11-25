@@ -68,17 +68,15 @@ public class SalesDomainControllerImpl implements SalesDomainController {
     public void registerSale(Sale sale) {
 
         // Begin transaction
-        Transaction transac = session.beginTransaction();
+        Transaction tx = session.beginTransaction();
 
         sale.setSellingTime(new Date());
 
-        // set client who made the sale
-        //sale.setClient(currentClient);
 
         // Reduce quantities of stockItems in warehouse
         for (SoldItem item : sale.getSoldItems()) {
             // Associate with current sale
-           //item.setSale(sale);
+            item.setSale(sale);
 
             StockItem stockItem = getStockItem(item.getStockItem().getId());
             stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
@@ -88,7 +86,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         session.save(sale);
 
         // end transaction
-        transac.commit();
+        tx.commit();
+        model.getPurchaseHistoryTableModel().addRow(sale);
         HibernateUtil.closeSession();
         session=HibernateUtil.currentSession();
 
@@ -107,12 +106,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 
     public void cancelCurrentPurchase() {
-        // XXX - Cancel current purchase
         log.info("Current purchase canceled");
     }
 
     public void startNewPurchase() {
-        // XXX - Start new purchase
         log.info("New purchase started");
     }
 

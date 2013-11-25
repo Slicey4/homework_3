@@ -57,7 +57,6 @@ public class HistoryTab {
 }
 
 
-
     private Component drawHistoryGeneralTable() {
 
         JTable table = new JTable(model.getPurchaseHistoryTableModel());

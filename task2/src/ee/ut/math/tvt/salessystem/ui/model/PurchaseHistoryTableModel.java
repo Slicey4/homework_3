@@ -61,11 +61,6 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 	}
 
 	@Override
-	public int getRowCount() {
-		return rows.size();
-	}
-
-	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return getColumnValue(rows.get(rowIndex), columnIndex);
 	}
@@ -79,4 +74,17 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 	public Sale getRow(int selectedRow) {
         return rows.get(selectedRow);
 }
+
+	public void addRow(Sale sale) {
+		rows.add(sale);
+        fireTableDataChanged();
+		
+	}
+
+	@Override
+	public void clear() {
+		rows.clear();
+        fireTableDataChanged();
+		
+	}
 }

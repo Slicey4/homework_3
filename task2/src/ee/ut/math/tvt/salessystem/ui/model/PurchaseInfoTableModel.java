@@ -164,14 +164,26 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
          return rows;
 	}
 
+	
 	@Override
-	public int getRowCount() {
-		return sale.getSoldItems().size();
-	}
+	public void addRow(SoldItem row) {
+            if(sale != null) {
+                    sale.addSoldItem(row);
+            }
+            fireTableDataChanged();
+    }
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return getColumnValue(getTableRows().get(rowIndex), columnIndex);
+	public SoldItem getRow(int index) {
+		return getTableRows().get(index);
 	}
+	
+	public void populateWithData(List<SoldItem> sales) {
+        if(sale != null) {
+                for(SoldItem item : sales) {
+                        sale.addSoldItem(item);
+                }
+        }
+}
 
 }

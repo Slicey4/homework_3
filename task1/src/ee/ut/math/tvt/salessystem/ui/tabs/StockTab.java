@@ -130,20 +130,17 @@ public class StockTab {
 					session.getTransaction().begin();
 
 					for (StockItem x : model.getWarehouseTableModel()
-							.getTableRows())
-					{
-						if (item.getName().equalsIgnoreCase(x.getName())) {
+							.getTableRows()) {
+						if (id1 == x.getId()) {
 							session.update(item);
+							break;
 
 						} else {
 							session.save(item);
-
 						}
-
 					}
-					
 					session.getTransaction().commit();
-					 //session.close();
+					session.close();
 
 				} catch (NullPointerException e) {
 
@@ -174,10 +171,12 @@ public class StockTab {
 			for (StockItem x : model.getWarehouseTableModel().getTableRows()) {
 				combo.addItem(x.getName());
 			}
-			
+try{
 			model.getCurrentPurchaseTableModel().setItems(combo, item);
+			
 
-
+		}catch(NullPointerException e){
+			e.printStackTrace();}
 		}
 
 	}

@@ -49,6 +49,7 @@ public class PurchaseTab extends JDialog {
 	private static final Logger log = Logger.getLogger(PurchaseTab.class);
 
 	private final SalesDomainController domainController;
+	Session session ;
 
 	private JButton newPurchase;
 
@@ -279,9 +280,10 @@ public class PurchaseTab extends JDialog {
 
 					HistoryItem item = new HistoryItem(a);
 					item.setPrice(sum);
+					
 
 					model.getHistoryTableModel().addItem(item);
-					Session session = HibernateUtil.currentSession();
+					session = HibernateUtil.currentSession();
 
 					session.getTransaction().begin();
 
@@ -290,12 +292,14 @@ public class PurchaseTab extends JDialog {
 								i.getStockItem().getQuantity());
 						i.setHistoryItem(item);
 						session.update(i.getStockItem());
-						session.save(item);
+						session.save(i);
+						
 					}
-					//session.save(item);
+					session.save(item);
 					//session.save(a);
 					
 					session.getTransaction().commit();
+					
 
 					domainController.submitCurrentPurchase(a);
 
@@ -317,7 +321,7 @@ public class PurchaseTab extends JDialog {
 		finally {
 			model.getCurrentPurchaseTableModel().clear();
 			endPurchaseAfterPaying();
-
+			//session.close();
 		}
 
 	}
